@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DiagnoseViewDlg" widgetVar="DiagnoseViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDiagnoseTitle}">
+            <h:form id="DiagnoseViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{diagnoseController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDiagnoseLabel_id}"/>
+                        <h:outputText value="#{diagnoseController.selected.id}" title="#{bundle.ViewDiagnoseTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewDiagnoseLabel_diagnosis}"/>
+                        <h:outputText value="#{diagnoseController.selected.diagnosis}" title="#{bundle.ViewDiagnoseTitle_diagnosis}"/>
+                        <h:outputText value="#{bundle.ViewDiagnoseLabel_markAsImportant}"/>
+                        <p:selectBooleanCheckbox value="#{diagnoseController.selected.markAsImportant}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewDiagnoseLabel_sicknessFk}"/>
+                        <h:outputText value="#{diagnoseController.selected.sicknessFk}" title="#{bundle.ViewDiagnoseTitle_sicknessFk}"/>
+                        <h:outputText value="#{bundle.ViewDiagnoseLabel_appoitmentId}"/>
+                        <h:outputText value="#{diagnoseController.selected.appoitmentId}" title="#{bundle.ViewDiagnoseTitle_appoitmentId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DiagnoseViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

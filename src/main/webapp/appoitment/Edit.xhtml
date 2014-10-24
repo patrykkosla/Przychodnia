@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AppoitmentEditDlg" widgetVar="AppoitmentEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditAppoitmentTitle}">
+            <h:form id="AppoitmentEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{appoitmentController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditAppoitmentLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{appoitmentController.selected.id}" title="#{bundle.EditAppoitmentTitle_id}" required="true" requiredMessage="#{bundle.EditAppoitmentRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditAppoitmentLabel_appoitmentDate}" for="appoitmentDate" />
+                        <p:calendar id="appoitmentDate" pattern="MM/dd/yyyy" value="#{appoitmentController.selected.appoitmentDate}" title="#{bundle.EditAppoitmentTitle_appoitmentDate}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditAppoitmentLabel_queuePositione}" for="queuePositione" />
+                        <p:inputText id="queuePositione" value="#{appoitmentController.selected.queuePositione}" title="#{bundle.EditAppoitmentTitle_queuePositione}" />
+                        <p:outputLabel value="#{bundle.EditAppoitmentLabel_approximateTime}" for="approximateTime" />
+                        <p:calendar id="approximateTime" pattern="HH:mm:ss" value="#{appoitmentController.selected.approximateTime}" title="#{bundle.EditAppoitmentTitle_approximateTime}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditAppoitmentLabel_status}" for="status" />
+                        <p:inputText id="status" value="#{appoitmentController.selected.status}" title="#{bundle.EditAppoitmentTitle_status}" />
+                        <p:outputLabel value="#{bundle.EditAppoitmentLabel_note}" for="note" />
+                        <p:inputTextarea rows="4" cols="30" id="note" value="#{appoitmentController.selected.note}" title="#{bundle.EditAppoitmentTitle_note}" />
+                        <p:outputLabel value="#{bundle.EditAppoitmentLabel_radiologyTestOrder}" for="radiologyTestOrder" />
+                        <p:inputText id="radiologyTestOrder" value="#{appoitmentController.selected.radiologyTestOrder}" title="#{bundle.EditAppoitmentTitle_radiologyTestOrder}" />
+                        <p:outputLabel value="#{bundle.EditAppoitmentLabel_blodTestOrder}" for="blodTestOrder" />
+                        <p:inputText id="blodTestOrder" value="#{appoitmentController.selected.blodTestOrder}" title="#{bundle.EditAppoitmentTitle_blodTestOrder}" />
+                        <p:outputLabel value="#{bundle.EditAppoitmentLabel_patientId}" for="patientId" />
+                        <p:selectOneMenu id="patientId" value="#{appoitmentController.selected.patientId}" required="true" requiredMessage="#{bundle.EditAppoitmentRequiredMessage_patientId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{patientController.itemsAvailableSelectOne}"
+                                           var="patientIdItem"
+                                           itemValue="#{patientIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditAppoitmentLabel_medicId}" for="medicId" />
+                        <p:selectOneMenu id="medicId" value="#{appoitmentController.selected.medicId}" required="true" requiredMessage="#{bundle.EditAppoitmentRequiredMessage_medicId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{medicController.itemsAvailableSelectOne}"
+                                           var="medicIdItem"
+                                           itemValue="#{medicIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{appoitmentController.update}" value="#{bundle.Save}" update="display,:AppoitmentListForm:datalist,:growl" oncomplete="handleSubmit(args, 'AppoitmentEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="AppoitmentEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

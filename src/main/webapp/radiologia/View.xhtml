@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RadiologiaViewDlg" widgetVar="RadiologiaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewRadiologiaTitle}">
+            <h:form id="RadiologiaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{radiologiaController.selected != null}">
+                        <h:outputText value="#{bundle.ViewRadiologiaLabel_id}"/>
+                        <h:outputText value="#{radiologiaController.selected.id}" title="#{bundle.ViewRadiologiaTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewRadiologiaLabel_examDate}"/>
+                        <h:outputText value="#{radiologiaController.selected.examDate}" title="#{bundle.ViewRadiologiaTitle_examDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewRadiologiaLabel_descriptione}"/>
+                        <h:outputText value="#{radiologiaController.selected.descriptione}" title="#{bundle.ViewRadiologiaTitle_descriptione}"/>
+                        <h:outputText value="#{bundle.ViewRadiologiaLabel_imagesAmount}"/>
+                        <h:outputText value="#{radiologiaController.selected.imagesAmount}" title="#{bundle.ViewRadiologiaTitle_imagesAmount}"/>
+                        <h:outputText value="#{bundle.ViewRadiologiaLabel_patientId}"/>
+                        <h:outputText value="#{radiologiaController.selected.patientId}" title="#{bundle.ViewRadiologiaTitle_patientId}"/>
+                        <h:outputText value="#{bundle.ViewRadiologiaLabel_medicId}"/>
+                        <h:outputText value="#{radiologiaController.selected.medicId}" title="#{bundle.ViewRadiologiaTitle_medicId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="RadiologiaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

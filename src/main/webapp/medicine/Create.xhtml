@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MedicineCreateDlg" widgetVar="MedicineCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateMedicineTitle}">
+            <h:form id="MedicineCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{medicineController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateMedicineLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{medicineController.selected.id}" title="#{bundle.CreateMedicineTitle_id}" required="true" requiredMessage="#{bundle.CreateMedicineRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateMedicineLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{medicineController.selected.name}" title="#{bundle.CreateMedicineTitle_name}" required="true" requiredMessage="#{bundle.CreateMedicineRequiredMessage_name}"/>
+                        <p:outputLabel value="#{bundle.CreateMedicineLabel_latineName}" for="latineName" />
+                        <p:inputText id="latineName" value="#{medicineController.selected.latineName}" title="#{bundle.CreateMedicineTitle_latineName}" />
+                        <p:outputLabel value="#{bundle.CreateMedicineLabel_decryption}" for="decryption" />
+                        <p:inputText id="decryption" value="#{medicineController.selected.decryption}" title="#{bundle.CreateMedicineTitle_decryption}" />
+                        <p:outputLabel value="#{bundle.CreateMedicineLabel_refundactionLevel}" for="refundactionLevel" />
+                        <p:inputText id="refundactionLevel" value="#{medicineController.selected.refundactionLevel}" title="#{bundle.CreateMedicineTitle_refundactionLevel}" />
+                        <p:outputLabel value="#{bundle.CreateMedicineLabel_amount}" for="amount" />
+                        <p:inputText id="amount" value="#{medicineController.selected.amount}" title="#{bundle.CreateMedicineTitle_amount}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{medicineController.create}" value="#{bundle.Save}" update="display,:MedicineListForm:datalist,:growl" oncomplete="handleSubmit(args,'MedicineCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MedicineCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

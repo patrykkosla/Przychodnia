@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MedicCreateDlg" widgetVar="MedicCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateMedicTitle}">
+            <h:form id="MedicCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{medicController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateMedicLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{medicController.selected.id}" title="#{bundle.CreateMedicTitle_id}" required="true" requiredMessage="#{bundle.CreateMedicRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateMedicLabel_username}" for="username" />
+                        <p:inputText id="username" value="#{medicController.selected.username}" title="#{bundle.CreateMedicTitle_username}" required="true" requiredMessage="#{bundle.CreateMedicRequiredMessage_username}"/>
+                        <p:outputLabel value="#{bundle.CreateMedicLabel_firstName}" for="firstName" />
+                        <p:inputText id="firstName" value="#{medicController.selected.firstName}" title="#{bundle.CreateMedicTitle_firstName}" required="true" requiredMessage="#{bundle.CreateMedicRequiredMessage_firstName}"/>
+                        <p:outputLabel value="#{bundle.CreateMedicLabel_lastName}" for="lastName" />
+                        <p:inputText id="lastName" value="#{medicController.selected.lastName}" title="#{bundle.CreateMedicTitle_lastName}" required="true" requiredMessage="#{bundle.CreateMedicRequiredMessage_lastName}"/>
+                        <p:outputLabel value="#{bundle.CreateMedicLabel_password}" for="password" />
+                        <p:inputText id="password" value="#{medicController.selected.password}" title="#{bundle.CreateMedicTitle_password}" />
+                        <p:outputLabel value="#{bundle.CreateMedicLabel_pesel}" for="pesel" />
+                        <p:inputText id="pesel" value="#{medicController.selected.pesel}" title="#{bundle.CreateMedicTitle_pesel}" />
+                        <p:outputLabel value="#{bundle.CreateMedicLabel_sex}" for="sex" />
+                        <p:selectBooleanCheckbox id="sex" value="#{medicController.selected.sex}" />
+                        <p:outputLabel value="#{bundle.CreateMedicLabel_enable}" for="enable" />
+                        <p:selectBooleanCheckbox id="enable" value="#{medicController.selected.enable}" />
+                        <p:outputLabel value="#{bundle.CreateMedicLabel_bornDate}" for="bornDate" />
+                        <p:calendar id="bornDate" pattern="MM/dd/yyyy" value="#{medicController.selected.bornDate}" title="#{bundle.EditMedicTitle_bornDate}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateMedicLabel_createTime}" for="createTime" />
+                        <p:calendar id="createTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{medicController.selected.createTime}" title="#{bundle.EditMedicTitle_createTime}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateMedicLabel_type}" for="type" />
+                        <p:inputText id="type" value="#{medicController.selected.type}" title="#{bundle.CreateMedicTitle_type}" />
+                        <p:outputLabel value="#{bundle.CreateMedicLabel_addresId}" for="addresId" />
+                        <p:selectOneMenu id="addresId" value="#{medicController.selected.addresId}" required="true" requiredMessage="#{bundle.EditMedicRequiredMessage_addresId}">
+                            <f:selectItems value="#{addresController.itemsAvailableSelectOne}"
+                                           var="addresIdItem"
+                                           itemValue="#{addresIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{medicController.create}" value="#{bundle.Save}" update="display,:MedicListForm:datalist,:growl" oncomplete="handleSubmit(args,'MedicCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MedicCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

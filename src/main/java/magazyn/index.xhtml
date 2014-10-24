@@ -1,0 +1,216 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+    </h:head>
+    <h:body>
+
+        <p:layout fullPage="true">
+
+            <p:layoutUnit id="header_unit" position="north" size="10" resizable="true" closable="true" collapsible="true"  >
+                Header
+            </p:layoutUnit>
+
+            <p:layoutUnit id="footer_unit" position="south" size="20" closable="true" collapsible="true">
+                Footer
+            </p:layoutUnit>
+
+            <p:layoutUnit id="boody_unit" position="center" styleClass="home_page_body" >
+
+                <p:panel styleClass="hp_login_wraper">
+
+                    <div id="login_box" class="jumbotron">
+                        <h1>Witaj w asystencie przychodni</h1>
+                        <p>Zaloguj się lub zarejstruj jeśli jeszcze nie masz konta.</p>
+
+                    </div>
+                    <h:form>
+                        <p:commandButton value="Zaloguj się" onclick="PF('dlg').show();"/>
+                        <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+                        <p:button href="faces/rejestracja.xhtml" value="Zarejstruj się"/>
+                        <a href="faces/patient/List.xhtml">Lista pacjentów</a>
+
+                        <h:link outcome="/patient/List.xhtml" value="Show All Patient Items"/>
+
+                        <p:dialog header="Login" widgetVar="dlg" resizable="false">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel for="username" value="Username:" />
+                                <p:inputText id="username" value="#{userLoginBean.username}" required="true" label="username" />
+
+                                <h:outputLabel for="password" value="Password:" />
+                                <p:password id="password" value="#{userLoginBean.password}" required="true" label="password" />
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Login" update="growl" actionListener="#{userLoginBean.login}"
+                                                     oncomplete="handleLoginRequest(xhr, status, args)" />
+                                </f:facet>  
+                            </h:panelGrid>
+                        </p:dialog>
+
+                    </h:form>
+
+                </p:panel>
+
+            </p:layoutUnit>
+
+        </p:layout>
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    PF('dlg').jq.effect("shake", {times: 5}, 100);
+                }
+                else {
+                    PF('dlg').hide();
+                    $('#loginLink').fadeOut();
+                }
+            }
+        </script>
+
+
+        <br />
+        <h:link outcome="/addres/List" value="Show All Addres Items"/>
+        <br />
+        <h:link outcome="/appoitment/List" value="Show All Appoitment Items"/>
+        <br />
+        <h:link outcome="/bloodTest/List" value="Show All BloodTest Items"/>
+        <br />
+        <h:link outcome="/diagnose/List" value="Show All Diagnose Items"/>
+        <br />
+        <h:link outcome="/doctor/List" value="Show All Doctor Items"/>
+        <br />
+        <h:link outcome="/medic/List" value="Show All Medic Items"/>
+        <br />
+        <h:link outcome="/medicine/List" value="Show All Medicine Items"/>
+        <br />
+        <h:link outcome="/patient/List" value="Show All Patient Items"/>
+        <br />
+        <h:link outcome="/perscripion/List" value="Show All Perscripion Items"/>
+        <br />
+        <h:link outcome="/radiologia/List" value="Show All Radiologia Items"/>
+        <br />
+        <h:link outcome="/referralAppoitment/List" value="Show All ReferralAppoitment Items"/>
+        <br />
+        <h:link outcome="/sickLeave/List" value="Show All SickLeave Items"/>
+        <br />
+        <h:link outcome="/sicknessdic/List" value="Show All Sicknessdic Items"/>
+        <br />
+        <h:link outcome="/sugerTest/List" value="Show All SugerTest Items"/>
+        <br />
+        <h:link outcome="/surgery/List" value="Show All Surgery Items"/>
+        <br />
+        <h:link outcome="/addres/List" value="Show All Addres Items"/>
+        <br />
+        <h:link outcome="/appoitment/List" value="Show All Appoitment Items"/>
+        <br />
+        <h:link outcome="/bloodTest/List" value="Show All BloodTest Items"/>
+        <br />
+        <h:link outcome="/diagnose/List" value="Show All Diagnose Items"/>
+        <br />
+        <h:link outcome="/doctor/List" value="Show All Doctor Items"/>
+        <br />
+        <h:link outcome="/medic/List" value="Show All Medic Items"/>
+        <br />
+        <h:link outcome="/medicine/List" value="Show All Medicine Items"/>
+        <br />
+        <h:link outcome="/patient/List" value="Show All Patient Items"/>
+        <br />
+        <h:link outcome="/perscripion/List" value="Show All Perscripion Items"/>
+        <br />
+        <h:link outcome="/radiologia/List" value="Show All Radiologia Items"/>
+        <br />
+        <h:link outcome="/referralAppoitment/List" value="Show All ReferralAppoitment Items"/>
+        <br />
+        <h:link outcome="/sickLeave/List" value="Show All SickLeave Items"/>
+        <br />
+        <h:link outcome="/sicknessdic/List" value="Show All Sicknessdic Items"/>
+        <br />
+        <h:link outcome="/sugerTest/List" value="Show All SugerTest Items"/>
+        <br />
+        <h:link outcome="/surgery/List" value="Show All Surgery Items"/>
+    </h:body>
+
+
+
+
+
+
+
+
+                        <p:submenu label="#{bundle.Maintenance}">
+                            <p:menuitem value="Addres" outcome="/addres/List.xhtml" />
+                            <p:menuitem value="Appoitment" outcome="/appoitment/List.xhtml" />
+                            <p:menuitem value="Bloodtest" outcome="/bloodtest/List.xhtml" />
+                            <p:menuitem value="Doctor" outcome="/doctor/List.xhtml" />
+                            <p:menuitem value="Employee" outcome="/employee/List.xhtml" />
+                            <p:menuitem value="Medicine" outcome="/medicine/List.xhtml" />
+                            <p:menuitem value="Patient" outcome="/patient/List.xhtml" />
+                            <p:menuitem value="Perscripion" outcome="/perscripion/List.xhtml" />
+                            <p:menuitem value="Radiologia" outcome="/radiologia/List.xhtml" />
+                            <p:menuitem value="Region" outcome="/region/List.xhtml" />
+                            <p:menuitem value="Sickness" outcome="/sickness/List.xhtml" />
+                            <p:menuitem value="Sicknessdic" outcome="/sicknessdic/List.xhtml" />
+                            <p:menuitem value="Sugertest" outcome="/sugertest/List.xhtml" />
+                            <p:menuitem value="Surgery" outcome="/surgery/List.xhtml" />
+                            <p:menuitem value="User" outcome="/user/List.xhtml" />
+                        </p:submenu>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
+

@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+    </h:head>
+<h:body>
+<f:view contentType="text/html">
+    <h:form>
+        <ui:include src="/resources/elements/header.xhtml" />
+        
+        <p:button href="index.xhtml" value="Powrót"/>
+    </h:form>
+     
+
+
+    <h:form id="register_form">
+        <p:messages />
+    <p:panel header="Formularz rejestraacji" style="margin: 30px; padding: 30px; width: 640px; " >
+    <h:panelGrid  id="grid"  columns="2" cellpadding="5" >
+
+        <h:outputLabel value="Imie" for="patientName"/>
+        <p:inputText id="patientName"  value="#{PatientBean.patient.firstName}"
+                     required="true"
+                     requiredMessage="Imie jest wymagane"
+                     label="Imie">
+            <f:validateLength minimum="2" />    
+        <p:message for="patientName" />    
+        </p:inputText>
+        
+        
+
+        <h:outputLabel value="Nazwisko" for="patientImie"/>
+        <p:inputText id="patientImie" value="#{PatientBean.patient.lastName}"
+                     required="true"
+                      requiredMessage="Nazwisko jest wymagane"
+                     label="Nazwisko">
+            <f:validateLength minimum="2" />  
+            <f:validateRegex pattern="^[a-zA-Z]+$" />
+        <p:message for="patientImie" />    
+        </p:inputText>
+        
+       
+
+        <h:outputLabel value="Adres email" for="email"/>
+        <p:inputText id="email" 
+                     required="true"
+                     requiredMessage="Podaj swój adres email"
+                     validatorMessage="Nie poprawny adres email"
+                     value="#{PatientBean.patient.username}">
+
+        <f:validateRegex
+            pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+        <p:message for="email" />
+        </p:inputText>
+        
+       
+
+
+        <h:outputLabel for="pwd1" value="Hasło" />
+        <p:password id="pwd1" value="#{PatientBean.patient.password}"
+                    label="Password 1"
+                    required="true" 
+                    feedback="true">
+        <p:messages id="passwor_messages" autoUpdate="true" for="pwd1"/>
+        </p:password>
+    
+        
+        
+        <h:selectOneRadio id="selectOneRadio1" value="#{PatientBean.patient.sex}">
+            <h:outputLabel for="selectOneRadio1" value="Wybirz płeć" />
+            <f:selectItem itemLabel="Mężczyzna" itemValue="#{true}"/>
+            <f:selectItem itemLabel="Kobieta" itemValue="#{false}"/>
+        </h:selectOneRadio>
+        <p:spacer/>
+       
+        <p:outputLabel value="Data urodzenia" for="dob"/>
+        <p:calendar value="#{PatientBean.patient.bornDate}" id="dob">
+        </p:calendar>
+        <p:message id="dobMsg" for="dob" />
+        
+        <p:spacer/>
+        
+        
+        <p:outputLabel value="PESEL" for="pesel"/>
+        <p:inputText id="pesel"  value="#{PatientBean.patient.pesel}"
+                    />
+
+        <p:outputLabel value="Waga" for="waga"/>
+        <p:inputText id="waga"  value="#{PatientBean.patient.weitht}"/>
+
+        <p:outputLabel value="Wzrost" for="wzrost"/>
+        <p:inputText id="wzrost" value="#{PatientBean.patient.height}"/>   
+
+        <p:outputLabel for="blodgrup" value="Wybirz grupę krwi" />
+        <p:spacer/>
+        <p:selectOneMenu id="blodgrup" value="#{PatientBean.blodGrupTemp}"
+                        >
+            <f:selectItem itemLabel="Grupa kwi" itemValue="" />
+            <f:selectItem itemLabel="A" itemValue="A" />
+            <f:selectItem itemLabel="B" itemValue="b" />
+            <f:selectItem itemLabel="AB" itemValue="AB" />
+            <f:selectItem itemLabel="0" itemValue="0" />
+        </p:selectOneMenu>  
+
+        <p:selectOneMenu id="rhtype" value="#{PatientBean.rhTypeTemp}"
+                        >
+            <f:selectItem itemLabel="Typ Rh" itemValue="" />
+            <f:selectItem itemLabel="Rh+" itemValue="+" />
+            <f:selectItem itemLabel="Rh-" itemValue="-" />
+        </p:selectOneMenu>     
+        <p:spacer height="10" />
+        <p:separator style="width:400px;"/>
+
+
+        <p:outputLabel value="Miejscowość" for="miejscowosc"/>
+        <p:inputText id="miejscowosc" value="#{PatientBean.addres.place}" 
+                    required="true"
+                    requiredMessage="Podaj miejscowość zamieszkania"
+                    label="Miejscowość">
+        </p:inputText>
+        <p:message for="miejscowosc" />
+        <h:outputText value="#{PatientBean.addres.place}" />              
+
+        <p:outputLabel value="Ulica" for="street"/>
+        <p:inputText id="street" value="#{PatientBean.addres.street}"
+                    required="true"
+                    requiredMessage="Podaj ulicę i numer domu">
+        </p:inputText>
+        <p:message for="street" />
+        <h:outputText value="#{PatientBean.addres.street}" /> 
+
+        <p:outputLabel for="posteCode" value="Kod pocztowy" />
+        <p:inputMask id="posteCode" value="#{PatientBean.addres.posteCode}" mask="99-999"
+                     required="true"
+                     requiredMessage="Podaj kod pocztowy">  
+        </p:inputMask>
+        <p:message for="posteCode" />
+        <h:outputText value="#{PatientBean.addres.posteCode}" /> 
+
+    </h:panelGrid>
+        <p:commandButton 
+                         value="Zarejestrój"
+                         update="register_form" 
+                         validateClient="true"
+                         action="#{PatientBean.doRegister()}"/>
+
+
+    </p:panel>
+</h:form>
+     <h:outputText value="#{PatientBean.patient.firstName}" />
+     <h:outputText value="#{PatientBean.patient.lastName}" />
+     <h:outputText value="#{PatientBean.patient.username}" />
+      <h:outputText value="#{PatientBean.patient.username}" />
+ </f:view>            
+</h:body>
+</html>

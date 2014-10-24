@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui" >
+    <h:head>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+    </h:head>
+
+    <h:body>
+
+        <p:layout fullPage="true">
+
+            <p:layoutUnit id="header_unit" position="north" size="10" resizable="true" closable="true" collapsible="true"  >
+                Header
+            </p:layoutUnit>
+
+            <p:layoutUnit id="footer_unit" position="south" size="20" closable="true" collapsible="true">
+                Footer
+            </p:layoutUnit>
+
+            <p:layoutUnit id="boody_unit" position="center" styleClass="home_page_body" >
+
+                <p:panel styleClass="hp_login_wraper">
+
+                    <div id="login_box" class="jumbotron">
+                        <h1>Witaj w asystencie przychodni</h1>
+                        <p>Zaloguj się lub zarejstruj jeśli jeszcze nie masz konta.</p>
+
+                    </div>
+                    <h:form>
+                        <p:commandButton id="loginLink"  value="Zaloguj się" onclick="PF('dlg').show();"/>
+
+                        <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+                        <p:button href="rejestracja.xhtml" value="Zarejstruj się"/>
+
+                        <p:button  href="/home.xhtml" value="Home page"/>
+
+                        <h:link outcome="/patient/List.xhtml" value="Show All Patient Items"/>
+
+                        <p:dialog header="Login" widgetVar="dlg" resizable="false">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel for="username" value="Username:" />
+                                <p:inputText 
+                                    id="username" 
+                                    value="#{PatientBean.uname}" 
+                                    required="true" 
+                                    label="username" />
+
+                                <h:outputLabel for="password" value="Password:" />
+                                <p:password 
+                                    id="password" 
+                                    value="#{PatientBean.password}" 
+                                    required="true" 
+                                    label="password"
+                                    feedback="false"
+                                    redisplay="true"/>
+
+
+                                <f:facet name="footer">
+                                    <h:selectBooleanCheckbox id="remember" value="#{PatientBean.remember}" onclick="return check(this);" />
+                                    <h:outputLabel for="remember">Zapamiętaj Mnie</h:outputLabel>
+                                    <p:commandButton value="Login" update="growl" actionListener="#{PatientBean.login}"
+                                                     oncomplete="handleLoginRequest(xhr, status, args)" />
+                                </f:facet>  
+                            </h:panelGrid>
+                        </p:dialog>
+
+                    </h:form>
+
+                </p:panel>
+
+            </p:layoutUnit>
+
+        </p:layout>
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    PF('dlg').jq.effect("shake", {times: 5}, 100);
+                }
+                else {
+                    PF('dlg').hide();
+                    $('#loginLink').fadeOut();
+
+                    // similar behavior as an HTTP redirect
+                    window.location.replace("/przychodnia/home.xhtml");
+                }
+            }
+        </script>
+
+   
+    </h:body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
+

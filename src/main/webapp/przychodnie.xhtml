@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/resources/template/two_row_template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="Przeglądaj i wybierz przechodnie"></h:outputText>
+        </ui:define>
+        <ui:define name="west_left_column">
+            <h:outputText value="Twoja obecna przychodnia to"></h:outputText>
+            <p:panel id="curentSurgeryInfo" header="#{homePatientBean.pb.patient.patientSurgery.name}" >
+                    <h:panelGrid columns="1" cellpadding="0" >
+                        <h:outputLabel value="Nazwa"/>
+                        <h:outputText value="#{homePatientBean.pb.patient.patientSurgery.name}"/>
+
+                        <h:outputText value="telefon"/>
+                        <h:outputText value="#{homePatientBean.pb.patient.patientSurgery.addresId.phonenumber}"/>
+
+                        <h:outputText value="miejscowość"/>                         
+                        <h:outputText value="#{homePatientBean.pb.patient.patientSurgery.addresId.place}"/>
+
+
+                    </h:panelGrid>
+            </p:panel>
+            
+            <h:outputText value="Zmiana przychodni spowoduje skasowanie wszelkich zarezerwowanych wizyt"></h:outputText>
+            
+            
+        </ui:define>
+        
+        <ui:define name="body">
+            <h:form id="SurgeryListForm">
+                <p:panel header="#{bundle.ListSurgeryTitle}">
+                    <p:dataTable 
+                         id="datalist" 
+                         value="#{surgeryController.items}" 
+                         var="item"
+                         selectionMode="single" 
+                         selection="#{surgeryController.selected}"
+                         paginator="true"
+                         rowKey="#{item.id}"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         >
+                        <p:ajax event="rowSelect"   update=" viewButton "/>
+                        <p:ajax event="rowUnselect" update=" viewButton "/>
+                        
+                        
+                        <p:column headerText="#{bundle.ListSurgeryTitle_id}" rendered="false">
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        
+                        <p:column filterBy="#{item.name}" filterMatchMode="contains"  headerText="#{bundle.ListSurgeryTitle_name}" >
+                            <h:outputText value="#{item.name}"/>   
+                        </p:column>
+                        <p:column  headerText="#{bundle.ViewAddresTitle_place}"  filterMatchMode="contains"  filterBy="#{item.addresId.place}" >
+                            <h:outputText value="#{item.addresId.place}"/>
+                        </p:column>                        
+                        <p:column  headerText="#{bundle.ListSurgeryTitle_email}">
+                            <h:outputText value="#{item.email}"/>
+                        </p:column>
+                        
+                        <p:column  headerText="#{bundle.ListSurgeryTitle_phonenumber}">
+                            <h:outputText value="#{item.addresId.phonenumber}"/>
+                        </p:column>
+
+                        <f:facet name="footer">
+
+                            <p:commandButton 
+                                id="viewButton"   
+                                icon="ui-icon-search" 
+                                value="Wybierz i zmień" 
+                                update=":SurgeryViewForm" 
+                                oncomplete="PF('SurgeryViewDialog').show()" 
+                                
+                                disabled="#{empty surgeryController.selected}"/>
+
+                            <p:commandButton 
+
+                                value="Anuluj"
+                                />
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+            <ui:include src="/surgery/Select.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

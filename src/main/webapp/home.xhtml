@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/resources/template/home_template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="Patient home page"></h:outputText>
+        </ui:define>
+        <ui:define name="west_left_column">
+            
+            <h:form>
+                <p:growl id="hp_doc_box" showDetail="true">
+               
+                    <p:panel header="Przychodnia" >
+                        <h:panelGrid columns="1" cellpadding="0" >
+                            <h:outputLabel value="Nazwa"/>
+                            <h:outputText value="#{not empty homePatientBean.pb.patient.surgeryId.name}"/>
+                            
+                            <h:outputText value="telefon"/>
+                            <h:outputText value="#{not empty homePatientBean.pb.patient.surgeryId.addresId.phoneNumber}"/>
+ 
+                            <h:outputText value="miejscowość"/>                         
+                            <h:outputText value="#{not empty homePatientBean.pb.patient.surgeryId.addresId.place}"/>
+                            
+                            
+                        </h:panelGrid>
+                        <f:facet name="footer">
+                            <p:button 
+                                id="SurgeryButton" 
+                                value="Przychodnie" 
+                                 href="/przychodnie.xhtml"
+                                 />
+                        </f:facet>
+                    </p:panel>
+                    
+                    <p:panel header="Twój lekarz ">
+                        <h:panelGrid columns="1" cellpadding="0" >
+
+                            
+                            
+                        </h:panelGrid>
+              
+
+                    </p:panel>
+                    
+                
+                </p:growl>
+            </h:form>
+        </ui:define>
+        <ui:define name="east_right_column">
+
+            
+            <h:outputLabel value="Imie"/>          
+            <h:outputText value="#{not empty homePatientBean.pb.patient.firstName}"/>
+            <h:outputLabel value="Nazwisko"/>
+            <h:outputText value="#{not empty homePatientBean.pb.patient.lastName}"/>           
+            
+            <h:outputLabel value="Waga"/>
+            <h:outputText value="#{not empty homePatientBean.pb.patient.weitht}"/>  
+            <h:outputLabel value="Wzrost"/>           
+            <h:outputText value="#{not empty homePatientBean.pb.patient.height}"/>              
+            
+            <h:outputLabel value="Wzrost"/>                
+            
+            
+            
+        </ui:define>
+            
+        <ui:define name="body">
+        
+            <h1>Witaj z PatientBena #{not empty PatientBean.patient.lastName}</h1>
+        
+            <h2>Twoje wizyty</h2>
+            
+        </ui:define>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PatientCreateDlg" widgetVar="PatientCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePatientTitle}">
+            <h:form id="PatientCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{patientController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_patientId}" for="patientId" />
+                        <p:inputText id="patientId" value="#{patientController.selected.patientId}" title="#{bundle.CreatePatientTitle_patientId}" required="true" requiredMessage="#{bundle.CreatePatientRequiredMessage_patientId}"/>
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_username}" for="username" />
+                        <p:inputText id="username" value="#{patientController.selected.username}" title="#{bundle.CreatePatientTitle_username}" required="true" requiredMessage="#{bundle.CreatePatientRequiredMessage_username}"/>
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_firstName}" for="firstName" />
+                        <p:inputText id="firstName" value="#{patientController.selected.firstName}" title="#{bundle.CreatePatientTitle_firstName}" required="true" requiredMessage="#{bundle.CreatePatientRequiredMessage_firstName}"/>
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_lastName}" for="lastName" />
+                        <p:inputText id="lastName" value="#{patientController.selected.lastName}" title="#{bundle.CreatePatientTitle_lastName}" required="true" requiredMessage="#{bundle.CreatePatientRequiredMessage_lastName}"/>
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_password}" for="password" />
+                        <p:inputText id="password" value="#{patientController.selected.password}" title="#{bundle.CreatePatientTitle_password}" />
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_pesel}" for="pesel" />
+                        <p:inputText id="pesel" value="#{patientController.selected.pesel}" title="#{bundle.CreatePatientTitle_pesel}" />
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_sex}" for="sex" />
+                        <p:selectBooleanCheckbox id="sex" value="#{patientController.selected.sex}" />
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_enable}" for="enable" />
+                        <p:selectBooleanCheckbox id="enable" value="#{patientController.selected.enable}" />
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_bornDate}" for="bornDate" />
+                        <p:calendar id="bornDate" pattern="MM/dd/yyyy" value="#{patientController.selected.bornDate}" title="#{bundle.EditPatientTitle_bornDate}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_createTime}" for="createTime" />
+                        <p:calendar id="createTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{patientController.selected.createTime}" title="#{bundle.EditPatientTitle_createTime}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_blogGrup}" for="blogGrup" />
+                        <p:inputText id="blogGrup" value="#{patientController.selected.blogGrup}" title="#{bundle.CreatePatientTitle_blogGrup}" />
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_weitht}" for="weitht" />
+                        <p:inputText id="weitht" value="#{patientController.selected.weitht}" title="#{bundle.CreatePatientTitle_weitht}" />
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_height}" for="height" />
+                        <p:inputText id="height" value="#{patientController.selected.height}" title="#{bundle.CreatePatientTitle_height}" />
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_addresId}" for="addresId" />
+                        <p:selectOneMenu id="addresId" value="#{patientController.selected.addresId}" required="true" requiredMessage="#{bundle.EditPatientRequiredMessage_addresId}">
+                            <f:selectItems value="#{addresController.itemsAvailableSelectOne}"
+                                           var="addresIdItem"
+                                           itemValue="#{addresIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_surgeryId}" for="surgeryId" />
+                        <p:selectOneMenu id="surgeryId" value="#{patientController.selected.surgeryId}" >
+                            <f:selectItems value="#{surgeryController.itemsAvailableSelectOne}"
+                                           var="surgeryIdItem"
+                                           itemValue="#{surgeryIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreatePatientLabel_medicId}" for="medicId" />
+                        <p:selectOneMenu id="medicId" value="#{patientController.selected.medicId}" >
+                            <f:selectItems value="#{medicController.itemsAvailableSelectOne}"
+                                           var="medicIdItem"
+                                           itemValue="#{medicIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{patientController.create}" value="#{bundle.Save}" update="display,:PatientListForm:datalist,:growl" oncomplete="handleSubmit(args,'PatientCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PatientCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

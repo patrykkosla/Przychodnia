@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ReferralAppoitmentCreateDlg" widgetVar="ReferralAppoitmentCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateReferralAppoitmentTitle}">
+            <h:form id="ReferralAppoitmentCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{referralAppoitmentController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateReferralAppoitmentLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{referralAppoitmentController.selected.id}" title="#{bundle.CreateReferralAppoitmentTitle_id}" required="true" requiredMessage="#{bundle.CreateReferralAppoitmentRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateReferralAppoitmentLabel_opis}" for="opis" />
+                        <p:inputTextarea rows="4" cols="30" id="opis" value="#{referralAppoitmentController.selected.opis}" title="#{bundle.CreateReferralAppoitmentTitle_opis}" />
+                        <p:outputLabel value="#{bundle.CreateReferralAppoitmentLabel_diagnoseId}" for="diagnoseId" />
+                        <p:selectOneMenu id="diagnoseId" value="#{referralAppoitmentController.selected.diagnoseId}" >
+                            <f:selectItems value="#{diagnoseController.itemsAvailableSelectOne}"
+                                           var="diagnoseIdItem"
+                                           itemValue="#{diagnoseIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateReferralAppoitmentLabel_appoitmentId}" for="appoitmentId" />
+                        <p:selectOneMenu id="appoitmentId" value="#{referralAppoitmentController.selected.appoitmentId}" required="true" requiredMessage="#{bundle.EditReferralAppoitmentRequiredMessage_appoitmentId}">
+                            <f:selectItems value="#{appoitmentController.itemsAvailableSelectOne}"
+                                           var="appoitmentIdItem"
+                                           itemValue="#{appoitmentIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{referralAppoitmentController.create}" value="#{bundle.Save}" update="display,:ReferralAppoitmentListForm:datalist,:growl" oncomplete="handleSubmit(args,'ReferralAppoitmentCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ReferralAppoitmentCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

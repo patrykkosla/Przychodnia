@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MedicineViewDlg" widgetVar="MedicineViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewMedicineTitle}">
+            <h:form id="MedicineViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{medicineController.selected != null}">
+                        <h:outputText value="#{bundle.ViewMedicineLabel_id}"/>
+                        <h:outputText value="#{medicineController.selected.id}" title="#{bundle.ViewMedicineTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewMedicineLabel_name}"/>
+                        <h:outputText value="#{medicineController.selected.name}" title="#{bundle.ViewMedicineTitle_name}"/>
+                        <h:outputText value="#{bundle.ViewMedicineLabel_latineName}"/>
+                        <h:outputText value="#{medicineController.selected.latineName}" title="#{bundle.ViewMedicineTitle_latineName}"/>
+                        <h:outputText value="#{bundle.ViewMedicineLabel_decryption}"/>
+                        <h:outputText value="#{medicineController.selected.decryption}" title="#{bundle.ViewMedicineTitle_decryption}"/>
+                        <h:outputText value="#{bundle.ViewMedicineLabel_refundactionLevel}"/>
+                        <h:outputText value="#{medicineController.selected.refundactionLevel}" title="#{bundle.ViewMedicineTitle_refundactionLevel}"/>
+                        <h:outputText value="#{bundle.ViewMedicineLabel_amount}"/>
+                        <h:outputText value="#{medicineController.selected.amount}" title="#{bundle.ViewMedicineTitle_amount}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="MedicineViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

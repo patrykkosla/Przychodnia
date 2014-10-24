@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SugerTestCreateDlg" widgetVar="SugerTestCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSugerTestTitle}">
+            <h:form id="SugerTestCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sugerTestController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateSugerTestLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{sugerTestController.selected.id}" title="#{bundle.CreateSugerTestTitle_id}" required="true" requiredMessage="#{bundle.CreateSugerTestRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateSugerTestLabel_sugerLevel}" for="sugerLevel" />
+                        <p:inputText id="sugerLevel" value="#{sugerTestController.selected.sugerLevel}" title="#{bundle.CreateSugerTestTitle_sugerLevel}" required="true" requiredMessage="#{bundle.CreateSugerTestRequiredMessage_sugerLevel}"/>
+                        <p:outputLabel value="#{bundle.CreateSugerTestLabel_afterMeal}" for="afterMeal" />
+                        <p:selectBooleanCheckbox id="afterMeal" value="#{sugerTestController.selected.afterMeal}" />
+                        <p:outputLabel value="#{bundle.CreateSugerTestLabel_testDateTmie}" for="testDateTmie" />
+                        <p:calendar id="testDateTmie" pattern="MM/dd/yyyy HH:mm:ss" value="#{sugerTestController.selected.testDateTmie}" title="#{bundle.EditSugerTestTitle_testDateTmie}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateSugerTestLabel_patientFk}" for="patientFk" />
+                        <p:selectOneMenu id="patientFk" value="#{sugerTestController.selected.patientFk}" required="true" requiredMessage="#{bundle.EditSugerTestRequiredMessage_patientFk}">
+                            <f:selectItems value="#{patientController.itemsAvailableSelectOne}"
+                                           var="patientFkItem"
+                                           itemValue="#{patientFkItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{sugerTestController.create}" value="#{bundle.Save}" update="display,:SugerTestListForm:datalist,:growl" oncomplete="handleSubmit(args,'SugerTestCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SugerTestCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

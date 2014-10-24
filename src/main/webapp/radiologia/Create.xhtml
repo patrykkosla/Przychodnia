@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RadiologiaCreateDlg" widgetVar="RadiologiaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRadiologiaTitle}">
+            <h:form id="RadiologiaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{radiologiaController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateRadiologiaLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{radiologiaController.selected.id}" title="#{bundle.CreateRadiologiaTitle_id}" required="true" requiredMessage="#{bundle.CreateRadiologiaRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateRadiologiaLabel_examDate}" for="examDate" />
+                        <p:calendar id="examDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{radiologiaController.selected.examDate}" title="#{bundle.EditRadiologiaTitle_examDate}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateRadiologiaLabel_descriptione}" for="descriptione" />
+                        <p:inputTextarea rows="4" cols="30" id="descriptione" value="#{radiologiaController.selected.descriptione}" title="#{bundle.CreateRadiologiaTitle_descriptione}" />
+                        <p:outputLabel value="#{bundle.CreateRadiologiaLabel_imagesAmount}" for="imagesAmount" />
+                        <p:inputText id="imagesAmount" value="#{radiologiaController.selected.imagesAmount}" title="#{bundle.CreateRadiologiaTitle_imagesAmount}" />
+                        <p:outputLabel value="#{bundle.CreateRadiologiaLabel_patientId}" for="patientId" />
+                        <p:selectOneMenu id="patientId" value="#{radiologiaController.selected.patientId}" required="true" requiredMessage="#{bundle.EditRadiologiaRequiredMessage_patientId}">
+                            <f:selectItems value="#{patientController.itemsAvailableSelectOne}"
+                                           var="patientIdItem"
+                                           itemValue="#{patientIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateRadiologiaLabel_medicId}" for="medicId" />
+                        <p:selectOneMenu id="medicId" value="#{radiologiaController.selected.medicId}" required="true" requiredMessage="#{bundle.EditRadiologiaRequiredMessage_medicId}">
+                            <f:selectItems value="#{medicController.itemsAvailableSelectOne}"
+                                           var="medicIdItem"
+                                           itemValue="#{medicIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{radiologiaController.create}" value="#{bundle.Save}" update="display,:RadiologiaListForm:datalist,:growl" oncomplete="handleSubmit(args,'RadiologiaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="RadiologiaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
