@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
@@ -17,33 +16,33 @@
         <p:growl id="growl" life="3000" />
 
         <p:layout fullPage="true">
-            
             <p:layoutUnit position="north" size="65" header="#{bundle.AppName}">
                 <h:form id="menuForm">
                     <p:menubar>
-                        <p:menuitem value="#{bundle.Home}" outcome="/home" icon="ui-icon-home"/>
+                        <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
                         <p:submenu label="#{bundle.Maintenance}">
                             <p:menuitem value="Addres" outcome="/views/addres/List.xhtml" />
+                            <p:menuitem value="Appoitment" outcome="/views/appoitment/List.xhtml" />
+                            <p:menuitem value="BloodTest" outcome="/views/bloodTest/List.xhtml" />
+                            <p:menuitem value="Diagnose" outcome="/views/diagnose/List.xhtml" />
+                            <p:menuitem value="Medic" outcome="/views/medic/List.xhtml" />
+                            <p:menuitem value="Medicine" outcome="/views/medicine/List.xhtml" />
                             <p:menuitem value="Patient" outcome="/views/patient/List.xhtml" />
+                            <p:menuitem value="Perscripion" outcome="/views/perscripion/List.xhtml" />
+                            <p:menuitem value="Radiologia" outcome="/views/radiologia/List.xhtml" />
+                            <p:menuitem value="ReferralAppoitment" outcome="/views/referralAppoitment/List.xhtml" />
+                            <p:menuitem value="SickLeave" outcome="/views/sickLeave/List.xhtml" />
+                            <p:menuitem value="Sicknessdic" outcome="/views/sicknessdic/List.xhtml" />
+                            <p:menuitem value="SugerTest" outcome="/views/sugerTest/List.xhtml" />
+                            <p:menuitem value="Surgery" outcome="/views/surgery/List.xhtml" />
+                            <p:menuitem value="SurgeryDoc" outcome="/views/surgeryHasMedic/List.xhtml" />
                         </p:submenu>
-                        <f:facet name="options">
-                            <p:commandButton  value="wyloguj" icon="ui-icon-extlink" action="#{PatientBean.logout()}"/>
-                        </f:facet>
                     </p:menubar>
                 </h:form>
             </p:layoutUnit>
-            <p:layoutUnit position="west" size="200" >
-                <ui:insert name="west_left_column"/>
-            </p:layoutUnit>
 
-            <p:layoutUnit position="east" size="200" header="Dane osobowe" >
-                <ui:insert name="east_right_column"/>
-            </p:layoutUnit>
-            
-            
             <p:layoutUnit position="south" size="60">
                 <ui:insert name="footer"/>
-                <h:outputText value="TFootter i inne info." />
             </p:layoutUnit>
 
             <p:layoutUnit position="center">

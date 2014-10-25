@@ -161,5 +161,11 @@ public class MedicController implements Serializable {
         }
 
     }
+    public List<Medic> getMedicsForSurgery(int id){
+        
+        return  ejbFacade.mediForSurgery(id);
+    }
+
+   
 
 }

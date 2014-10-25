@@ -14,16 +14,16 @@
         </ui:define>
         <ui:define name="west_left_column">
             <h:outputText value="Twoja obecna przychodnia to"></h:outputText>
-            <p:panel id="curentSurgeryInfo" header="#{homePatientBean.pb.patient.patientSurgery.name}" >
+            <p:panel  id="curentSurgeryInfo" header="#{homePatientBean.pb.patient.surgeryId.name}" >
                     <h:panelGrid columns="1" cellpadding="0" >
                         <h:outputLabel value="Nazwa"/>
-                        <h:outputText value="#{homePatientBean.pb.patient.patientSurgery.name}"/>
+                        <h:outputText value="#{homePatientBean.pb.patient.surgeryId.name}"/>
 
                         <h:outputText value="telefon"/>
-                        <h:outputText value="#{homePatientBean.pb.patient.patientSurgery.addresId.phonenumber}"/>
+                        <h:outputText value="#{homePatientBean.pb.patient.surgeryId.addresId.phoneNumber}"/>
 
                         <h:outputText value="miejscowość"/>                         
-                        <h:outputText value="#{homePatientBean.pb.patient.patientSurgery.addresId.place}"/>
+                        <h:outputText value="#{homePatientBean.pb.patient.surgeryId.addresId.place}"/>
 
 
                     </h:panelGrid>
@@ -66,8 +66,8 @@
                             <h:outputText value="#{item.email}"/>
                         </p:column>
                         
-                        <p:column  headerText="#{bundle.ListSurgeryTitle_phonenumber}">
-                            <h:outputText value="#{item.addresId.phonenumber}"/>
+                        <p:column  headerText="Numer telefonu">
+                            <h:outputText value="#{item.addresId.phoneNumber}"/>
                         </p:column>
 
                         <f:facet name="footer">
@@ -81,15 +81,15 @@
                                 
                                 disabled="#{empty surgeryController.selected}"/>
 
-                            <p:commandButton 
-
+                            <p:button 
+                                href="/home.xhtml"
                                 value="Anuluj"
                                 />
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
             </h:form>
-            <ui:include src="/surgery/Select.xhtml"/>
+            <ui:include src="/custom_views/common/SelectedSurgery.xhtml"/>
         </ui:define>
     </ui:composition>
 

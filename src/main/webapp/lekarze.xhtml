@@ -1,12 +1,101 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
+    <ui:composition template="/resources/template/two_row_template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="Przeglądaj i wybierz przechodnie"></h:outputText>
+        </ui:define>
+        <ui:define name="west_left_column">
+            <h:outputText value="Twoja obecna przychodnia to"></h:outputText>
+            <p:panel  id="curentSurgeryInfo" header="#{homePatientBean.pb.patient.surgeryId.name}" >
+                    <h:panelGrid columns="1" cellpadding="0" >
+                        <h:outputLabel value="Nazwa"/>
+                        <h:outputText value="#{homePatientBean.pb.patient.surgeryId.name}"/>
+
+                        <h:outputText value="telefon"/>
+                        <h:outputText value="#{homePatientBean.pb.patient.surgeryId.addresId.phoneNumber}"/>
+
+                        <h:outputText value="miejscowość"/>                         
+                        <h:outputText value="#{homePatientBean.pb.patient.surgeryId.addresId.place}"/>
+
+
+                    </h:panelGrid>
+            </p:panel>
+            <p:panel  id="curentDoctorInfo" header="Twój obecny lekarz" >
+                <h:panelGrid columns="1" cellpadding="0" rendered="#{not empty homePatientBean.pb.patient.medicId}" >
+
+                    <h:outputText value="#{homePatientBean.pb.patient.medicId.firstName}"/>
+                    <h:outputText value="#{homePatientBean.pb.patient.medicId.lastName}"/>
+                </h:panelGrid>
+            </p:panel>           
+            <h:outputText value="Zmiana przychodni spowoduje skasowanie wszelkich zarezerwowanych wizyt"></h:outputText>
+            
+            
+        </ui:define>
+        
+        <ui:define name="body">
+            <h:form
+                id="MedicListForm"
+                rendered="#{surgeryDoctorBean.chechIfSurgerySelected()}">
+                <p:panel header="#{bundle.ListMedicTitle}">
+                    <p:dataTable id="datalist" 
+                                 value="#{surgeryDoctorBean.doctorsSurgeryList}" var="item"
+                                 selectionMode="single"
+                                 selection="#{surgeryDoctorBean.selectedDoctor}"
+                                 paginator="true"
+                                 rowKey="#{doctorsSurgeryList.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update=" viewButton "/>
+                        <p:ajax event="rowUnselect" update=" viewButton "/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMedicTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{doctorsSurgeryList.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMedicTitle_firstName}"/>
+                            </f:facet>
+                            <h:outputText value="#{doctorsSurgeryList.firstName}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMedicTitle_lastName}"/>
+                            </f:facet>
+                            <h:outputText value="#{doctorsSurgeryList.lastName}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                
+                            <p:commandButton 
+                                id="viewButton"   
+                                icon="ui-icon-search" 
+                                value="#{bundle.View}" 
+                                disabled="#{empty surgeryDoctorBean.selectedDoctor}"/>
+                        
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+            <h:form  id="MedicListInfo" rendered="#{surgeryDoctorBean.chechIfSurgerySelected()}">
+                
+                  <h:outputText value="Wybierz przychodnie a dopiero puzniej lekarza rodzinnego"/>
+            </h:form>
+            
+            
+            <ui:include src="/custom_views/common/SelectedSurgery.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

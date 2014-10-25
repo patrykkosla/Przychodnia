@@ -5,10 +5,9 @@ package pl.kosla.przychodnia.model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -16,8 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -41,39 +38,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Medic.findByEnable", query = "SELECT m FROM Medic m WHERE m.enable = :enable"),
     @NamedQuery(name = "Medic.findByBornDate", query = "SELECT m FROM Medic m WHERE m.bornDate = :bornDate"),
     @NamedQuery(name = "Medic.findByCreateTime", query = "SELECT m FROM Medic m WHERE m.createTime = :createTime"),
+    @NamedQuery(name = "Medic.findAllActiveMedicForSelectedSurgery",
+    query = "SELECT m FROM Medic m JOIN m.surgeryHasMedicCollection hm  WHERE hm.surgeryId.id =:surgeryId AND hm.isAtive =:isAtive AND m.enable =:enable AND m.type = :type"),
     @NamedQuery(name = "Medic.findByType", query = "SELECT m FROM Medic m WHERE m.type = :type")})
-public class Medic implements Serializable {
+public class Medic extends Persone implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    private String username;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "first_name")
-    private String firstName;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "last_name")
-    private String lastName;
-    @Size(max = 255)
-    private String password;
-    @Size(max = 12)
-    private String pesel;
-    private Boolean sex;
-    private Boolean enable;
-    @Column(name = "born_date")
-    @Temporal(TemporalType.DATE)
-    private Date bornDate;
-    @Column(name = "create_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createTime;
     @Size(max = 9)
     private String type;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicId")
@@ -112,78 +85,6 @@ public class Medic implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPesel() {
-        return pesel;
-    }
-
-    public void setPesel(String pesel) {
-        this.pesel = pesel;
-    }
-
-    public Boolean getSex() {
-        return sex;
-    }
-
-    public void setSex(Boolean sex) {
-        this.sex = sex;
-    }
-
-    public Boolean getEnable() {
-        return enable;
-    }
-
-    public void setEnable(Boolean enable) {
-        this.enable = enable;
-    }
-
-    public Date getBornDate() {
-        return bornDate;
-    }
-
-    public void setBornDate(Date bornDate) {
-        this.bornDate = bornDate;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
     }
 
     public String getType() {

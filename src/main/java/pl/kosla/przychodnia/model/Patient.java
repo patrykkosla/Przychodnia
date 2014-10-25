@@ -48,39 +48,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Patient.findByHeight", query = "SELECT p FROM Patient p WHERE p.height = :height"),
     @NamedQuery(name = "Patient.login", query = "SELECT p FROM Patient p WHERE p.username = :username AND p.password = :password")})
 
-public class Patient implements Serializable {
+public class Patient extends Persone implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "patient_id")
     private Integer patientId;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    private String username;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "first_name")
-    private String firstName;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "last_name")
-    private String lastName;
-    @Size(max = 255)
-    private String password;
-    @Size(max = 12)
-    private String pesel;
-    private Boolean sex;
-    private Boolean enable;
-    @Column(name = "born_date")
-    @Temporal(TemporalType.DATE)
-    private Date bornDate;
-    @Column(name = "create_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createTime;
     @Size(max = 3)
     @Column(name = "blog_grup")
     private String blogGrup;
@@ -116,9 +90,9 @@ public class Patient implements Serializable {
 
     public Patient(Integer patientId, String username, String firstName, String lastName) {
         this.patientId = patientId;
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        super.username = username;
+        super.firstName = firstName;
+        super.lastName = lastName;
     }
 
     public Integer getPatientId() {
@@ -127,78 +101,6 @@ public class Patient implements Serializable {
 
     public void setPatientId(Integer patientId) {
         this.patientId = patientId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPesel() {
-        return pesel;
-    }
-
-    public void setPesel(String pesel) {
-        this.pesel = pesel;
-    }
-
-    public Boolean getSex() {
-        return sex;
-    }
-
-    public void setSex(Boolean sex) {
-        this.sex = sex;
-    }
-
-    public Boolean getEnable() {
-        return enable;
-    }
-
-    public void setEnable(Boolean enable) {
-        this.enable = enable;
-    }
-
-    public Date getBornDate() {
-        return bornDate;
-    }
-
-    public void setBornDate(Date bornDate) {
-        this.bornDate = bornDate;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
     }
 
     public String getBlogGrup() {

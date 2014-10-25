@@ -54,6 +54,6 @@ public class PatientFacade extends AbstractFacade<Patient> {
         q.setParameter("username", patient.getUsername() );
        // q.setMaxResults(1);
         return q.getSingleResult();
-    }  
+}
         
 }
