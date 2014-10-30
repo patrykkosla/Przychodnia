@@ -47,6 +47,26 @@ public class PatientFacade extends AbstractFacade<Patient> {
         }
         return true;       
     }
+    public boolean secureAuthenticate(Patient patient) {
+//      //za przykładaem z zajęć  
+       TypedQuery<Patient> query = getEntityManager().createNamedQuery("Patient.login",Patient.class);
+       // Query query = getEntityManager().createNamedQuery("Patient.login",Patient.class);  
+        query.setParameter("username", patient.getUsername());
+        query.setParameter("password", patient.getPassword());
+//        Przykład z zajęc powoduje wyjatki przy braku wyniku
+//        if (query.getSingleResult() == null){
+//                return false;   
+//        }
+//        else {        
+//            return true;
+//        }      
+        //Użyciee listy nie powoduje wyjątków
+        List<Patient> listaPacjentow = query.getResultList();
+        if(listaPacjentow.isEmpty()){
+            return false;
+        }
+        return true;       
+    }
     
     public Patient getPatienByUsername(Patient patient){
        // Patient.findByUsernamenie

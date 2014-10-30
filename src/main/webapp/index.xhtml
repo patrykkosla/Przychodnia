@@ -8,76 +8,144 @@
     xmlns:p="http://primefaces.org/ui" >
     <h:head>
         <h:outputStylesheet name="css/jsfcrud.css"/>
-        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputStylesheet name="css/bootstrap.css"/>
+        <h:outputStylesheet library="css" name="grayscale.css"/>
+        <h:outputStylesheet library="css" name="font-awesome.css"/>
+        
+        
         <h:outputScript library="js" name="jsfcrud.js"/>
+        <h:outputScript library="js" name="grayscale.js"/>
+        <h:outputScript library="js" name="jquery.easing.js"/>
+        
     </h:head>
 
-    <h:body>
+    <h:body id="page-top">
+            <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">
+                    <i class="fa fa-play-circle"></i>  <span class="light"></span> E-Karta
+                </a>
+                
+            
+                <h:form id="login_line">
+                    <p:commandButton id="loginLink"  value="Zaloguj się" onclick="PF('dlg').show();"/>
+                    
+                    <p:commandButton id="loginMedicsLink"  value="Medic Login" onclick="PF('dlg').show();"/>
 
-        <p:layout fullPage="true">
+                    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+                    <p:button href="rejestracja.xhtml" value="Zarejstruj się"/>
 
-            <p:layoutUnit id="header_unit" position="north" size="10" resizable="true" closable="true" collapsible="true"  >
-                Header
-            </p:layoutUnit>
+                    <p:button  href="/home.xhtml" value="Home page"/>
 
-            <p:layoutUnit id="footer_unit" position="south" size="20" closable="true" collapsible="true">
-                Footer
-            </p:layoutUnit>
+                    <p:dialog header="Login" widgetVar="dlg" resizable="false">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="username" value="Username:" />
+                            <p:inputText 
+                                id="username" 
+                                value="#{PatientBean.uname}" 
+                                required="true" 
+                                label="username" />
 
-            <p:layoutUnit id="boody_unit" position="center" styleClass="home_page_body" >
+                            <h:outputLabel for="password" value="Password:" />
+                            <p:password 
+                                id="password" 
+                                value="#{PatientBean.password}" 
+                                required="true" 
+                                label="password"
+                                feedback="false"
+                                redisplay="true"/>
 
-                <p:panel styleClass="hp_login_wraper">
 
-                    <div id="login_box" class="jumbotron">
-                        <h1>Witaj w asystencie przychodni</h1>
-                        <p>Zaloguj się lub zarejstruj jeśli jeszcze nie masz konta.</p>
+                            <f:facet name="footer">
+                                <h:selectBooleanCheckbox id="remember" value="#{PatientBean.remember}" onclick="return check(this);" />
+                                <h:outputLabel for="remember">Zapamiętaj Mnie</h:outputLabel>
+                                <p:commandButton value="Login" update="growl" actionListener="#{PatientBean.login}"
+                                                 oncomplete="handleLoginRequest(xhr, status, args)" />
+                            </f:facet>  
+                        </h:panelGrid>
+                    </p:dialog>
 
+                    
+                </h:form>
+            </div>    
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about">O nas</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Kontakt</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <!-- Intro Header -->
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <h1 class="brand-heading">E-Karta</h1>
+                        <p class="intro-text">Nowatorskie podejście do Pacjenta <br/>
+                            Przeglądaj swoją kartę kiedy chcesz</p>
+                        <a href="#about" class="btn btn-circle page-scroll">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
                     </div>
-                    <h:form>
-                        <p:commandButton id="loginLink"  value="Zaloguj się" onclick="PF('dlg').show();"/>
+                </div>
+            </div>
+        </div>
+    </header>
+     <!-- About Section -->
+    <section id="about" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>About Grayscale</h2>
+                <p>E-Karta is darmowym oprogramwanie łaczącym pacjenta z swoim lekarzem rodzinnym.  Każda przychodnia może dołączyć do systemu, już dziś zapytaj swojego lekarza czy użwają E-Karty </p>
+                <p>Jeśli jesteś lekarzem skontaktuj się z nami a pomorzemy wdrożyć system<span>E-Karta </span> w twoje placówce. Pomorzemy ci oszczędzić czas i pieniądze dzieki spedzany na czynnosciach które mogą być zautamoaztzowane</p>
+                <p>E-Karta zawiera w sobie system rezerwacji wizy, ułatwia wypisywanie recept oraz kontrolę nad zleconymi badaniami.</p>
+            </div>
+        </div>
+    </section>
+     
+       <!-- Contact Section -->
+    <section id="contact" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Skontaktu się z namiw</h2>
+                <p>Nie krępuj się wysłać nam meila z wszelkimi pytania mi lub twoję opinią na temat naszego programu. </p>
+                <p><a href="mailto:feedback@e-karta.pl">feedback@e-karta.pl</a>
+                </p>
+                <ul class="list-inline banner-social-buttons">
 
-                        <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-                        <p:button href="rejestracja.xhtml" value="Zarejstruj się"/>
+                    <li>
+                        <a href="https://github.com/patrykkosla/Przychodnia" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                    </li>
 
-                        <p:button  href="/home.xhtml" value="Home page"/>
+                </ul>
+            </div>
+        </div>
+    </section>  
 
-                        <h:link outcome="/patient/List.xhtml" value="Show All Patient Items"/>
-
-                        <p:dialog header="Login" widgetVar="dlg" resizable="false">
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <h:outputLabel for="username" value="Username:" />
-                                <p:inputText 
-                                    id="username" 
-                                    value="#{PatientBean.uname}" 
-                                    required="true" 
-                                    label="username" />
-
-                                <h:outputLabel for="password" value="Password:" />
-                                <p:password 
-                                    id="password" 
-                                    value="#{PatientBean.password}" 
-                                    required="true" 
-                                    label="password"
-                                    feedback="false"
-                                    redisplay="true"/>
-
-
-                                <f:facet name="footer">
-                                    <h:selectBooleanCheckbox id="remember" value="#{PatientBean.remember}" onclick="return check(this);" />
-                                    <h:outputLabel for="remember">Zapamiętaj Mnie</h:outputLabel>
-                                    <p:commandButton value="Login" update="growl" actionListener="#{PatientBean.login}"
-                                                     oncomplete="handleLoginRequest(xhr, status, args)" />
-                                </f:facet>  
-                            </h:panelGrid>
-                        </p:dialog>
-
-                    </h:form>
-
-                </p:panel>
-
-            </p:layoutUnit>
-
-        </p:layout>
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>Copyright &copy; E-Karta 2014</p>
+        </div>
+    </footer>       
         <script type="text/javascript">
             function handleLoginRequest(xhr, status, args) {
                 if (args.validationFailed || !args.loggedIn) {
@@ -93,38 +161,7 @@
             }
         </script>
 
-
-        <br />
-        <h:link outcome="/views/addres/List" value="Show All Addres Items"/>
-        <br />
-        <h:link outcome="/views/appoitment/List" value="Show All Appoitment Items"/>
-        <br />
-        <h:link outcome="/views/bloodTest/List" value="Show All BloodTest Items"/>
-        <br />
-        <h:link outcome="/views/diagnose/List" value="Show All Diagnose Items"/>
-        <br />
-        <h:link outcome="/views/medic/List" value="Show All Medic Items"/>
-        <br />
-        <h:link outcome="/views/medicine/List" value="Show All Medicine Items"/>
-        <br />
-        <h:link outcome="/views/patient/List" value="Show All Patient Items"/>
-        <br />
-        <h:link outcome="/views/perscripion/List" value="Show All Perscripion Items"/>
-        <br />
-        <h:link outcome="/views/radiologia/List" value="Show All Radiologia Items"/>
-        <br />
-        <h:link outcome="/views/referralAppoitment/List" value="Show All ReferralAppoitment Items"/>
-        <br />
-        <h:link outcome="/views/sickLeave/List" value="Show All SickLeave Items"/>
-        <br />
-        <h:link outcome="/views/sicknessdic/List" value="Show All Sicknessdic Items"/>
-        <br />
-        <h:link outcome="/views/sugerTest/List" value="Show All SugerTest Items"/>
-        <br />
-        <h:link outcome="/views/surgery/List" value="Show All Surgery Items"/>
-        <br />
-        <h:link outcome="/views/surgeryHasMedic/List" value="Show All SurgeryHasMedic Items"/>
-    </h:body>
+   </h:body>
 
 
 

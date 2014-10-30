@@ -23,6 +23,7 @@ import pl.kosla.przychodnia.controler.util.JsfUtil;
 import pl.kosla.przychodnia.model.Patient;
 import pl.kosla.przychodnia.session.AddresFacade;
 import pl.kosla.przychodnia.session.PatientFacade;
+import static pl.kosla.przychodnia.utilis.EncryptorUtils.hashPassword;
 import pl.kosla.przychodnia.utilis.JSFUtils;
 import pl.kosla.przychodnia.utilis.SessionUtil;
 
@@ -59,14 +60,12 @@ public class PatientBean implements Serializable{
         boolean check = false;
         
         if(blodGrupTemp != null && rhTypeTemp != null){
-        patient.setBlogGrup(blodGrupTemp + rhTypeTemp);
+            patient.setBlogGrup(blodGrupTemp + rhTypeTemp);
         }
         
         Calendar calendar = Calendar.getInstance();
         Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());    
-        patient.setCreateTime(currentTimestamp);
-        
-        JsfUtil.addSuccessMessage("akcja"); 
+        patient.setCreateTime(currentTimestamp);       
         try
         {  
             addresFacade.create(addres);

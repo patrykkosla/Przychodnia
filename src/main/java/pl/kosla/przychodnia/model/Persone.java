@@ -10,6 +10,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import static pl.kosla.przychodnia.utilis.EncryptorUtils.hashPassword;
 
 @MappedSuperclass
 
@@ -80,7 +81,7 @@ public abstract class Persone implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+          this.password = hashPassword(password);
     }
 
     public String getPesel() {
