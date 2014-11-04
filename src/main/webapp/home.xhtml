@@ -85,6 +85,8 @@
                     <p:commandButton 
                         id="EditPersonalDataButton" 
                         value="Edytuj dane personalne" 
+                        onclick="MedicViewDlg.hide()"
+                        action="#{homePatientBean.prepareEditPersonalData()}"
                          />
                 </f:facet>
             </p:panel> 

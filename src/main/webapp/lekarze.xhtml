@@ -34,6 +34,7 @@
                     <h:outputText value="#{homePatientBean.pb.patient.medicId.firstName}"/>
                     <h:outputText value="#{homePatientBean.pb.patient.medicId.lastName}"/>
                 </h:panelGrid>
+                
             </p:panel>           
             <h:outputText value="Zmiana przychodni spowoduje skasowanie wszelkich zarezerwowanych wizyt"></h:outputText>
             
@@ -94,7 +95,7 @@
             </h:form>
             
             
-            <ui:include src="/custom_views/common/SelectedSurgery.xhtml"/>
+            <ui:include src="/custom_views/pacjent/SelectedDoctor.xhtml"/>
         </ui:define>
     </ui:composition>
 

@@ -9,13 +9,14 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.inject.Inject;
+import pl.kosla.przychodnia.model.Medic;
 import pl.kosla.przychodnia.model.Patient;
 import pl.kosla.przychodnia.model.Surgery;
 /**
  *
  * @author patryk
  */
-@Named(value = "homePatientBean")
+    @Named(value = "homePatientBean")
 @RequestScoped
 public class HomePatientBean implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -33,11 +34,27 @@ public class HomePatientBean implements Serializable{
 //        Surgery s = pb.getPatient().getPatientSurgery();
 //        return (s == null);
 //    }
-    public void setSurgeryForPatient(ActionEvent event){
-        
-
+    public void setSurgeryForPatient(Surgery surgery ){
+        pb.setSurgeryForPatient(surgery);
     }
-    
+       public void setDoctorForPatient(Medic medic){
+        pb.setDoctorForPatient(medic);
+            // dodać anulację wizyt
+    }
+    public void upDateData(){
+        pb.upDatePatient();  
+    }
+    public boolean prepareEditPersonalData(){
+        String temp = pb.getPatient().getBlogGrup();
+        if(temp != null){
+            pb.setRhTypeTemp(temp.substring(temp.length()-1));
+            pb.setBlodGrupTemp(temp.substring(0, temp.length()-1));
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     public Patient getP() {
         return p;
     }

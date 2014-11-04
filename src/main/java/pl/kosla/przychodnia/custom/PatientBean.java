@@ -1,11 +1,6 @@
 package pl.kosla.przychodnia.custom;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
@@ -19,12 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
-import pl.kosla.przychodnia.controler.util.JsfUtil;
+import pl.kosla.przychodnia.model.Medic;
 import pl.kosla.przychodnia.model.Patient;
+import pl.kosla.przychodnia.model.Surgery;
 import pl.kosla.przychodnia.session.AddresFacade;
 import pl.kosla.przychodnia.session.PatientFacade;
-import static pl.kosla.przychodnia.utilis.EncryptorUtils.hashPassword;
-import pl.kosla.przychodnia.utilis.JSFUtils;
 import pl.kosla.przychodnia.utilis.SessionUtil;
 
 @Named(value = "PatientBean")
@@ -56,38 +50,6 @@ public class PatientBean implements Serializable{
     
   // private static final Logger logger = Logger.getLogger(newPatient.class.getName());
     
-    public String doRegister(){
-        boolean check = false;
-        
-        if(blodGrupTemp != null && rhTypeTemp != null){
-            patient.setBlogGrup(blodGrupTemp + rhTypeTemp);
-        }
-        
-        Calendar calendar = Calendar.getInstance();
-        Timestamp currentTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());    
-        patient.setCreateTime(currentTimestamp);       
-        try
-        {  
-            addresFacade.create(addres);
-            patient.setAddresId(addres);
-            patientFacade.create(patient);
-            
-            JsfUtil.addSuccessMessage(addres.getId().toString()); 
-            JSFUtils.addInfoMsg("sucess_messages","User Registered successfully");
-            check = true;
-            
-        } catch (EJBException ex)
-        {   
-             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-             JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-        }
-        if(check)
-        {
-                setSessione();
-                return "home.xhtml?faces-redirect=true";
-        }
-        return null;
-    }
     private void setSessione(){
         patient = patientFacade.getPatienByUsername(patient);
         // get Http Session and store username
@@ -185,7 +147,24 @@ public class PatientBean implements Serializable{
       addres = new Addres();
       checkCookie();
     }
-
+    public void setSurgeryForPatient(Surgery surgery ){
+        patient.setSurgeryId(surgery);
+        upDatePatient();     
+    }
+    public void setDoctorForPatient(Medic medic){
+        patient.setMedicId(medic);
+        upDatePatient();  
+    }
+    public void upDatePatient(){
+       getPatientFacade().edit(patient); 
+    }
+    public void blodGrupEditPrepar(){
+        if(patient.getBlogGrup() != null ){
+            String temp = patient.getBlogGrup();
+            
+        }
+    }
+    
     public Addres getAddres() {
         return addres;
     }

@@ -11,63 +11,47 @@
         <p:dialog id="PatientEditDlg" widgetVar="PatientEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditPatientTitle}">
             <h:form id="PatientEditForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{patientController.selected != null}">
+                    <p:panelGrid columns="2">
 
                         <p:outputLabel value="#{bundle.EditPatientLabel_username}" for="username" />
-                        <p:inputText id="username" value="#{patientController.selected.username}" title="#{bundle.EditPatientTitle_username}" required="true" requiredMessage="#{bundle.EditPatientRequiredMessage_username}"/>
-                        <p:outputLabel value="#{bundle.EditPatientLabel_firstName}" for="firstName" />
-                        <p:inputText id="firstName" value="#{patientController.selected.firstName}" title="#{bundle.EditPatientTitle_firstName}" required="true" requiredMessage="#{bundle.EditPatientRequiredMessage_firstName}"/>
-                        <p:outputLabel value="#{bundle.EditPatientLabel_lastName}" for="lastName" />
-                        <p:inputText id="lastName" value="#{patientController.selected.lastName}" title="#{bundle.EditPatientTitle_lastName}" required="true" requiredMessage="#{bundle.EditPatientRequiredMessage_lastName}"/>
-                       
-                        <p:outputLabel value="#{bundle.EditPatientLabel_password}" for="password" />
-                        <p:inputText id="password" value="#{patientController.selected.password}" title="#{bundle.EditPatientTitle_password}" />
-                        
+                        <p:inputText 
+                            id="username" 
+                            value="#{homePatientBean.pb.patient.username}" 
+                            title="#{bundle.EditPatientTitle_username}" 
+                            required="true" 
+                            requiredMessage="#{bundle.EditPatientRequiredMessage_username}"/>
+                  
                         <p:outputLabel value="#{bundle.EditPatientLabel_pesel}" for="pesel" />
-                        <p:inputText id="pesel" value="#{patientController.selected.pesel}" title="#{bundle.EditPatientTitle_pesel}" />
-                        
-                        
-                        <p:outputLabel value="#{bundle.EditPatientLabel_sex}" for="sex" />
-                        <p:selectBooleanCheckbox id="sex" value="#{patientController.selected.sex}" />
-                        
-                        <p:outputLabel value="#{bundle.EditPatientLabel_enable}" for="enable" />
-                        <p:selectBooleanCheckbox id="enable" value="#{patientController.selected.enable}" />
-                        
-                        <p:outputLabel value="#{bundle.EditPatientLabel_bornDate}" for="bornDate" />
-                        <p:calendar id="bornDate" pattern="MM/dd/yyyy" value="#{patientController.selected.bornDate}" title="#{bundle.EditPatientTitle_bornDate}"  showOn="button"/>
-                        
+                        <p:inputText 
+                            id="pesel" 
+                            value="#{homePatientBean.pb.patient.pesel}" 
+                            title="#{bundle.EditPatientTitle_pesel}" />
+                                           
+                        <p:outputLabel for="blodgrup" value="Wybirz grupę krwi" />
+                        <p:spacer/>
+                        <p:selectOneMenu id="blodgrup" value="#{homePatientBean.pb.blodGrupTemp}" >
+                            <f:selectItem itemLabel="Grupa kwi" itemValue="" />
+                            <f:selectItem itemLabel="A" itemValue="A" />
+                            <f:selectItem itemLabel="B" itemValue="b" />
+                            <f:selectItem itemLabel="AB" itemValue="AB" />
+                            <f:selectItem itemLabel="0" itemValue="0" />
+                        </p:selectOneMenu>  
 
-                        <p:outputLabel value="#{bundle.EditPatientLabel_blogGrup}" for="blogGrup" />
-                        <p:inputText id="blogGrup" value="#{patientController.selected.blogGrup}" title="#{bundle.EditPatientTitle_blogGrup}" />
-                        
+                        <p:selectOneMenu id="rhtype" value="#{homePatientBean.pb.rhTypeTemp}"
+                                        >
+                            <f:selectItem itemLabel="Typ Rh" itemValue="" />
+                            <f:selectItem itemLabel="Rh+" itemValue="+" />
+                            <f:selectItem itemLabel="Rh-" itemValue="-" />
+                        </p:selectOneMenu>     
                         
                         <p:outputLabel value="#{bundle.EditPatientLabel_weitht}" for="weitht" />
-                        <p:inputText id="weitht" value="#{patientController.selected.weitht}" title="#{bundle.EditPatientTitle_weitht}" />
+                        <p:inputText id="weitht" value="#{homePatientBean.pb.patient.weitht}" title="#{bundle.EditPatientTitle_weitht}" />
+                        
                         <p:outputLabel value="#{bundle.EditPatientLabel_height}" for="height" />
-                        <p:inputText id="height" value="#{patientController.selected.height}" title="#{bundle.EditPatientTitle_height}" />
-                        <p:outputLabel value="#{bundle.EditPatientLabel_addresId}" for="addresId" />
-                        <p:selectOneMenu id="addresId" value="#{patientController.selected.addresId}" required="true" requiredMessage="#{bundle.EditPatientRequiredMessage_addresId}">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{addresController.itemsAvailableSelectOne}"
-                                           var="addresIdItem"
-                                           itemValue="#{addresIdItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditPatientLabel_surgeryId}" for="surgeryId" />
-                        <p:selectOneMenu id="surgeryId" value="#{patientController.selected.surgeryId}" >
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{surgeryController.itemsAvailableSelectOne}"
-                                           var="surgeryIdItem"
-                                           itemValue="#{surgeryIdItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditPatientLabel_medicId}" for="medicId" />
-                        <p:selectOneMenu id="medicId" value="#{patientController.selected.medicId}" >
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{medicController.itemsAvailableSelectOne}"
-                                           var="medicIdItem"
-                                           itemValue="#{medicIdItem}"/>
-                        </p:selectOneMenu>
+                        <p:inputText id="height" value="#{homePatientBean.pb.patient.height}" title="#{bundle.EditPatientTitle_height}" />
+                          
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{patientController.update}" value="#{bundle.Save}" update="display,:PatientListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PatientEditDialog');"/>
+                    <p:commandButton actionListener="#{homePatientBean.upDateData}" value="#{bundle.Save}" update="display,:PatientListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PatientEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PatientEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

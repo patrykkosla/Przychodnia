@@ -25,11 +25,10 @@
                         value="#{bundle.Close}" 
                         onclick="SurgeryViewDialog.hide()"/>
                     <p:commandButton 
-                        action="#{PatientBean.patient.setSurgeryId(surgeryController.selected)}"
+                        action="#{homePatientBean.setSurgeryForPatient(surgeryController.selected)}"
                          
                         value="Potwierdzam zamianę" 
                         onclick="SurgeryViewDialog.hide()"/>
-                        />
                 </h:panelGroup>
             </h:form>
         </p:dialog>

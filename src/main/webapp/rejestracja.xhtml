@@ -6,7 +6,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title><ui:insert name="title">Default Title</ui:insert></title>
+ 
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
     </h:head>
@@ -26,7 +26,7 @@
     <h:panelGrid  id="grid"  columns="2" cellpadding="5" >
 
         <h:outputLabel value="Imie" for="patientName"/>
-        <p:inputText id="patientName"  value="#{PatientBean.patient.firstName}"
+        <p:inputText id="patientName"  value="#{patientRejestracjaBean.patient.firstName}"
                      required="true"
                      requiredMessage="Imie jest wymagane"
                      label="Imie">
@@ -37,7 +37,7 @@
         
 
         <h:outputLabel value="Nazwisko" for="patientImie"/>
-        <p:inputText id="patientImie" value="#{PatientBean.patient.lastName}"
+        <p:inputText id="patientImie" value="#{patientRejestracjaBean.patient.lastName}"
                      required="true"
                       requiredMessage="Nazwisko jest wymagane"
                      label="Nazwisko">
@@ -53,7 +53,7 @@
                      required="true"
                      requiredMessage="Podaj swój adres email"
                      validatorMessage="Nie poprawny adres email"
-                     value="#{PatientBean.patient.username}">
+                     value="#{patientRejestracjaBean.patient.username}">
 
         <f:validateRegex
             pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
@@ -64,7 +64,7 @@
 
 
         <h:outputLabel for="pwd1" value="Hasło" />
-        <p:password id="pwd1" value="#{PatientBean.patient.password}"
+        <p:password id="pwd1" value="#{patientRejestracjaBean.patient.password}"
                     label="Password 1"
                     required="true" 
                     feedback="true">
@@ -73,7 +73,7 @@
     
         
         
-        <h:selectOneRadio id="selectOneRadio1" value="#{PatientBean.patient.sex}">
+        <h:selectOneRadio id="selectOneRadio1" value="#{patientRejestracjaBean.patient.sex}">
             <h:outputLabel for="selectOneRadio1" value="Wybirz płeć" />
             <f:selectItem itemLabel="Mężczyzna" itemValue="#{true}"/>
             <f:selectItem itemLabel="Kobieta" itemValue="#{false}"/>
@@ -81,7 +81,7 @@
         <p:spacer/>
        
         <p:outputLabel value="Data urodzenia" for="dob"/>
-        <p:calendar value="#{PatientBean.patient.bornDate}" id="dob">
+        <p:calendar value="#{patientRejestracjaBean.patient.bornDate}" id="dob">
         </p:calendar>
         <p:message id="dobMsg" for="dob" />
         
@@ -89,19 +89,17 @@
         
         
         <p:outputLabel value="PESEL" for="pesel"/>
-        <p:inputText id="pesel"  value="#{PatientBean.patient.pesel}"
-                    />
+        <p:inputText id="pesel"  value="#{patientRejestracjaBean.patient.pesel}"/>
 
         <p:outputLabel value="Waga" for="waga"/>
-        <p:inputText id="waga"  value="#{PatientBean.patient.weitht}"/>
+        <p:inputText id="waga"  value="#{patientRejestracjaBean.patient.weitht}"/>
 
         <p:outputLabel value="Wzrost" for="wzrost"/>
-        <p:inputText id="wzrost" value="#{PatientBean.patient.height}"/>   
+        <p:inputText id="wzrost" value="#{patientRejestracjaBean.patient.height}"/>   
 
         <p:outputLabel for="blodgrup" value="Wybirz grupę krwi" />
         <p:spacer/>
-        <p:selectOneMenu id="blodgrup" value="#{PatientBean.blodGrupTemp}"
-                        >
+        <p:selectOneMenu id="blodgrup" value="#{patientRejestracjaBean.blodGrupTemp}" >
             <f:selectItem itemLabel="Grupa kwi" itemValue="" />
             <f:selectItem itemLabel="A" itemValue="A" />
             <f:selectItem itemLabel="B" itemValue="b" />
@@ -109,7 +107,7 @@
             <f:selectItem itemLabel="0" itemValue="0" />
         </p:selectOneMenu>  
 
-        <p:selectOneMenu id="rhtype" value="#{PatientBean.rhTypeTemp}"
+        <p:selectOneMenu id="rhtype" value="#{patientRejestracjaBean.rhTypeTemp}"
                         >
             <f:selectItem itemLabel="Typ Rh" itemValue="" />
             <f:selectItem itemLabel="Rh+" itemValue="+" />
@@ -120,44 +118,44 @@
 
 
         <p:outputLabel value="Miejscowość" for="miejscowosc"/>
-        <p:inputText id="miejscowosc" value="#{PatientBean.addres.place}" 
+        <p:inputText id="miejscowosc" value="#{patientRejestracjaBean.addres.place}" 
                     required="true"
                     requiredMessage="Podaj miejscowość zamieszkania"
                     label="Miejscowość">
         </p:inputText>
         <p:message for="miejscowosc" />
-        <h:outputText value="#{PatientBean.addres.place}" />              
+        <h:outputText value="#{patientRejestracjaBean.addres.place}" />              
 
         <p:outputLabel value="Ulica" for="street"/>
-        <p:inputText id="street" value="#{PatientBean.addres.street}"
+        <p:inputText id="street" value="#{patientRejestracjaBean.addres.street}"
                     required="true"
                     requiredMessage="Podaj ulicę i numer domu">
         </p:inputText>
         <p:message for="street" />
-        <h:outputText value="#{PatientBean.addres.street}" /> 
+        <h:outputText value="#{patientRejestracjaBean.addres.street}" /> 
 
         <p:outputLabel for="posteCode" value="Kod pocztowy" />
-        <p:inputMask id="posteCode" value="#{PatientBean.addres.posteCode}" mask="99-999"
+        <p:inputMask id="posteCode" value="#{patientRejestracjaBean.addres.posteCode}" mask="99-999"
                      required="true"
                      requiredMessage="Podaj kod pocztowy">  
         </p:inputMask>
         <p:message for="posteCode" />
-        <h:outputText value="#{PatientBean.addres.posteCode}" /> 
+        <h:outputText value="#{patientRejestracjaBean.addres.posteCode}" /> 
 
     </h:panelGrid>
         <p:commandButton 
                          value="Zarejestrój"
                          update="register_form" 
                          validateClient="true"
-                         action="#{PatientBean.doRegister()}"/>
+                         action="#{patientRejestracjaBean.doRegister()}"/>
 
 
     </p:panel>
 </h:form>
-     <h:outputText value="#{PatientBean.patient.firstName}" />
-     <h:outputText value="#{PatientBean.patient.lastName}" />
-     <h:outputText value="#{PatientBean.patient.username}" />
-      <h:outputText value="#{PatientBean.patient.username}" />
+     <h:outputText value="#{patientRejestracjaBean.patient.firstName}" />
+     <h:outputText value="#{patientRejestracjaBean.patient.lastName}" />
+     <h:outputText value="#{patientRejestracjaBean.patient.username}" />
+     <h:outputText value="#{patientRejestracjaBean.patient.username}" />
  </f:view>            
 </h:body>
 </html>
