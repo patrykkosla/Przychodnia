@@ -161,5 +161,12 @@ public class PatientController implements Serializable {
         }
 
     }
-
+    public void pactienSurgery(){
+        
+        
+    }
+    public void setFastAppoitment(){
+        
+    }
+    
 }

@@ -161,5 +161,13 @@ public class AppoitmentController implements Serializable {
         }
 
     }
-
+    public List<Appoitment> getBookedAppointment(int days, int medicId){  
+        return getFacade().getBookedAppointment(days, medicId);
+    }
+    public List<Appoitment> getAppointmentForMedic(String stat, int medicId){  
+        return getFacade().getAppointmentForMedic( stat,  medicId);
+    }
+    public List<Appoitment> getAppointmentForMedic(String stat, int medicId, int patientId){  
+        return getFacade().getAppointmentForMedic( stat,  medicId, patientId);
+    }
 }

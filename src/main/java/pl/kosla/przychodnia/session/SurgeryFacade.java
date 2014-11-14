@@ -26,4 +26,5 @@ public class SurgeryFacade extends AbstractFacade<Surgery> {
         super(Surgery.class);
     }
     
+    
 }

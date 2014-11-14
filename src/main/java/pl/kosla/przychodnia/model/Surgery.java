@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Surgery.findAll", query = "SELECT s FROM Surgery s"),
     @NamedQuery(name = "Surgery.findById", query = "SELECT s FROM Surgery s WHERE s.id = :id"),
     @NamedQuery(name = "Surgery.findByName", query = "SELECT s FROM Surgery s WHERE s.name = :name"),
+    @NamedQuery(name = "Surgery.findTest", query = "SELECT s FROM Surgery s WHERE s.name = :name"),
     @NamedQuery(name = "Surgery.findByEmail", query = "SELECT s FROM Surgery s WHERE s.email = :email")})
 public class Surgery implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -45,8 +46,10 @@ public class Surgery implements Serializable {
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 220)
     private String email;
+    
     @OneToMany(mappedBy = "surgeryId")
     private Collection<Patient> patientCollection;
+    
     @JoinColumn(name = "addres_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Addres addresId;

@@ -18,6 +18,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import pl.kosla.przychodnia.model.Medic;
+import pl.kosla.przychodnia.model.Surgery;
 
 @Named("surgeryHasMedicController")
 @SessionScoped
@@ -161,5 +163,11 @@ public class SurgeryHasMedicController implements Serializable {
         }
 
     }
-
+  public List<Surgery> findAllSurgeryForMedic(Medic medic) {
+      return getFacade().findAllSurgery(medic);
+  }
+  public List<Medic> findAllMedicForSurgery(Surgery surgery){
+       return null;
+  }
+         
 }

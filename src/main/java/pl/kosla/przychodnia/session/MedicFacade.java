@@ -38,5 +38,21 @@ public class MedicFacade extends AbstractFacade<Medic> {
         
         return ListaLekarzy;
     }
-    
+    public boolean authenticate(Medic medic) {
+
+       TypedQuery<Medic> query = getEntityManager().createNamedQuery("Medic.login",Medic.class);
+        query.setParameter("username", medic.getUsername());
+        query.setParameter("password", medic.getPassword());
+
+        List<Medic> listaPacjentow = query.getResultList();
+        if(listaPacjentow.isEmpty()){
+            return false;
+        }
+        return true;       
+    }
+    public Medic getMedicByUsername(Medic medic){
+        TypedQuery<Medic> q = em.createNamedQuery("Medic.findByUsername", Medic.class);
+        q.setParameter("username", medic.getUsername() );
+        return q.getSingleResult();
+    }    
 }

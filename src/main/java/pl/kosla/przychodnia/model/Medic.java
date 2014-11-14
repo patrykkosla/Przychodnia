@@ -40,28 +40,41 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Medic.findByCreateTime", query = "SELECT m FROM Medic m WHERE m.createTime = :createTime"),
     @NamedQuery(name = "Medic.findAllActiveMedicForSelectedSurgery",
     query = "SELECT m FROM Medic m JOIN m.surgeryHasMedicCollection hm  WHERE hm.surgeryId.id =:surgeryId AND hm.isAtive =:isAtive AND m.enable =:enable AND m.type = :type"),
-    @NamedQuery(name = "Medic.findByType", query = "SELECT m FROM Medic m WHERE m.type = :type")})
+    
+    @NamedQuery(name = "Medic.findByType", query = "SELECT m FROM Medic m WHERE m.type = :type"),
+    
+    //@NamedQuery(name = "Medic.findByType", query = "SELECT m FROM Medic m WHERE m.type = :type"),
+    @NamedQuery(name = "Medic.login", query = "SELECT m FROM Medic m WHERE m.username = :username AND m.password = :password")})
+
 public class Medic extends Persone implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     private Integer id;
+    
     @Size(max = 9)
     private String type;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicId")
     private Collection<Appoitment> appoitmentCollection;
+    
     @JoinColumn(name = "addres_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Addres addresId;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicId")
     private Collection<Perscripion> perscripionCollection;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicId")
     private Collection<BloodTest> bloodTestCollection;
+    
     @OneToMany(mappedBy = "medicId")
     private Collection<Patient> patientCollection;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicId")
     private Collection<Radiologia> radiologiaCollection;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicId")
     private Collection<SurgeryHasMedic> surgeryHasMedicCollection;
 
@@ -74,9 +87,9 @@ public class Medic extends Persone implements Serializable {
 
     public Medic(Integer id, String username, String firstName, String lastName) {
         this.id = id;
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        super.username = username;
+        super.firstName = firstName;
+        super.lastName = lastName;
     }
 
     public Integer getId() {

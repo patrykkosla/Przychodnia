@@ -38,6 +38,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Appoitment.findByQueuePositione", query = "SELECT a FROM Appoitment a WHERE a.queuePositione = :queuePositione"),
     @NamedQuery(name = "Appoitment.findByApproximateTime", query = "SELECT a FROM Appoitment a WHERE a.approximateTime = :approximateTime"),
     @NamedQuery(name = "Appoitment.findByStatus", query = "SELECT a FROM Appoitment a WHERE a.status = :status"),
+    
+    @NamedQuery(name = "Appoitment.findFutherBooked", 
+    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :med AND a.appoitmentDate BETWEEN :startDate AND :endDate"),
+    @NamedQuery(name = "Appoitment.findMedicStatus", 
+    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :med"),
+    @NamedQuery(name = "Appoitment.findMedicPatientStatus", 
+    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :med AND a.patientId.patientId = :patientId"),
+    
     @NamedQuery(name = "Appoitment.findByRadiologyTestOrder", query = "SELECT a FROM Appoitment a WHERE a.radiologyTestOrder = :radiologyTestOrder"),
     @NamedQuery(name = "Appoitment.findByBlodTestOrder", query = "SELECT a FROM Appoitment a WHERE a.blodTestOrder = :blodTestOrder")})
 public class Appoitment implements Serializable {
@@ -46,16 +54,23 @@ public class Appoitment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     private Integer id;
+    
     @Column(name = "appoitment_date")
     @Temporal(TemporalType.DATE)
     private Date appoitmentDate;
+    
     @Column(name = "queue_positione")
     private Integer queuePositione;
+    
     @Column(name = "approximate_time")
     @Temporal(TemporalType.TIME)
     private Date approximateTime;
+    
+    // http://tomee.apache.org/examples-trunk/jpa-enumerated/README.html
+    // rez pas can 
     @Size(max = 3)
     private String status;
+
     @Lob
     @Size(max = 65535)
     private String note;
@@ -68,9 +83,11 @@ public class Appoitment implements Serializable {
     @JoinColumn(name = "patient_id", referencedColumnName = "patient_id")
     @ManyToOne(optional = false)
     private Patient patientId;
+    
     @JoinColumn(name = "medic_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Medic medicId;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "appoitmentId")
     private Collection<SickLeave> sickLeaveCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "appoitmentId")
