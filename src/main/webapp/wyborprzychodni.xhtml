@@ -48,8 +48,8 @@
                          rows="10"
                          rowsPerPageTemplate="10,20,30,40,50"
                          >
-                        <p:ajax event="rowSelect"   update=" viewButton "/>
-                        <p:ajax event="rowUnselect" update=" viewButton "/>
+                        <p:ajax event="rowSelect"   update=" setSurgeryButton "/>
+                        <p:ajax event="rowUnselect" update=" setSurgeryButton "/>
                         
                         
                         <p:column headerText="#{bundle.ListSurgeryTitle_id}" rendered="false">
@@ -73,12 +73,11 @@
                         <f:facet name="footer">
 
                             <p:commandButton 
-                                id="viewButton"   
+                                id="setSurgeryButton"   
                                 icon="ui-icon-search" 
-                                value="Wybierz i zmień" 
+                                value="Wybierz przychodnie" 
                                 update=":SurgeryViewForm" 
                                 oncomplete="PF('SurgeryViewDialog').show()" 
-                                
                                 disabled="#{empty surgeryController.selected}"/>
 
                             <p:button 
@@ -89,7 +88,7 @@
                     </p:dataTable>
                 </p:panel>
             </h:form>
-            <ui:include src="/custom_views/common/SelectedSurgery.xhtml"/>
+            <ui:include src="/custom_views/pacjent/SelectedSurgery.xhtml"/>
         </ui:define>
     </ui:composition>
 

@@ -22,11 +22,15 @@
                         
                     </p:panelGrid>
                     
-                    <p:commandButton value="#{bundle.Close}" onclick="MedicViewDlg.hide()"/>
+                    <p:commandButton 
+                        value="#{bundle.Close}" 
+                        onclick="MedicViewDlg.hide()"/>
                     <p:commandButton 
                         action="#{homePatientBean.setDoctorForPatient(medicController.selected)}"
                         value="Potwierdzam zamianę" 
-                        onclick="PatientEditDlg.schow()"/>
+                        onclick="MedicViewDialog.hide()"
+                        
+                        />
                     
                     
  <h:outputText value="Zmiana lekarza spowoduje alulowaniue wszytkich wizy zarezerwowanych u poprzedniego lekarza."/>

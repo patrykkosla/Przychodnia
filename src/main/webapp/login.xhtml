@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html     
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui" >
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+            <p:panel header="Logowanie dla personelu" style="width: 400px; margin: auto">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="username" value="Username:" />
+                    <p:inputText 
+                        id="username" 
+                        value="#{staffBean.uname}" 
+                        required="true" 
+                        label="username" />
+
+                    <h:outputLabel for="password" value="Password:" />
+                    <p:password 
+                        id="password" 
+                        value="#{staffBean.password}" 
+                        required="true" 
+                        label="password"
+                        feedback="false"
+                        redisplay="true"/>
+
+
+                    <f:facet name="footer">
+                        <h:selectBooleanCheckbox id="remember" value="#{staffBean.remember}" onclick="return check(this);" />
+                        <h:outputLabel for="remember">Zapamiętaj Mnie</h:outputLabel>
+                        <p:commandButton value="Login" update="growl" actionListener="#{staffBean.login}"
+                                         oncomplete="handleLoginRequest(xhr, status, args)" />
+                    </f:facet>  
+                </h:panelGrid>
+                <p:button  href="/staff/przychodnia.xhtml" value="Home page"/>
+            </p:panel>
+        </h:form>
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.loggedIn) {
+                    window.location.replace("/przychodnia/staff/przychodnia.xhtml");
+                }
+            }
+        </script>
+        
+    </h:body>
+
+</html>
+

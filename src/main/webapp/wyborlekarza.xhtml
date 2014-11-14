@@ -47,43 +47,44 @@
                 rendered="#{surgeryDoctorBean.chechIfSurgerySelected()}">
                 <p:panel header="#{bundle.ListMedicTitle}">
                     <p:dataTable id="datalist" 
-                                 value="#{surgeryDoctorBean.doctorsSurgeryList}" var="item"
+                                 value="#{surgeryDoctorBean.doctorsSurgeryList}" 
+                                 var="doctoritem"
                                  selectionMode="single"
                                  selection="#{surgeryDoctorBean.selectedDoctor}"
-                                 paginator="true"
-                                 rowKey="#{doctorsSurgeryList.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 rowKey="#{doctoritem.id}"
                                  >
 
-                        <p:ajax event="rowSelect"   update=" viewButton "/>
-                        <p:ajax event="rowUnselect" update=" viewButton "/>
+                        <p:ajax event="rowSelect"   update=" setGPDoctorButton "/>
+                        <p:ajax event="rowUnselect" update=" setGPDoctorButton "/>
 
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListMedicTitle_id}"/>
                             </f:facet>
-                            <h:outputText value="#{doctorsSurgeryList.id}"/>
+                            <h:outputText value="#{doctoritem.id}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListMedicTitle_firstName}"/>
                             </f:facet>
-                            <h:outputText value="#{doctorsSurgeryList.firstName}"/>
+                            <h:outputText value="#{doctoritem.firstName}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListMedicTitle_lastName}"/>
                             </f:facet>
-                            <h:outputText value="#{doctorsSurgeryList.lastName}"/>
+                            <h:outputText value="#{doctoritem.lastName}"/>
                         </p:column>
                         <f:facet name="footer">
                 
                             <p:commandButton 
-                                id="viewButton"   
+                                id="setGPDoctorButton"   
                                 icon="ui-icon-search" 
-                                value="#{bundle.View}" 
-                                disabled="#{empty surgeryDoctorBean.selectedDoctor}"/>
+                                value="Wybierz lekarza" 
+                                disabled="#{empty surgeryDoctorBean.selectedDoctor}"
+                                update=":MedicViewForm" 
+                                oncomplete="PF('MedicViewDialog').show()" 
+                                />
                         
                         </f:facet>
                     </p:dataTable>
