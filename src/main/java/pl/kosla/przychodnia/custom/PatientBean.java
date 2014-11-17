@@ -1,6 +1,8 @@
 package pl.kosla.przychodnia.custom;
 
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
@@ -28,27 +30,30 @@ import pl.kosla.przychodnia.utilis.SessionUtil;
  * @author patryk
  */
 public class PatientBean implements Serializable{
-    
+    private static final long serialVersionUID = 1L;
     @EJB
     private pl.kosla.przychodnia.session.AddresFacade addresFacade;
     @EJB 
     private pl.kosla.przychodnia.session.PatientFacade patientFacade;
     
-    private static final long serialVersionUID = 1L;
-    
     private Patient patient;
-    private Addres addres;
-    
+    private Addres addres;  
     private String blodGrupTemp;
     private String rhTypeTemp;
     private String password;
     private String uname;
-    
     //zapamiętywanie chasła
     boolean remember;
     String remember1 = "";
     
-  // private static final Logger logger = Logger.getLogger(newPatient.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(PatientBean.class.getName());
+   
+    public PatientBean() {
+      patient = new Patient();
+      addres = new Addres();
+      checkCookie();
+      LOGGER.setLevel(Level.INFO); 
+    }
     
     private void setSessione(){
         patient = patientFacade.getPatienByUsername(patient);
@@ -76,8 +81,8 @@ public class PatientBean implements Serializable{
            FacesContext facesContext = FacesContext.getCurrentInstance();
            
             // Save the uname and password in a cookie
-            Cookie btuser = new Cookie("btuser", patient.getUsername());
-            Cookie btpasswd = new Cookie("btpasswd",patient.getPassword());
+            Cookie btuser = new Cookie("btuser", uname);
+            Cookie btpasswd = new Cookie("btpasswd",password);
                     if(remember == false){
                         remember1 = "false";
                     }
@@ -142,11 +147,7 @@ public class PatientBean implements Serializable{
     }
     
     
-    public PatientBean() {
-      patient = new Patient();
-      addres = new Addres();
-      checkCookie();
-    }
+
     public void setSurgeryForPatient(Surgery surgery ){
         patient.setSurgeryId(surgery);
         upDatePatient();     
@@ -154,6 +155,8 @@ public class PatientBean implements Serializable{
     public void setDoctorForPatient(Medic medic){
         patient.setMedicId(medic);
         upDatePatient();  
+        String msg ="Zmiana lekarza prowadzącego na: " + patient.getMedicId().getFirstName();
+        LOGGER.info(msg);
     }
     public void upDatePatient(){
        getPatientFacade().edit(patient); 

@@ -50,7 +50,6 @@ public class AppoitmentFacade extends AbstractFacade<Appoitment> {
         q.setParameter("med", medicId);
         q.setParameter("startDate", currentDate, TemporalType.DATE);
         q.setParameter("endDate", endDate, TemporalType.DATE);
-        
         return q.getResultList();
         
     }
@@ -58,17 +57,45 @@ public class AppoitmentFacade extends AbstractFacade<Appoitment> {
         TypedQuery<Appoitment> q = em.createNamedQuery("Appoitment.findMedicStatus", Appoitment.class);
         q.setParameter("status", stat);
         q.setParameter("med", medicId);
-        
         return q.getResultList();      
     }
     public List<Appoitment> getAppointmentForMedic(String stat, int medicId, int patientId){
         TypedQuery<Appoitment> q = em.createNamedQuery("Appoitment.findMedicPatientStatus", Appoitment.class);
         q.setParameter("status", stat);
         q.setParameter("med", medicId);
-        q.setParameter("patientId", patientId);
-        
+        q.setParameter("patientId", patientId);    
         return q.getResultList();      
     }
+    
+    public List<Appoitment> getAppointmentForPatient(String stat, int patientId){
+        TypedQuery<Appoitment> q = em.createNamedQuery("Appoitment.findPatientAppoitment", Appoitment.class);
+        q.setParameter("status", stat);
+        q.setParameter("patientId", patientId);
+        return q.getResultList();      
+    }
+    public List<Appoitment> getLastAppointmentsForPatient(String stat, int patientId, int take){
+        TypedQuery<Appoitment> q = em.createNamedQuery("Appoitment.findLastPatientAppoitment", Appoitment.class);
+        q.setMaxResults(take);
+        q.setParameter("status", stat);
+        q.setParameter("patientId", patientId);
+        return q.getResultList();      
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 //        public Patient getPatienByUsername(Patient patient){

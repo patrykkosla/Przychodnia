@@ -45,6 +45,11 @@ import javax.xml.bind.annotation.XmlTransient;
     query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :med"),
     @NamedQuery(name = "Appoitment.findMedicPatientStatus", 
     query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :med AND a.patientId.patientId = :patientId"),
+   
+    @NamedQuery(name = "Appoitment.findPatientAppoitment", 
+    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.patientId.patientId = :patientId"),
+    @NamedQuery(name = "Appoitment.findLastPatientAppoitment", 
+    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.patientId.patientId = :patientId ORDER BY a.appoitmentDate"),
     
     @NamedQuery(name = "Appoitment.findByRadiologyTestOrder", query = "SELECT a FROM Appoitment a WHERE a.radiologyTestOrder = :radiologyTestOrder"),
     @NamedQuery(name = "Appoitment.findByBlodTestOrder", query = "SELECT a FROM Appoitment a WHERE a.blodTestOrder = :blodTestOrder")})
@@ -67,7 +72,7 @@ public class Appoitment implements Serializable {
     private Date approximateTime;
     
     // http://tomee.apache.org/examples-trunk/jpa-enumerated/README.html
-    // rez pas can 
+    // rez (rezerwacja) pas(past-odbyte) can(canseld) not(patientNOTschowUp)
     @Size(max = 3)
     private String status;
 

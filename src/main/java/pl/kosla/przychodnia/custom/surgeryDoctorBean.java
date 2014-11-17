@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.inject.Inject;
 import pl.kosla.przychodnia.controler.MedicController;
@@ -17,12 +18,11 @@ import pl.kosla.przychodnia.model.SurgeryHasMedic;
  * @author patryk
  */
 @Named(value = "surgeryDoctorBean")
-@ConversationScoped
+@ViewScoped
 public class surgeryDoctorBean implements Serializable{
     
     private List<Medic> doctorsSurgeryList = null;
     private Medic selectedDoctor;
-    
     @Inject private PatientBean pb;
     @Inject private MedicController mc;
      private SurgeryHasMedic shc;

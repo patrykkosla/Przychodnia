@@ -70,7 +70,6 @@
         
         
         <ui:define name="east_right_column">
-            <h:form>
             <p:panel>
                 <h:panelGrid columns="2"> 
                     <h:outputLabel value="Imie"/>          
@@ -93,7 +92,7 @@
                          />
                 </f:facet>
             </p:panel> 
-            </h:form>
+            
         </ui:define>
         
         
@@ -116,46 +115,10 @@
     
         
             <p:panel header="Ostatnie wizyty">
-                <h:form>
-                    <p:dataTable id="lastAppoitmentsdatalist" 
-                                 value="#{homePatientBean.lastAppoitmentsList}" 
-                                 var="lappoitment"
-                                 selectionMode="single"
-                                 selection="#{homePatientBean.selectedAppoitment}"
-                                 rowKey="#{lappoitment.id}"
-                                 >
 
-                        <p:ajax event="rowSelect"   update=" schowAppoitmentButton "/>
-                        <p:ajax event="rowUnselect" update=" schowAppoitmentButton "/>
-                        
-                        <p:column headerText="Data">
-                            <h:outputText value="#{lappoitment.appoitmentDate}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="Lekarz">
-
-                            <h:outputText value="#{lappoitment.medicId.firstName}"/>
-                            <h:outputText value="#{lappoitment.medicId.lastName}"/>
-                        </p:column>
-                        
-                        <f:facet name="footer">
-                            <p:commandButton 
-                                id="schowAppoitmentButton"   
-                                icon="ui-icon-search" 
-                                value="Pokaż szczegóły" 
-                                disabled="#{empty homePatientBean.selectedAppoitment}"
-                                update=":AppoitmentQuickViewForm" 
-                                oncomplete="PF('AppoitmentQuickViewDlg').show()" 
-                                
-                                /> 
-                        </f:facet>
-                    </p:dataTable>
                 
-                </h:form>
-                <ui:include src="/custom_views/pacjent/AppoitmentQuickView.xhtml"/>
                 <h:form>
-                    <p:button 
+                    <p:commandButton 
                       id="AllWizytButton" 
                       value="Przeglądaj listę wszystkich wizy" 
                      />

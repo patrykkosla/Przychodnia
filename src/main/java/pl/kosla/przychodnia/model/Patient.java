@@ -72,12 +72,15 @@ public class Patient extends Persone implements Serializable {
     @JoinColumn(name = "addres_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Addres addresId;
+    
     @JoinColumn(name = "surgery_id", referencedColumnName = "id")
     @ManyToOne
     private Surgery surgeryId;
+    
     @JoinColumn(name = "medic_id", referencedColumnName = "id")
     @ManyToOne
     private Medic medicId;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "patientId")
     private Collection<Radiologia> radiologiaCollection;
 

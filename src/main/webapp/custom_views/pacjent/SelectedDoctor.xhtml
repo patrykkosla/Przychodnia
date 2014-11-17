@@ -8,32 +8,27 @@
 
     <ui:composition>
 
-        <p:dialog id="MedicViewDlg" widgetVar="MedicViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewMedicTitle}">
+        <p:dialog id="MedicViewDlg" widgetVar="MedicViewDialog" modal="true" resizable="false" appendTo="@(body)" header="Potwierdzenie zmiany lekarza">
             <h:form id="MedicViewForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2" rendered="#{medicController.selected != null}">
-
-
-                        <h:outputText value="#{bundle.ViewMedicLabel_firstName}"/>
-                        <h:outputText value="#{medicController.selected.firstName}" title="#{bundle.ViewMedicTitle_firstName}"/>
-                        <h:outputText value="#{bundle.ViewMedicLabel_lastName}"/>
-                        <h:outputText value="#{medicController.selected.lastName}" title="#{bundle.ViewMedicTitle_lastName}"/>
-
-                        
-                    </p:panelGrid>
-                    
+                        <h:outputText value="Potwierdzam wybór  "/>
+                        <h:outputText value="#{surgeryDoctorBean.selectedDoctor.firstName} "/>
+                        <h:outputText value="#{surgeryDoctorBean.selectedDoctor.lastName}"/>
+                        <h:outputText value=" na mojego lekarza rodzinnego "/>   
+                        <br/>
                     <p:commandButton 
-                        value="#{bundle.Close}" 
+                        value="Anuluj" 
                         onclick="MedicViewDlg.hide()"/>
                     <p:commandButton 
-                        action="#{homePatientBean.setDoctorForPatient(medicController.selected)}"
+                        action="#{PatientBean.setDoctorForPatient(surgeryDoctorBean.selectedDoctor)}"
                         value="Potwierdzam zamianę" 
                         onclick="MedicViewDialog.hide()"
+                        disabled="#{empty surgeryDoctorBean.selectedDoctor}"
                         
                         />
                     
-                    
- <h:outputText value="Zmiana lekarza spowoduje alulowaniue wszytkich wizy zarezerwowanych u poprzedniego lekarza."/>
+                    <br/>
+                    <h:outputText value="Zmiana lekarza spowoduje alulowaniue wszytkich wizy zarezerwowanych u poprzedniego lekarza."/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
