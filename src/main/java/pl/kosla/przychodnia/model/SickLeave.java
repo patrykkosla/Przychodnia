@@ -11,13 +11,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -31,7 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "SickLeave.findAll", query = "SELECT s FROM SickLeave s"),
     @NamedQuery(name = "SickLeave.findById", query = "SELECT s FROM SickLeave s WHERE s.id = :id"),
     @NamedQuery(name = "SickLeave.findByDateFrom", query = "SELECT s FROM SickLeave s WHERE s.dateFrom = :dateFrom"),
-    @NamedQuery(name = "SickLeave.findByDateTo", query = "SELECT s FROM SickLeave s WHERE s.dateTo = :dateTo")})
+    @NamedQuery(name = "SickLeave.findByDateTo", query = "SELECT s FROM SickLeave s WHERE s.dateTo = :dateTo"),
+    @NamedQuery(name = "SickLeave.findBySecureCode", query = "SELECT s FROM SickLeave s WHERE s.secureCode = :secureCode")})
 public class SickLeave implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,9 +44,8 @@ public class SickLeave implements Serializable {
     @Column(name = "date_to")
     @Temporal(TemporalType.DATE)
     private Date dateTo;
-    @JoinColumn(name = "appoitment_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Appoitment appoitmentId;
+    @Size(max = 9)
+    private String secureCode;
 
     public SickLeave() {
     }
@@ -79,12 +78,12 @@ public class SickLeave implements Serializable {
         this.dateTo = dateTo;
     }
 
-    public Appoitment getAppoitmentId() {
-        return appoitmentId;
+    public String getSecureCode() {
+        return secureCode;
     }
 
-    public void setAppoitmentId(Appoitment appoitmentId) {
-        this.appoitmentId = appoitmentId;
+    public void setSecureCode(String secureCode) {
+        this.secureCode = secureCode;
     }
 
     @Override

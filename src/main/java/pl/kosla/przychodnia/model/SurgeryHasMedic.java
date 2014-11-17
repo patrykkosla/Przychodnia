@@ -4,8 +4,10 @@
 package pl.kosla.przychodnia.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,11 +17,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,13 +38,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "SurgeryHasMedic.findBySecureLevel", query = "SELECT s FROM SurgeryHasMedic s WHERE s.secureLevel = :secureLevel"),
     @NamedQuery(name = "SurgeryHasMedic.findByPositione", query = "SELECT s FROM SurgeryHasMedic s WHERE s.positione = :positione"),
     @NamedQuery(name = "SurgeryHasMedic.findByIsAtive", query = "SELECT s FROM SurgeryHasMedic s WHERE s.isAtive = :isAtive"),
+    @NamedQuery(name = "SurgeryHasMedic.findByOnHoliday", query = "SELECT s FROM SurgeryHasMedic s WHERE s.onHoliday = :onHoliday"),
+    @NamedQuery(name = "SurgeryHasMedic.findByCreationTime", query = "SELECT s FROM SurgeryHasMedic s WHERE s.creationTime = :creationTime"),
     @NamedQuery(name = "SurgeryHasMedic.findSugeryForMedic",
     query = "SELECT shm.surgeryId FROM SurgeryHasMedic shm WHERE shm.medicId = :medicId"),
     
     @NamedQuery(name = "SurgeryHasMedic.findMedicForSurgery",
     query = "SELECT shm.medicId FROM SurgeryHasMedic shm WHERE shm.surgeryId = :surgeryId AND shm.isAtive = :isAtive" ),
-    
-    @NamedQuery(name = "SurgeryHasMedic.findByCreationTime", query = "SELECT s FROM SurgeryHasMedic s WHERE s.creationTime = :creationTime")})
+    @NamedQuery(name = "SurgeryHasMedic.findByStartFromDate", query = "SELECT s FROM SurgeryHasMedic s WHERE s.startFromDate = :startFromDate")})
 public class SurgeryHasMedic implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,10 +57,15 @@ public class SurgeryHasMedic implements Serializable {
     private String positione;
     @Column(name = "is_ative")
     private Boolean isAtive;
+    private Boolean onHoliday;
     @Column(name = "creation_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationTime;
-    
+    @Temporal(TemporalType.DATE)
+    private Date startFromDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "surgeryHasMedicId")
+    private Collection<Workhour> workhourCollection;
+
     @JoinColumn(name = "surgery_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Surgery surgeryId;
@@ -63,7 +73,7 @@ public class SurgeryHasMedic implements Serializable {
     @JoinColumn(name = "medic_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Medic medicId;
-
+    
     public SurgeryHasMedic() {
     }
 
@@ -103,12 +113,37 @@ public class SurgeryHasMedic implements Serializable {
         this.isAtive = isAtive;
     }
 
+    public Boolean getOnHoliday() {
+        return onHoliday;
+    }
+
+    public void setOnHoliday(Boolean onHoliday) {
+        this.onHoliday = onHoliday;
+    }
+
     public Date getCreationTime() {
         return creationTime;
     }
 
     public void setCreationTime(Date creationTime) {
         this.creationTime = creationTime;
+    }
+
+    public Date getStartFromDate() {
+        return startFromDate;
+    }
+
+    public void setStartFromDate(Date startFromDate) {
+        this.startFromDate = startFromDate;
+    }
+
+    @XmlTransient
+    public Collection<Workhour> getWorkhourCollection() {
+        return workhourCollection;
+    }
+
+    public void setWorkhourCollection(Collection<Workhour> workhourCollection) {
+        this.workhourCollection = workhourCollection;
     }
 
     public Surgery getSurgeryId() {
