@@ -40,5 +40,5 @@ public class SurgeryHasMedicFacade extends AbstractFacade<SurgeryHasMedic> {
 //        //q.setParameter("medicId", medic );
 //        //return q.getResultList();
 //    }
-   
+
 }    

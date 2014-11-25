@@ -55,4 +55,5 @@ public class MedicFacade extends AbstractFacade<Medic> {
         q.setParameter("username", medic.getUsername() );
         return q.getSingleResult();
     }    
+    
 }

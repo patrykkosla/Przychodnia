@@ -80,6 +80,28 @@ public class AppoitmentFacade extends AbstractFacade<Appoitment> {
         q.setParameter("patientId", patientId);
         return q.getResultList();      
     }
+
+    public int countAppoinments(String stat,  int medicId, Date appDate){
+      //http://stackoverflow.com/questions/11896872/jpa-count-namedquery
+      //int count = ((Number)em.createNamedQuery("Charakteristika.findAllCount").getSingleResult()).intValue();
+       
+      // SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :med AND a.appoitmentDate =:appDate"),
+        int count = ((Number)em.createNamedQuery("Appoitment.countApp")
+                .setParameter("status", stat)
+                .setParameter("medicId", medicId)
+                .setParameter("appDate", appDate)
+                .getSingleResult()).intValue();
+       return count;
+    }
+    public int countAppoinments(String status, String statusBis,  int medicId, Date appDate){
+       int count = ((Number)em.createNamedQuery("Appoitment.countApp")
+          .setParameter("status", status)
+          .setParameter("statusBis", statusBis)
+          .setParameter("medicId", medicId)
+          .setParameter("appDate", appDate)
+          .getSingleResult()).intValue();
+       return count;
+    }
     
     
     

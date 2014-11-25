@@ -40,12 +40,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SurgeryHasMedic.findByIsAtive", query = "SELECT s FROM SurgeryHasMedic s WHERE s.isAtive = :isAtive"),
     @NamedQuery(name = "SurgeryHasMedic.findByOnHoliday", query = "SELECT s FROM SurgeryHasMedic s WHERE s.onHoliday = :onHoliday"),
     @NamedQuery(name = "SurgeryHasMedic.findByCreationTime", query = "SELECT s FROM SurgeryHasMedic s WHERE s.creationTime = :creationTime"),
-    @NamedQuery(name = "SurgeryHasMedic.findSugeryForMedic",
-    query = "SELECT shm.surgeryId FROM SurgeryHasMedic shm WHERE shm.medicId = :medicId"),
+    @NamedQuery(name = "SurgeryHasMedic.findByStartDate", query = "SELECT s FROM SurgeryHasMedic s WHERE s.startDate = :startDate"),
     
     @NamedQuery(name = "SurgeryHasMedic.findMedicForSurgery",
     query = "SELECT shm.medicId FROM SurgeryHasMedic shm WHERE shm.surgeryId = :surgeryId AND shm.isAtive = :isAtive" ),
-    @NamedQuery(name = "SurgeryHasMedic.findByStartFromDate", query = "SELECT s FROM SurgeryHasMedic s WHERE s.startFromDate = :startFromDate")})
+   
+    @NamedQuery(name = "SurgeryHasMedic.findByStopDate", query = "SELECT s FROM SurgeryHasMedic s WHERE s.stopDate = :stopDate")})
 public class SurgeryHasMedic implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -62,18 +62,23 @@ public class SurgeryHasMedic implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationTime;
     @Temporal(TemporalType.DATE)
-    private Date startFromDate;
+    private Date startDate;
+    @Temporal(TemporalType.DATE)
+    private Date stopDate;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "surgeryHasMedicId")
+    private Collection<Holidays> holidaysCollection;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "surgeryHasMedicId")
     private Collection<Workhour> workhourCollection;
+    
+     @JoinColumn(name = "surgery_id", referencedColumnName = "id")
+     @ManyToOne(optional = false)
+     private Surgery surgeryId;
 
-    @JoinColumn(name = "surgery_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Surgery surgeryId;
-    
-    @JoinColumn(name = "medic_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Medic medicId;
-    
+     @JoinColumn(name = "medic_id", referencedColumnName = "id")
+     @ManyToOne(optional = false)
+     private Medic medicId;
+     
     public SurgeryHasMedic() {
     }
 
@@ -129,15 +134,31 @@ public class SurgeryHasMedic implements Serializable {
         this.creationTime = creationTime;
     }
 
-    public Date getStartFromDate() {
-        return startFromDate;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStartFromDate(Date startFromDate) {
-        this.startFromDate = startFromDate;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getStopDate() {
+        return stopDate;
+    }
+
+    public void setStopDate(Date stopDate) {
+        this.stopDate = stopDate;
     }
 
     @XmlTransient
+    public Collection<Holidays> getHolidaysCollection() {
+        return holidaysCollection;
+    }
+
+    public void setHolidaysCollection(Collection<Holidays> holidaysCollection) {
+        this.holidaysCollection = holidaysCollection;
+    }
+
     public Collection<Workhour> getWorkhourCollection() {
         return workhourCollection;
     }

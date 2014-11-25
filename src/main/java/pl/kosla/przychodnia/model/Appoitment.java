@@ -41,6 +41,10 @@ import javax.xml.bind.annotation.XmlTransient;
     
     @NamedQuery(name = "Appoitment.findFutherBooked", 
     query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :med AND a.appoitmentDate BETWEEN :startDate AND :endDate"),
+    @NamedQuery(name = "Appoitment.countApp", 
+    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :med AND a.appoitmentDate =:appDate"),
+    @NamedQuery(name = "Appoitment.countAppType", 
+    query = "SELECT a FROM Appoitment a WHERE a.status IN ( :status , :statusBis) AND a.medicId.id = :med AND a.appoitmentDate =:appDate"),
     @NamedQuery(name = "Appoitment.findMedicStatus", 
     query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :med"),
     @NamedQuery(name = "Appoitment.findMedicPatientStatus", 
@@ -48,6 +52,7 @@ import javax.xml.bind.annotation.XmlTransient;
    
     @NamedQuery(name = "Appoitment.findPatientAppoitment", 
     query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.patientId.patientId = :patientId"),
+    
     @NamedQuery(name = "Appoitment.findLastPatientAppoitment", 
     query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.patientId.patientId = :patientId ORDER BY a.appoitmentDate"),
     
