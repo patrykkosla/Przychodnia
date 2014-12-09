@@ -62,8 +62,11 @@
                             <f:facet name="footer">
                                 <h:selectBooleanCheckbox id="remember" value="#{PatientBean.remember}" onclick="return check(this);" />
                                 <h:outputLabel for="remember">Zapamiętaj Mnie</h:outputLabel>
-                                <p:commandButton value="Login" update="growl" actionListener="#{PatientBean.login}"
-                                                 oncomplete="handleLoginRequest(xhr, status, args)" />
+                                <p:commandButton 
+                                    value="Login"
+                                    update="growl" 
+                                    actionListener="#{PatientBean.login}"
+                                    oncomplete="handleLoginRequest(xhr, status, args)" />
                             </f:facet>  
                         </h:panelGrid>
                     </p:dialog>

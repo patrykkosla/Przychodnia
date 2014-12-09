@@ -40,21 +40,27 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Appoitment.findByStatus", query = "SELECT a FROM Appoitment a WHERE a.status = :status"),
     
     @NamedQuery(name = "Appoitment.findFutherBooked", 
-    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :med AND a.appoitmentDate BETWEEN :startDate AND :endDate"),
+    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId AND a.appoitmentDate BETWEEN :startDate AND :endDate"),
     @NamedQuery(name = "Appoitment.countApp", 
-    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :med AND a.appoitmentDate =:appDate"),
+    query = "SELECT COUNT (a) FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId AND a.appoitmentDate =:appDate"),
+    @NamedQuery(name = "Appoitment.checkiIfPatientGatApp", 
+    query = "SELECT COUNT (a) FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId AND a.patientId.patientId = :patientId AND a.appoitmentDate =:appDate"),
+    @NamedQuery(name = "Appoitment.countPatientApp", 
+    query = "SELECT COUNT (a) FROM Appoitment a WHERE a.status = :status AND a.patientId.patientId = :patientId"),
     @NamedQuery(name = "Appoitment.countAppType", 
-    query = "SELECT a FROM Appoitment a WHERE a.status IN ( :status , :statusBis) AND a.medicId.id = :med AND a.appoitmentDate =:appDate"),
+    query = "SELECT COUNT (a) FROM Appoitment a WHERE a.status IN ( :status , :statusBis) AND a.medicId.id = :medicId AND a.appoitmentDate =:appDate"),
     @NamedQuery(name = "Appoitment.findMedicStatus", 
-    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :med"),
+    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId"),
     @NamedQuery(name = "Appoitment.findMedicPatientStatus", 
-    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :med AND a.patientId.patientId = :patientId"),
-   
+    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId AND a.patientId.patientId = :patientId"),
+  
     @NamedQuery(name = "Appoitment.findPatientAppoitment", 
     query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.patientId.patientId = :patientId"),
     
     @NamedQuery(name = "Appoitment.findLastPatientAppoitment", 
     query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.patientId.patientId = :patientId ORDER BY a.appoitmentDate"),
+    @NamedQuery(name = "Appoitment.findAppListForBooking", 
+    query = "SELECT a.queuePositione FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId AND a.appoitmentDate =:appDate ORDER BY a.queuePositione "),
     
     @NamedQuery(name = "Appoitment.findByRadiologyTestOrder", query = "SELECT a FROM Appoitment a WHERE a.radiologyTestOrder = :radiologyTestOrder"),
     @NamedQuery(name = "Appoitment.findByBlodTestOrder", query = "SELECT a FROM Appoitment a WHERE a.blodTestOrder = :blodTestOrder")})
@@ -78,9 +84,12 @@ public class Appoitment implements Serializable {
     
     // http://tomee.apache.org/examples-trunk/jpa-enumerated/README.html
     // rez (rezerwacja) pas(past-odbyte) can(canseld) not(patientNOTschowUp)
+    public static final String REZERWACJA = "rez";
+    public static final String PAST = "pas";
+    public static final String CANCELD = "can";
+    public static final String PATIENTNOTSCHOUP = "not";
     @Size(max = 3)
     private String status;
-
     @Lob
     @Size(max = 65535)
     private String note;
@@ -243,5 +252,21 @@ public class Appoitment implements Serializable {
     public String toString() {
         return "pl.kosla.przychodnia.model.Appoitment[ id=" + id + " ]";
     }
+
+   public static String getREZERWACJA() {
+      return REZERWACJA;
+   }
+
+   public static String getPAST() {
+      return PAST;
+   }
+
+   public static String getCANCELD() {
+      return CANCELD;
+   }
+
+   public static String getPATIENTNOTSCHOUP() {
+      return PATIENTNOTSCHOUP;
+   }
     
 }

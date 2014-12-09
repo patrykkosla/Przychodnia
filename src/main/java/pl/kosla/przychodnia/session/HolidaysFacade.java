@@ -29,11 +29,13 @@ public class HolidaysFacade extends AbstractFacade<Holidays> {
         super(Holidays.class);
     }
     public Holidays checkIfDoctorIs(int medicId, Date date){       
-        TypedQuery<Holidays> query = getEntityManager().createNamedQuery("Holidays.findBymedicIdStatusDay",Holidays.class);
+        TypedQuery<Holidays> query = getEntityManager().createNamedQuery("Holidays.checkIfDoctorIs",Holidays.class);
         query.setParameter("medicId", medicId);
         query.setParameter("date", date, TemporalType.DATE);
         query.setMaxResults(1);
 
-        return query.getResultList().get(0);
+        //return query.getResultList().get(0);
+        List<Holidays> result = query.getResultList();
+        return result.isEmpty() ? null : result.get(0);
     }
 }

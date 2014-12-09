@@ -5,14 +5,126 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-        
-        
-        
-    </h:body>
-</html>
 
+    <h:head>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+        <h:outputStylesheet library="css" name="main.css"/>
+    </h:head>
+
+    <h:body>
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="65" header="#{bundle.AppName}">
+                  <h:form id="menuForm">
+                    <p:menubar>
+                        <p:menuitem value="#{bundle.Home}" outcome="/home" icon="ui-icon-home"/>
+                        <f:facet name="options">
+                            <p:commandButton  value="wyloguj" icon="ui-icon-extlink" action="#{PatientBean.logout()}"/>
+                        </f:facet>
+                    </p:menubar>
+                </h:form>              
+               
+            </p:layoutUnit>
+            
+            <p:layoutUnit position="west" size="250" header="Left" >
+        <h:outputText value="Twoja obecna przychodnia to"></h:outputText>
+        <p:panel  id="curentSurgeryInfo" header="#{homePatientBean.pb.patient.surgeryId.name}" >
+                <h:panelGrid columns="1" cellpadding="0" >
+                    <h:outputLabel value="Nazwa"/>
+                    <h:outputText value="#{homePatientBean.pb.patient.surgeryId.name}"/>
+
+                    <h:outputText value="telefon"/>
+                    <h:outputText value="#{homePatientBean.pb.patient.surgeryId.addresId.phoneNumber}"/>
+
+                    <h:outputText value="miejscowość"/>                         
+                    <h:outputText value="#{homePatientBean.pb.patient.surgeryId.addresId.place}"/>
+
+                </h:panelGrid>
+        </p:panel>
+            </p:layoutUnit>
+            
+            <p:layoutUnit position="south" size="60">
+                <ui:insert name="footer"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center">
+        <h:form id="BookAppoitmentForm">
+            <p:growl id="msgs" showDetail="true" />
+
+                <p:dataTable 
+                    id="datalist" 
+                    value="#{makeAppoitmentBean.dayList}" 
+                    var="item"
+                    rowKey="#{item.dayOfYear}"
+                    rowStyleClass="#{(item.is and !item.patientHasApp) ? 'avaibleDate' : 'not_avaibleDate'}"
+                    >
+                  <p:column headerText="Dnia">
+                        <h:outputText value="#{item.date}">
+                            <f:convertDateTime pattern="MM/dd/yyyy"  />
+                        </h:outputText>
+                    </p:column>   
+                    <p:column headerText="Lekarz jest dopstępny">
+                        <h:outputText value="#{item.is}" />
+                    </p:column>
+                    <p:column headerText="Typ wizyt">
+                        <h:outputText value="#{item.vistType}" rendered="#{item.is}"/>
+                    </p:column>
+                    <p:column headerText="Przyjmuje od">
+                        <h:outputText value="#{item.customeStartTime}" rendered="#{item.is}"/>
+                    </p:column>
+                    <p:column headerText="Przyjmuje do">
+                        <h:outputText value="#{item.customeEndTime}" rendered="#{item.is}"/>
+                    </p:column>
+                    <p:column headerText="Maksymalnie przyjmuje">
+                        <h:outputText value="#{item.maxApp}" rendered="#{item.is}"/>
+                    </p:column>
+                    <p:column headerText="Rezerwacji">
+                        <h:outputText value="#{item.bookedApp}" rendered="#{item.is}"/>
+                    </p:column>
+
+            <p:column style="width:32px;text-align: center">
+                 <p:commandButton 
+                     rendered="#{(item.is and !item.patientHasApp)}"
+                     update=":BookAppoitmentForm:DoctorViewDlg" 
+                     oncomplete="PF('doctorDialog').show()" 
+                     icon="ui-icon-search"
+                     title="View">
+                    <f:setPropertyActionListener 
+                        value="#{item}" 
+                        target="#{makeAppoitmentBean.selectedDoctorDay}" />
+                </p:commandButton>
+            </p:column>
+
+
+                </p:dataTable>
+
+            <p:dialog id="DoctorViewDlg" header="Potwierdzenie wizyty" widgetVar="doctorDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" appendTo="@(body)" >
+    
+
+                          <h:outputText value="Id:" />
+                          <h:outputText value="#{makeAppoitmentBean.selectedDoctorDay.date}" >
+                            <f:convertDateTime pattern="MM/dd/yyyy"  />
+                          </h:outputText>
+                          <h:outputText value="Lekarz" />
+                          <h:outputText value="#{makeAppoitmentBean.selectedDoctorDay.doctor.firstName} #{makeAppoitmentBean.selectedDoctorDay.doctor.lastName}"  />
+                          <p:commandButton 
+                              value="Rezerwuj"
+                              actionListener="makeAppoitmentBean.bookAppoitment()"
+                             
+                              oncomplete="handleAppoitmentRequest(xhr, status, args)" 
+                              />
+                          <p:commandButton 
+                              value="Anuluj"
+                              onclick="PF('doctorDialog').hide()"/>
+        
+
+            </p:dialog>
+        </h:form>
+            </p:layoutUnit>
+
+        </p:layout>
+
+    </h:body>
+
+</html>

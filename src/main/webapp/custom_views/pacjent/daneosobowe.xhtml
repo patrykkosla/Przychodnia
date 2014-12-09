@@ -51,8 +51,14 @@
                         <p:inputText id="height" value="#{homePatientBean.pb.patient.height}" title="#{bundle.EditPatientTitle_height}" />
                           
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{homePatientBean.upDateData}" value="#{bundle.Save}" update="display,:PatientListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PatientEditDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="PatientEditDialog.hide()"/>
+                    <p:commandButton 
+                        actionListener="#{homePatientBean.upDateData}"
+                        value="#{bundle.Save}"
+               
+                        />
+                    <p:commandButton 
+                        value="#{bundle.Cancel}" 
+                        onclick="PatientEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

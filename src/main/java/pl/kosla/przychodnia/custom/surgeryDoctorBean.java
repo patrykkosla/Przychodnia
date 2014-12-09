@@ -28,7 +28,7 @@ public class surgeryDoctorBean implements Serializable{
      private SurgeryHasMedic shc;
     
    public boolean chechIfSurgerySelected(){
-      if ( pb.getPatient().getSurgeryId().getId() != null ){
+      if ( pb.getPatient().getSurgeryId() != null ){
           return true;
              }
       else return false;
@@ -46,7 +46,7 @@ public class surgeryDoctorBean implements Serializable{
     @PostConstruct
     public void init() {  
       //  if (chechIfSurgerySelected())
-        if ( pb.getPatient().getSurgeryId().getId() != null)
+        if ( pb.getPatient().getSurgeryId() != null)
             setMedicList();
     }
 

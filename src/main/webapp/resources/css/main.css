@@ -1,0 +1,14 @@
+/*
+Mój jest kawałek podłogi... 
+*/
+/* 
+    Created on : 2014-12-03, 21:13:11
+    Author     : patryk
+*/
+
+tr.avaibleDate {
+    background-color: limegreen;
+}
+tr.not_avaibleDate {
+    background-color: lightcoral;
+}

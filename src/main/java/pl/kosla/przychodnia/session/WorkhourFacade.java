@@ -28,11 +28,14 @@ public class WorkhourFacade extends AbstractFacade<Workhour> {
         super(Workhour.class);
     }
    public Workhour getWorkhourforMedicinSurgery(int medicId, int surgeryId){
-        TypedQuery<Workhour> q = em.createNamedQuery("Workhour.findByMedicId&SurgeryId", Workhour.class);
+        TypedQuery<Workhour> q = em.createNamedQuery("Workhour.findByMedicIdSurgeryId", Workhour.class);
         q.setMaxResults(1);
         q.setParameter("medicId", medicId);
         q.setParameter("surgeryId", surgeryId);
         q.setParameter("isActive", true);
-        return q.getResultList().get(1);      
+         // sprawdza czy są jakieś ustalone godziny
+        List<Workhour> result = q.getResultList();
+        return result.isEmpty() ? null : result.get(0);
+           
     }
 }

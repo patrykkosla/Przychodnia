@@ -25,7 +25,7 @@
                             <h:outputText value="telefon"/>
                             <h:outputText value="#{ homePatientBean.pb.patient.surgeryId.addresId.phoneNumber}"/>
  
-                            <h:outputText value="miejscowość"/>                         
+                            <h:outputText value="miejscowoĹ›Ä‡"/>                         
                             <h:outputText value="#{ homePatientBean.pb.patient.surgeryId.addresId.place}"/>
                              
                         </h:panelGrid>
@@ -43,7 +43,7 @@
                         </f:facet>
                     </p:panel>
                     
-                    <p:panel header="Twój lekarz ">
+                    <p:panel header="TwĂłj lekarz ">
                         <h:panelGrid rendered="#{ not empty homePatientBean.pb.patient.medicId}" columns="1" cellpadding="0" >
                             <h:outputLabel value="Imie"/>
                             <h:outputText value="#{ homePatientBean.pb.patient.medicId.firstName}"/>
@@ -53,13 +53,14 @@
                         </h:panelGrid>
                         <h:panelGrid rendered="#{ empty homePatientBean.pb.patient.medicId}">
                              <h:outputText value="Nie posiadasz wybranego lekarza rodzinnego"/>
-                             <h:outputText value="Wybierz przychodnie a następnie lekarza rodzinnego"/>
+                             <h:outputText value="Wybierz przychodnie a nastÄ™pnie lekarza rodzinnego"/>
                         </h:panelGrid> 
                         <f:facet name="footer">
                             <p:button 
                                 icon="ui-icon-search"  
                                 id="LekarzeButton" 
                                 value="Lekarze" 
+                                disabled="#{empty homePatientBean.pb.patient.surgeryId}"
                                 href="/wyborlekarza.xhtml"
                                  />
                         </f:facet>                      
@@ -88,33 +89,32 @@
                     <p:commandButton 
                         id="EditPersonalDataButton" 
                         value="Edytuj dane personalne" 
-                        onclick="MedicViewDlg.hide()"
-                        action="#{homePatientBean.prepareEditPersonalData()}"
-                         />
+                        update=":PatientEditForm" 
+                        oncomplete="PF('PatientEditDialog').show()" />                      
                 </f:facet>
             </p:panel> 
             </h:form>
+            <h:form>
+              <p:growl id="wiztmwessage" life="5000" />  
+              <p:commandButton 
+                id="WizytaButton" 
+                actionListener="#{homePatientBean.bookAppoitmentAction}"
+                value="Umów się na wizytę" 
+                update=":growl"
+               oncomplete="handleAppoitmentPageRequest(xhr, status, args)"
+                />   
+              
+            </h:form>
+            <ui:include src="/custom_views/pacjent/daneosobowe.xhtml"/>
+            
+            
         </ui:define>
         
         
-        <ui:define name="body">
-            <h:form>
-              <p:commandButton 
-                id="WizytaButton" 
-                value="Umów się na wizytę" 
-             />
-                
-            </h:form>
-
-        
+        <ui:define name="body">    
             <h1>Witaj z PatientBena #{ PatientBean.patient.lastName}</h1>
-        
-            
-            
             <h2>Twoje wizyty</h2>
             
-    
-        
             <p:panel header="Ostatnie wizyty">
                 <h:form>
                     <p:dataTable id="lastAppoitmentsdatalist" 
@@ -143,7 +143,7 @@
                             <p:commandButton 
                                 id="schowAppoitmentButton"   
                                 icon="ui-icon-search" 
-                                value="Pokaż szczegóły" 
+                                value="PokaĹĽ szczegĂłĹ‚y" 
                                 disabled="#{empty homePatientBean.selectedAppoitment}"
                                 update=":AppoitmentQuickViewForm" 
                                 oncomplete="PF('AppoitmentQuickViewDlg').show()" 
@@ -157,7 +157,7 @@
                 <h:form>
                     <p:button 
                       id="AllWizytButton" 
-                      value="Przeglądaj listę wszystkich wizy" 
+                      value="PrzeglÄ…daj listÄ™ wszystkich wizy" 
                      />
                 
                 </h:form>

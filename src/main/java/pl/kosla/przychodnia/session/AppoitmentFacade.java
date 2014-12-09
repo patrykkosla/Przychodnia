@@ -3,14 +3,13 @@
  */
 package pl.kosla.przychodnia.session;
 
-import java.util.Calendar;
-import static java.util.Calendar.DAY_OF_WEEK;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import pl.kosla.przychodnia.model.Appoitment;
@@ -33,36 +32,33 @@ public class AppoitmentFacade extends AbstractFacade<Appoitment> {
     public AppoitmentFacade() {
         super(Appoitment.class);
     }
-    public List<Appoitment> getBookedAppointment(int days, int medicId){
-        
-        Date currentDate = new Date();
-        
+    public List<Appoitment> getBookedAppointment(int days, int medicId){    
         // Dodawanie czasu prze GregorianCalendar
         //Calendar calendar = new GregorianCalendar();
         //calendar.add(Calendar.DATE, days);
         //Date endDate = calendar.getTime();
-        
+       Date currentDate = new Date();
         //Dodanie czasu z wykorzystaniem biblioteki org.apache.commons.
-        Date endDate = DateUtils.addDays(currentDate, days);
-     
+        Date endDate = DateUtils.addDays(currentDate, days);     
         TypedQuery<Appoitment> q = em.createNamedQuery("Appoitment.findFutherBooked", Appoitment.class);
         q.setParameter("status", "rez");
-        q.setParameter("med", medicId);
+        q.setParameter("medicId", medicId);
         q.setParameter("startDate", currentDate, TemporalType.DATE);
         q.setParameter("endDate", endDate, TemporalType.DATE);
         return q.getResultList();
-        
     }
+    
     public List<Appoitment> getAppointmentForMedic(String stat, int medicId){
         TypedQuery<Appoitment> q = em.createNamedQuery("Appoitment.findMedicStatus", Appoitment.class);
         q.setParameter("status", stat);
-        q.setParameter("med", medicId);
+        q.setParameter("medicId", medicId);
         return q.getResultList();      
     }
+    
     public List<Appoitment> getAppointmentForMedic(String stat, int medicId, int patientId){
         TypedQuery<Appoitment> q = em.createNamedQuery("Appoitment.findMedicPatientStatus", Appoitment.class);
         q.setParameter("status", stat);
-        q.setParameter("med", medicId);
+        q.setParameter("medicId", medicId);
         q.setParameter("patientId", patientId);    
         return q.getResultList();      
     }
@@ -73,6 +69,7 @@ public class AppoitmentFacade extends AbstractFacade<Appoitment> {
         q.setParameter("patientId", patientId);
         return q.getResultList();      
     }
+    
     public List<Appoitment> getLastAppointmentsForPatient(String stat, int patientId, int take){
         TypedQuery<Appoitment> q = em.createNamedQuery("Appoitment.findLastPatientAppoitment", Appoitment.class);
         q.setMaxResults(take);
@@ -84,8 +81,6 @@ public class AppoitmentFacade extends AbstractFacade<Appoitment> {
     public int countAppoinments(String stat,  int medicId, Date appDate){
       //http://stackoverflow.com/questions/11896872/jpa-count-namedquery
       //int count = ((Number)em.createNamedQuery("Charakteristika.findAllCount").getSingleResult()).intValue();
-       
-      // SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :med AND a.appoitmentDate =:appDate"),
         int count = ((Number)em.createNamedQuery("Appoitment.countApp")
                 .setParameter("status", stat)
                 .setParameter("medicId", medicId)
@@ -93,38 +88,69 @@ public class AppoitmentFacade extends AbstractFacade<Appoitment> {
                 .getSingleResult()).intValue();
        return count;
     }
+    
     public int countAppoinments(String status, String statusBis,  int medicId, Date appDate){
-       int count = ((Number)em.createNamedQuery("Appoitment.countApp")
+       int count = ((Number)em.createNamedQuery("Appoitment.countAppType")
           .setParameter("status", status)
           .setParameter("statusBis", statusBis)
           .setParameter("medicId", medicId)
-          .setParameter("appDate", appDate)
+          .setParameter("appDate", appDate, TemporalType.DATE)
           .getSingleResult()).intValue();
        return count;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//        public Patient getPatienByUsername(Patient patient){
-//       // Patient.findByUsernamenie
-//        TypedQuery<Patient> q = em.createNamedQuery("Patient.findByUsername", Patient.class);
-//        q.setParameter("username", patient.getUsername() );
-//       // q.setMaxResults(1);
-//        return q.getSingleResult();
-//    }
+public int countPatientApp(int paiientId, String stat){
+         int count = ((Number)em.createNamedQuery("Appoitment.countPatientApp")
+          .setParameter("patientId", paiientId)
+          .setParameter("status", stat)
+          .getSingleResult()).intValue();
+       return count;    
+   } 
+public boolean checkiIfPatientGatApp(String status, int patientId, int medicId, Date appDate){
+      int count = ((Number)em.createNamedQuery("Appoitment.checkiIfPatientGatApp")
+       .setParameter("status", status)
+       .setParameter("medicId", medicId)
+       .setParameter("patientId", patientId)
+       .setParameter("appDate", appDate, TemporalType.DATE)
+       .getSingleResult()).intValue();
+      return count > 0 ? true : false;
+  }
+
+public Integer bookAppoitment(Appoitment appoitment, int maxApp){
+   // zaraca numer w kolejce jeśłi zarezerwował lub 0 jeśli nie udało się zabookować wizyty
+   
+
+     Query  q = em.createQuery("SELECT a.queuePositione FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId AND a.appoitmentDate =:appDate ORDER BY a.queuePositione");
+     q.setParameter("status", "rez");
+     q.setParameter("medicId", appoitment.getMedicId());
+     q.setParameter("appDate", appoitment.getAppoitmentDate(), TemporalType.DATE); 
+     
+     Integer queuePositione = 0;
+     List<Integer> results = (List<Integer>) q.getResultList();
+     if(results.isEmpty()){
+        queuePositione = 1;
+     }else if(results.size() >= maxApp){
+        queuePositione = 0;
+     }else{
+      Integer prev = results.get(0);
+      Integer curent = 0;
+
+      for (Integer result : results) {
+         curent = result;
+          if(  curent  > prev++) {
+             queuePositione = prev + 1;
+          }  
+          prev = curent;
+      }
+      if(queuePositione == 0)  {
+         queuePositione = curent ++;
+      } 
+     }  
+     if(queuePositione > 0){
+      appoitment.setQueuePositione(queuePositione);
+      em.persist(appoitment);
+     }
+    return queuePositione;  
 }
+
+
+} 

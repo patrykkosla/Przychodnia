@@ -77,11 +77,11 @@ public abstract class Persone implements Serializable {
     }
 
     public String getPassword() {
-        return password;
+      return password;
     }
 
     public void setPassword(String password) {
-          this.password = hashPassword(password);
+      this.password = hashPassword(password);
     }
 
     public String getPesel() {

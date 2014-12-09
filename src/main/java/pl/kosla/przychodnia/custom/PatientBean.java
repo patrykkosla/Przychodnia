@@ -30,19 +30,22 @@ import pl.kosla.przychodnia.utilis.SessionUtil;
  * @author patryk
  */
 public class PatientBean implements Serializable{
-    private static final long serialVersionUID = 1L;
-    @EJB
-    private pl.kosla.przychodnia.session.AddresFacade addresFacade;
-    @EJB 
-    private pl.kosla.przychodnia.session.PatientFacade patientFacade;
-    
-    private Patient patient;
-    private Addres addres;  
-    private String blodGrupTemp;
-    private String rhTypeTemp;
-    private String password;
-    private String uname;
-    //zapamiętywanie chasła
+   
+   @EJB 
+   private pl.kosla.przychodnia.session.AddresFacade addresFacade;
+   @EJB 
+   private pl.kosla.przychodnia.session.PatientFacade patientFacade;
+   @EJB 
+   private pl.kosla.przychodnia.session.AppoitmentFacade appoitmentFacade;
+   
+   private static final long serialVersionUID = 1L; 
+   private Patient patient;
+   private Addres addres;  
+   private String blodGrupTemp;
+   private String rhTypeTemp;
+   private String password;
+   private String uname;
+    //zapamiÄ™tywanie chasĹ‚a
     boolean remember;
     String remember1 = "";
     
@@ -155,7 +158,7 @@ public class PatientBean implements Serializable{
     public void setDoctorForPatient(Medic medic){
         patient.setMedicId(medic);
         upDatePatient();  
-        String msg ="Zmiana lekarza prowadzącego na: " + patient.getMedicId().getFirstName();
+        String msg ="Zmiana lekarza prowadzÄ…cego na: " + patient.getMedicId().getFirstName();
         LOGGER.info(msg);
     }
     public void upDatePatient(){
@@ -167,7 +170,18 @@ public class PatientBean implements Serializable{
             
         }
     }
-    
+   public boolean prepareEditPersonalData(){  
+      if(patient.getBlogGrup() != null && !patient.getBlogGrup().isEmpty() ){
+         String temp = patient.getBlogGrup();
+        
+         rhTypeTemp = temp.substring(temp.length()-2);
+         blodGrupTemp = temp.substring(0, temp.length()-2);
+         return true;
+      }else{
+         return false;
+     }
+   }
+   
     public Addres getAddres() {
         return addres;
     }
@@ -204,8 +218,7 @@ public class PatientBean implements Serializable{
     }
 
     
-    
-    //zobaczyc czy potrzebna
+   //zobaczyc czy potrzebna
     public AddresFacade getAddresFacade() {
         return addresFacade;
     }
@@ -264,4 +277,8 @@ public class PatientBean implements Serializable{
         this.uname = uname;
     }
 
+    
+   public int getAppRezCount(){
+    return  appoitmentFacade.countPatientApp(patient.getPatientId(), "rez");
+   }
 }

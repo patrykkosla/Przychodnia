@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -46,6 +48,10 @@ public class SickLeave implements Serializable {
     private Date dateTo;
     @Size(max = 9)
     private String secureCode;
+    
+    @JoinColumn(name = "appoitment_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Appoitment appoitmentId;
 
     public SickLeave() {
     }
@@ -84,6 +90,13 @@ public class SickLeave implements Serializable {
 
     public void setSecureCode(String secureCode) {
         this.secureCode = secureCode;
+    }
+    public Appoitment getAppoitmentId() {
+        return appoitmentId;
+    }
+
+    public void setAppoitmentId(Appoitment appoitmentId) {
+        this.appoitmentId = appoitmentId;
     }
 
     @Override

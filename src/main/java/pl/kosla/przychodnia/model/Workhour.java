@@ -28,8 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
    @NamedQuery(name = "Workhour.findAll", query = "SELECT w FROM Workhour w"),
    @NamedQuery(name = "Workhour.findById", query = "SELECT w FROM Workhour w WHERE w.id = :id"),
-   @NamedQuery(name = "Workhour.findByMedicId&SurgeryId",
-   query = "SELECT w FROM Workhour w WHERE w.surgeryHasMedicId.medicId.id = :medicId AND w.surgeryHasMedicId.surgeryId.id = :surgeryId AND w.surgeryHasMedicId.isAtive =: isActive"),
+   @NamedQuery(name = "Workhour.findByMedicIdSurgeryId",
+   query = "SELECT w FROM Workhour w WHERE w.surgeryHasMedicId.medicId.id = :medicId AND w.surgeryHasMedicId.surgeryId.id = :surgeryId AND w.surgeryHasMedicId.isAtive = :isActive"),
 
    @NamedQuery(name = "Workhour.findByMonday", query = "SELECT w FROM Workhour w WHERE w.monday = :monday"),
    @NamedQuery(name = "Workhour.findByMondayType", query = "SELECT w FROM Workhour w WHERE w.mondayType = :mondayType"),
@@ -58,40 +58,51 @@ public class Workhour implements Serializable {
    @Basic(optional = false)
    private Integer id;
    private Boolean monday;
-   @Size(max = 9)
+   // Typy domowe     w przychodni
+   @Size(max = 22)
    private String mondayType;
    @Temporal(TemporalType.TIME)
    private Date mondayStart;
    @Temporal(TemporalType.TIME)
    private Date mondayEnd;
+   private Integer mondayMaxApp;
+   
    private Boolean tuesday;
-   @Size(max = 9)
+   @Size(max = 22)
    private String tuesdayType;
    @Temporal(TemporalType.TIME)
    private Date tuesdayStart;
    @Temporal(TemporalType.TIME)
    private Date tuesdayEnd;
+   private Integer tuesdayMaxApp;
+   
    private Boolean wednesday;
-   @Size(max = 9)
+   @Size(max = 22)
    private String wednesdayType;
    @Temporal(TemporalType.TIME)
    private Date wednesdayStart;
    @Temporal(TemporalType.TIME)
    private Date wednesdayEnd;
+   private Integer wednesdayMaxApp;
+   
    private Boolean thursday;
-   @Size(max = 9)
+   @Size(max = 22)
    private String thursdayType;
    @Temporal(TemporalType.TIME)
    private Date thursdayStart;
    @Temporal(TemporalType.TIME)
    private Date thursdayEnd;
+   private Integer thursdayMaxApp;
+   
    private Boolean friday;
-   @Size(max = 9)
+   @Size(max = 22)
    private String fridayType;
    @Temporal(TemporalType.TIME)
    private Date fridayStart;
    @Temporal(TemporalType.TIME)
    private Date fridayEnd;
+   private Integer fridayMaxApp;
+   
    @JoinColumn(name = "surgery_has_medic_id", referencedColumnName = "id")
    @ManyToOne(optional = false)
    private SurgeryHasMedic surgeryHasMedicId;
@@ -277,6 +288,46 @@ public class Workhour implements Serializable {
 
    public void setSurgeryHasMedicId(SurgeryHasMedic surgeryHasMedicId) {
       this.surgeryHasMedicId = surgeryHasMedicId;
+   }
+
+   public Integer getMondayMaxApp() {
+      return mondayMaxApp;
+   }
+
+   public void setMondayMaxApp(Integer mondayMaxApp) {
+      this.mondayMaxApp = mondayMaxApp;
+   }
+
+   public Integer getTuesdayMaxApp() {
+      return tuesdayMaxApp;
+   }
+
+   public void setTuesdayMaxApp(Integer tuesdayMaxApp) {
+      this.tuesdayMaxApp = tuesdayMaxApp;
+   }
+
+   public Integer getWednesdayMaxApp() {
+      return wednesdayMaxApp;
+   }
+
+   public void setWednesdayMaxApp(Integer wednesdayMaxApp) {
+      this.wednesdayMaxApp = wednesdayMaxApp;
+   }
+
+   public Integer getThursdayMaxApp() {
+      return thursdayMaxApp;
+   }
+
+   public void setThursdayMaxApp(Integer thursdayMaxApp) {
+      this.thursdayMaxApp = thursdayMaxApp;
+   }
+
+   public Integer getFridayMaxApp() {
+      return fridayMaxApp;
+   }
+
+   public void setFridayMaxApp(Integer fridayMaxApp) {
+      this.fridayMaxApp = fridayMaxApp;
    }
 
    @Override

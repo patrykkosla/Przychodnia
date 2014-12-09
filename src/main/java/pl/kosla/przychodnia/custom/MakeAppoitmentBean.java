@@ -1,81 +1,82 @@
 package pl.kosla.przychodnia.custom;
 
 import java.io.Serializable;
-import java.time.LocalTime;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import org.apache.commons.lang3.time.DateUtils;
-import org.joda.time.DateMidnight;
-import org.joda.time.Days;
 import pl.kosla.przychodnia.model.Holidays;
-import pl.kosla.przychodnia.model.SurgeryHasMedic;
 import pl.kosla.przychodnia.session.AppoitmentFacade;
 import pl.kosla.przychodnia.session.HolidaysFacade;
 import org.joda.time.DateMidnight;
 import org.joda.time.Days;
+import org.primefaces.context.RequestContext;
+import pl.kosla.przychodnia.model.Appoitment;
+import pl.kosla.przychodnia.model.DoctorDay;
 import pl.kosla.przychodnia.model.Workhour;
 import pl.kosla.przychodnia.session.WorkhourFacade;
-import pl.kosla.przychodnia.utilis.CalendarUtil;
 
 /**
  *
  * @author patryk
  */
 @Named(value = "makeAppoitmentBean")
-@RequestScoped
-public class MakeAppoitmentBean  implements Serializable{
-
-    @EJB private AppoitmentFacade appoitmentFacade;
-    @EJB private  SurgeryHasMedic surgeryHasMedic;
-    @EJB private  HolidaysFacade holidaysFacade;
-    @EJB private  WorkhourFacade workhourFacade;
+@ViewScoped
+public class MakeAppoitmentBean implements Serializable{
+   private static final long serialVersionUID = 1L;
+   @Inject private PatientBean pb;
+  // @Inject private PatientBean doctorDay
+   @EJB private AppoitmentFacade appoitmentFacade;
+  // @EJB private SurgeryHasMedic surgeryHasMedic;
+   @EJB private HolidaysFacade holidaysFacade;
+   @EJB private WorkhourFacade workhourFacade;
     
     
-    private DateMidnight curentDay;
-    private List<DoctorDay> dayList;
+   private DateMidnight curentDay;
+   private List<DoctorDay> dayList; 
+   private DoctorDay selectedDoctorDay;
     
-    public MakeAppoitmentBean() {
+   public MakeAppoitmentBean() {
       curentDay =  new DateMidnight();
-        
-    }
+      dayList  = new ArrayList <>();
+   }
     
    public void setAvList(int doctorId,int surgeryId){
+      
       
       int daysToCheck = 7;
       DateMidnight chekedkDate = new DateMidnight(); 
       Workhour workhour= workhourFacade.getWorkhourforMedicinSurgery(doctorId, surgeryId);
+      if( workhour == null) return;
       
       for(int n = 0; n <daysToCheck; n++){
         int dw =  chekedkDate.getDayOfWeek();
          boolean weakDay = false;//Pobranie informacji o pracy w zadany dniu tygodnia
          switch (dw) {
-         case 1:  
-            weakDay = workhour.getMonday();
+         case 1:  weakDay = (  workhour.getMonday() == null ? false : workhour.getMonday() );
             break;
-         case 2:  
-            weakDay =  workhour.getTuesday();
+         case 2: weakDay = (  workhour.getTuesday() == null ? false : workhour.getTuesday() );
             break;
-         case 3:  
-            weakDay =  workhour.getWednesday();
+         case 3:  weakDay = ( workhour.getWednesday() == null ? false : workhour.getWednesday() );
             break;
-         case 4:  
-            weakDay =  workhour.getThursday();
+         case 4:  weakDay =  ( workhour.getThursday() == null ? false : workhour.getThursday() );
             break;
-         case 5:  
-            weakDay =  workhour.getFriday();
+         case 5:  weakDay =  ( workhour.getFriday() == null ? false : workhour.getFriday() );
             break;
-         case 6:  
-            weakDay =  false;
+         case 6: weakDay =  false;
             break;
-         case 7:  
-            weakDay =  false;
+         case 7: weakDay =  false;
+            break;
+         default: weakDay =  false;
             break;
          }
          
@@ -84,9 +85,9 @@ public class MakeAppoitmentBean  implements Serializable{
             chekedkDate = chekedkDate.plusDays(1);
             continue;
          }
-         Holidays h = holidaysFacade.checkIfDoctorIs(doctorId, chekedkDate.toDate());//sprawdza czy doc nie ma wolnego w ten dzieĂ„Ä…Ă˘â‚¬Ĺľ
-         if(h != null){
-            //Doktor ma wolne - spawdza na jak dĂ„Ä…Ă˘â‚¬Ĺˇugo 
+         if ( holidaysFacade.checkIfDoctorIs(doctorId, chekedkDate.toDate()) != null) {//sprawdza czy doc nie ma wolnego w ten dzieĂ„Ä…Ă˘â‚¬Ĺľ
+            Holidays h = holidaysFacade.checkIfDoctorIs(doctorId, chekedkDate.toDate());
+            //Doktor ma wolne - spawdza na jak dlugo
             int days;     
             DateMidnight endDay = new DateMidnight(h.getEndDate());
             days = Days.daysBetween(chekedkDate, endDay).getDays();
@@ -94,195 +95,141 @@ public class MakeAppoitmentBean  implements Serializable{
             if( (daysToCheck - n) <= days) days = daysToCheck;
             n = n + days;
 
-
            for ( int i = 0; i<= days; i++){
               if (dayList.size() < daysToCheck){
                  addEmpty(chekedkDate.toDate());
                  chekedkDate = chekedkDate.plusDays(1);
               }
            }  
-           
-         }
-         else{// doktor pracuje
-
-            // do obliczenia             
-            dayList.add(new DoctorDay(
-                    true,
-                    chekedkDate.toDate()
-                    
-            )
-
-            );
+         }else{// add working day set start and and h
+            addOpenDay(chekedkDate.toDate(), workhour );
             chekedkDate = chekedkDate.plusDays(1);
          }  
       }
+      for (DoctorDay d : dayList){
+         //dodaje info o wolnych miejscach
+         d.setAvaibleApp();
+         
+         //dodać sprawdzenie czy pacjent nie jest już zarejesrowany w ten dzień
+         d.setPatientHasApp(appoitmentFacade.checkiIfPatientGatApp(Appoitment.getREZERWACJA(), pb.getPatient().getPatientId(), doctorId, d.getDate()));
+      }
+      
    }
    public void addEmpty(Date date){
+      //System.out.println ("pusty"); 
         dayList.add(new DoctorDay(
-             false,
-              date
+            false,
+            new DateMidnight(date).getDayOfYear(),  
+            date
       ) ); 
    }
    public void addOpenDay(Date date, Workhour workhour){
       String prop = null;
       Date startTime = null;
       Date endTime = null;
+      int maxApp = 0;
       switch (date.getDay()) {
       case 1:  
          startTime = workhour.getMondayStart();
          endTime = workhour.getMondayEnd();
          prop = workhour.getMondayType();
+         maxApp = workhour.getMondayMaxApp();
          break;
       case 2:  
          startTime = workhour.getTuesdayStart();
          endTime = workhour.getTuesdayEnd();
          prop = workhour.getTuesdayType();
+         maxApp = workhour.getTuesdayMaxApp();
          break;
       case 3:  
          startTime = workhour.getWednesdayStart();
          endTime = workhour.getWednesdayEnd();
          prop = workhour.getWednesdayType();
+         maxApp = workhour.getWednesdayMaxApp();
          break;
       case 4:  
          startTime = workhour.getThursdayStart();
          endTime = workhour.getThursdayEnd();
          prop = workhour.getThursdayType();
+         maxApp = workhour.getThursdayMaxApp();
          break;
       case 5:  
          startTime = workhour.getFridayStart();
          endTime = workhour.getFridayEnd();
          prop = workhour.getFridayType();
+         maxApp = workhour.getFridayMaxApp();
          break;
       }
-      int maxApp = 0;
+//      if ( startTime != null && endTime != null){
+//         int statH = startTime.getHours();
+//         int endH = startTime.getHours();
+//         int startM = startTime.getMinutes();
+//         int endM = endTime.getMinutes();
+//         int temT = (endH -statH) * 60 + (endM - startM);
+//         maxApp = temT / 15;// 15 minu na kaÄąÄ˝dego pacjenta
+//      }
       
-      if ( startTime != null && endTime != null){
-         int statH = startTime.getHours();
-         int endH = startTime.getHours();
-         int startM = startTime.getMinutes();
-         int endM = endTime.getMinutes();
-         int temT = (endH -statH) * 60 + (endM - startM);
-         maxApp = temT / 15;// 15 minu na kaÄąÄ˝dego pacjenta
-      }
       if(prop == null) prop = "";
-      int vistCount = vistCount( date, workhour.getSurgeryHasMedicId().getMedicId().getId(), workhour.getSurgeryHasMedicId().getSurgeryId().getId());
-      //(boolean is , Date date, String vistType, Date startTime, Date endTime, int maxApp, int bookedApp )
-      if(maxApp > 0 ){
-         dayList.add(new DoctorDay(
-             true,
-              date,
-              prop,
-              startTime,
-              endTime,   
-              maxApp,
-              vistCount   
-         ) ); 
-      } else {
-         
-         dayList.add(new DoctorDay(
-             true,
-             date,
-             prop
-                 
-         ) );          
-      }  
+      int vistCount = vistCount( date, workhour.getSurgeryHasMedicId().getMedicId().getId());
+      dayList.add(new DoctorDay(
+          true,
+           new DateMidnight(date).getDayOfYear(),     
+           date,
+           prop,
+           startTime,
+           endTime,   
+           maxApp,
+           vistCount,
+           workhour.getSurgeryHasMedicId().getMedicId()// doctor
+      ) ); 
    }
    
-   public int vistCount(Date date,int doctorId,int surgeryId){
-      String type = "rez";
+   public int vistCount(Date date,int doctorId){
       boolean samedate = DateUtils.isSameDay(new Date(), date);  //Takes either Calendar or Date objects
       if(samedate){
-         return appoitmentFacade.countAppoinments(type, "pas", doctorId, date);
+         return appoitmentFacade.countAppoinments(Appoitment.REZERWACJA, Appoitment.PAST, doctorId, date);
       }
       else{
-         return appoitmentFacade.countAppoinments(type, doctorId, date);
+         return appoitmentFacade.countAppoinments(Appoitment.REZERWACJA, doctorId, date);
       }    
    }
    
-   
+   public void bookAppoitment(ActionEvent actionEvent){
+      Appoitment ap = new Appoitment();
+      ap.setMedicId(selectedDoctorDay.getDoctor());
+      ap.setPatientId(pb.getPatient());
+      ap.setStatus(Appoitment.REZERWACJA);
+      ap.setAppoitmentDate(selectedDoctorDay.getDate());
+      Integer temp = appoitmentFacade.bookAppoitment(ap, selectedDoctorDay.getMaxApp());
+      RequestContext context = RequestContext.getCurrentInstance();
+      FacesMessage message = null;
+      boolean bookSet = false;
+      if(temp == 0){
+         message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Przykro nam", "Nie ma już wolnych miejsc");
+         bookSet = false;
+      }else if(temp < 0) {
+         message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Uwaga", "Nie udało się dokań rezerwacji");
+         bookSet = false;
+      }else{
+         message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Potwierdzenie wizyty", "Twój nomer rejestracji to: " + temp.toString() );
+         bookSet = true;
+      }
+      FacesContext.getCurrentInstance().addMessage(null, message);
+      context.addCallbackParam("bookSet", bookSet);  
+   }
+
    @PostConstruct
-    private void init() {         
+   public void init() {  
+       if(pb != null && pb.getPatient() != null){
+          if(pb.getPatient().getMedicId() != null && pb.getPatient().getSurgeryId() != null){
+            setAvList(pb.getPatient().getMedicId().getId() , pb.getPatient().getSurgeryId().getId());
+             
+          }else{
+             
+          }
+       } 
     }
-    
-    public int checkIfDoctorisAcrive(int medicId){
-        
-        return  0;
-    }
-    public Boolean[]  checkIfDoctorAvaible(int medicId){
-        
-        
-        return null;
-    
-    }
-    
-        
-    class DoctorDay{
-        boolean is = false;
-        int dayOfWeak;
-        Date date;
-        Date startTime;
-        Date endTime;
-        int maxApp;
-        int bookedApp; //or in the samae day all visits
-        String vistType; // typ wizyt domowa czy w przychodni
-        
-        public DoctorDay(boolean is , Date date, String vistType){
-            this.date = date;
-            this.is = is;
-        }
-        public DoctorDay(boolean is , Date date){
-            this.date = date;
-            this.is = is;
-        }
-        public DoctorDay(boolean is , Date date, String startTime, String endTime ){
-            this.date = date;
-            this.is = is;
-        }
-        public DoctorDay(boolean is , Date date, String vistType, Date startTime, Date endTime, int maxApp ){
-            this.date = date;
-            this.is = is;
-            this.vistType = vistType;
-            this.startTime = startTime;
-            this.endTime = endTime;
-            this.maxApp = maxApp;
-        }
-        public DoctorDay(boolean is , Date date, String vistType, Date startTime, Date endTime, int maxApp, int bookedApp ){
-            this.date = date;
-            this.is = is;
-            this.vistType = vistType;
-            this.startTime = startTime;
-            this.endTime = endTime;
-            this.maxApp = maxApp;
-        }
-        public DoctorDay(){}
-    }
-    public void getDayHourInfo(Date date){
-       
-       
-    }
-
-    
-    
-    
-/**
- *
- * @author patryk
- */
-   public AppoitmentFacade getAppoitmentFacade() {
-      return appoitmentFacade;
-   }
-
-   public void setAppoitmentFacade(AppoitmentFacade appoitmentFacade) {
-      this.appoitmentFacade = appoitmentFacade;
-   }
-    public SurgeryHasMedic getSurgeryHasMedic() {
-        return surgeryHasMedic;
-    }
-
-    public void setSurgeryHasMedic(SurgeryHasMedic surgeryHasMedic) {
-        this.surgeryHasMedic = surgeryHasMedic;
-    }
-
+   
     public HolidaysFacade getHolidaysFacade() {
         return holidaysFacade;
     }
@@ -291,4 +238,23 @@ public class MakeAppoitmentBean  implements Serializable{
         this.holidaysFacade = holidaysFacade;
     }
 
+   public List<DoctorDay> getDayList() {
+      for(DoctorDay n : dayList){
+          System.out.println (n.getDayOfYear()); 
+      }
+      return dayList;
+   }
+
+   public void setDayList(List<DoctorDay> dayList) {
+      this.dayList = dayList;
+   }
+
+   public DoctorDay getSelectedDoctorDay() {
+      return selectedDoctorDay;
+   }
+
+   public void setSelectedDoctorDay(DoctorDay selectedDoctorDay) {
+      this.selectedDoctorDay = selectedDoctorDay;
+   }
+   
 }

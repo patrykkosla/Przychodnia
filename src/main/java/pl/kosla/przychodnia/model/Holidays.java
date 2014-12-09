@@ -31,7 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Holidays.findById", query = "SELECT h FROM Holidays h WHERE h.id = :id"),
     @NamedQuery(name = "Holidays.findBymedicIdStatusDay",
     query = "SELECT h FROM Holidays h WHERE h.surgeryHasMedicId.medicId.id = :medicId AND h.status IN ( :status , :statusBis)  AND  :date BETWEEN  h.startDate AND h.endDate"),
-    
+    @NamedQuery(name = "Holidays.checkIfDoctorIs",
+    query = "SELECT h FROM Holidays h WHERE h.surgeryHasMedicId.medicId.id = :medicId AND :date BETWEEN  h.startDate AND h.endDate"),
     
     @NamedQuery(name = "Holidays.findByStartDate", query = "SELECT h FROM Holidays h WHERE h.startDate = :startDate"),
     @NamedQuery(name = "Holidays.findByEndDate", query = "SELECT h FROM Holidays h WHERE h.endDate = :endDate"),
