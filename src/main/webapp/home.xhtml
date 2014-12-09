@@ -43,7 +43,7 @@
                         </f:facet>
                     </p:panel>
                     
-                    <p:panel header="TwĂłj lekarz ">
+                    <p:panel header="Twój lekarz ">
                         <h:panelGrid rendered="#{ not empty homePatientBean.pb.patient.medicId}" columns="1" cellpadding="0" >
                             <h:outputLabel value="Imie"/>
                             <h:outputText value="#{ homePatientBean.pb.patient.medicId.firstName}"/>
@@ -103,7 +103,10 @@
                 update=":growl"
                oncomplete="handleAppoitmentPageRequest(xhr, status, args)"
                 />   
-              
+                <p:button 
+                  id="AllRecepButton" 
+                  value="#{mess}" 
+                />  
             </h:form>
             <ui:include src="/custom_views/pacjent/daneosobowe.xhtml"/>
             
@@ -111,10 +114,32 @@
         </ui:define>
         
         
-        <ui:define name="body">    
-            <h1>Witaj z PatientBena #{ PatientBean.patient.lastName}</h1>
-            <h2>Twoje wizyty</h2>
+        <ui:define name="body">  
+            <p:panel header="Twoje rezerwacje">
+                <h:form>
+                    <p:dataTable 
+                        id="yourBoodedAppdatalist" 
+                        value="#{homePatientBean.bookedAppoitmentsList}" 
+                        var="bookeditem">
+                        <p:column headerText="Data">
+                            <h:outputText value="#{bookeditem.appoitmentDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Lekarz">
+                            <h:outputText value="#{bookeditem.medicId.firstName} "/>
+                            <h:outputText value="#{bookeditem.medicId.lastName}"/>
+                        </p:column>   
+                        <p:column headerText="Numer w kolejce">
+                            <h:outputText value="#{bookeditem.queuePositione}"/>
+                        </p:column>   
+                        
+                    </p:dataTable>                    
+                </h:form>
+            </p:panel>
             
+            
+            <h2>Twoje wizyty</h2>
             <p:panel header="Ostatnie wizyty">
                 <h:form>
                     <p:dataTable id="lastAppoitmentsdatalist" 
@@ -135,7 +160,7 @@
                         </p:column>
                         <p:column headerText="Lekarz">
 
-                            <h:outputText value="#{lappoitment.medicId.firstName}"/>
+                            <h:outputText value="#{lappoitment.medicId.firstName} "/>
                             <h:outputText value="#{lappoitment.medicId.lastName}"/>
                         </p:column>
                         
@@ -143,7 +168,7 @@
                             <p:commandButton 
                                 id="schowAppoitmentButton"   
                                 icon="ui-icon-search" 
-                                value="PokaĹĽ szczegĂłĹ‚y" 
+                                value="Pokaż szczegóły" 
                                 disabled="#{empty homePatientBean.selectedAppoitment}"
                                 update=":AppoitmentQuickViewForm" 
                                 oncomplete="PF('AppoitmentQuickViewDlg').show()" 

@@ -120,8 +120,8 @@ public Integer bookAppoitment(Appoitment appoitment, int maxApp){
    
 
      Query  q = em.createQuery("SELECT a.queuePositione FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId AND a.appoitmentDate =:appDate ORDER BY a.queuePositione");
-     q.setParameter("status", "rez");
-     q.setParameter("medicId", appoitment.getMedicId());
+     q.setParameter("status", Appoitment.REZERWACJA);
+     q.setParameter("medicId", appoitment.getMedicId().getId());
      q.setParameter("appDate", appoitment.getAppoitmentDate(), TemporalType.DATE); 
      
      Integer queuePositione = 0;
@@ -149,8 +149,26 @@ public Integer bookAppoitment(Appoitment appoitment, int maxApp){
       appoitment.setQueuePositione(queuePositione);
       em.persist(appoitment);
      }
+           System.out.println(queuePositione.toString());
     return queuePositione;  
 }
 
-
+   /**
+    *
+    * @param patient
+    * @param date
+    * @param doctor
+    * @return Appoitment
+    */
+   public Appoitment finOneAppoitment(int patient, Date date, int doctor){
+     TypedQuery<Appoitment> q = em.createNamedQuery("Appoitment.findAppoitmentByPatientMedicStausDate", Appoitment.class);
+     q.setParameter("status", Appoitment.REZERWACJA);
+     q.setParameter("patientId", patient);
+     q.setParameter("medicId", doctor);
+     q.setParameter("appDate", date, TemporalType.DATE); 
+     Appoitment a =q.getResultList().get(0);       
+     return a;
+   }
+   public void  cancelAppoitment(Appoitment a){
+   }
 } 

@@ -56,6 +56,8 @@ import javax.xml.bind.annotation.XmlTransient;
   
     @NamedQuery(name = "Appoitment.findPatientAppoitment", 
     query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.patientId.patientId = :patientId"),
+    @NamedQuery(name = "Appoitment.findAppoitmentByPatientMedicStausDate", 
+    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.patientId.patientId = :patientId AND a.medicId.id =:medicId AND a.appoitmentDate =:appDate"),
     
     @NamedQuery(name = "Appoitment.findLastPatientAppoitment", 
     query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.patientId.patientId = :patientId ORDER BY a.appoitmentDate"),

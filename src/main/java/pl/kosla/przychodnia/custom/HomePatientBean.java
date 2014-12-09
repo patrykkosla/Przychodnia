@@ -37,18 +37,13 @@ public class HomePatientBean implements Serializable{
     private List<Appoitment> lastAppoitmentsList;
     private Appoitment selectedAppoitment;
     private Appoitment curentAppoitment;
-    
+    private List<Appoitment> bookedAppoitmentsList;
 
     @PostConstruct
     private void init() {  
+      fillBookedAppoitmentsList();
     }
   
-//    public boolean checkIfIsSurgery(){       
-//        Surgery s = pb.getPatient().getPatientSurgery();
-//        return (s == null);
-//    }
-    
-    
    public void bookAppoitmentAction(ActionEvent actionEvent) {
       // check app amount
       RequestContext context = RequestContext.getCurrentInstance();
@@ -164,5 +159,16 @@ public class HomePatientBean implements Serializable{
     public void setCurentAppoitment(Appoitment curentAppoitment) {
         this.curentAppoitment = curentAppoitment;
     }
+
+   public List<Appoitment> getBookedAppoitmentsList() {
+      return bookedAppoitmentsList;
+   }
+
+   public void setBookedAppoitmentsList(List<Appoitment> bookedAppoitmentsList) {
+      this.bookedAppoitmentsList = bookedAppoitmentsList;
+   }
+   public void fillBookedAppoitmentsList() {
+      this.bookedAppoitmentsList =appoitmentFacade.getAppointmentForPatient(Appoitment.REZERWACJA, pb.getPatient().getPatientId());
+   }
     
 }

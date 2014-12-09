@@ -193,15 +193,27 @@ public class MakeAppoitmentBean implements Serializable{
          return appoitmentFacade.countAppoinments(Appoitment.REZERWACJA, doctorId, date);
       }    
    }
-   
-   public void bookAppoitment(ActionEvent actionEvent){
+     public String  bookAppoitmentTest(DoctorDay item ){
+      if(item == null){
+          System.out.println("Brak lekarzaq");
+      }
+     return "dup";
+     } 
+   public String bookAppoitment(DoctorDay d){
+      selectedDoctorDay = d;
+      RequestContext context = RequestContext.getCurrentInstance();
+      if(selectedDoctorDay == null){
+          System.out.println("Brak lekarzaq");
+      }
+      
       Appoitment ap = new Appoitment();
       ap.setMedicId(selectedDoctorDay.getDoctor());
       ap.setPatientId(pb.getPatient());
       ap.setStatus(Appoitment.REZERWACJA);
       ap.setAppoitmentDate(selectedDoctorDay.getDate());
       Integer temp = appoitmentFacade.bookAppoitment(ap, selectedDoctorDay.getMaxApp());
-      RequestContext context = RequestContext.getCurrentInstance();
+      
+ 
       FacesMessage message = null;
       boolean bookSet = false;
       if(temp == 0){
@@ -216,8 +228,16 @@ public class MakeAppoitmentBean implements Serializable{
       }
       FacesContext.getCurrentInstance().addMessage(null, message);
       context.addCallbackParam("bookSet", bookSet);  
+      context.addCallbackParam("bookNumber", temp);  
+      return null;
    }
-
+   public String cancelBookAppoitment(DoctorDay d){
+      selectedDoctorDay = d;
+      Appoitment a = appoitmentFacade.finOneAppoitment(pb.getPatient().getPatientId(), d.getDate(), d.getDoctor().getId());
+      a.setStatus(Appoitment.CANCELD);
+      appoitmentFacade.edit(a);
+      return null;
+   }
    @PostConstruct
    public void init() {  
        if(pb != null && pb.getPatient() != null){
@@ -230,18 +250,22 @@ public class MakeAppoitmentBean implements Serializable{
        } 
     }
    
-    public HolidaysFacade getHolidaysFacade() {
+   public String refershView(){
+      return null;
+   }
+   
+   public HolidaysFacade getHolidaysFacade() {
         return holidaysFacade;
     }
 
-    public void setHolidaysFacade(HolidaysFacade holidaysFacade) {
+   public void setHolidaysFacade(HolidaysFacade holidaysFacade) {
         this.holidaysFacade = holidaysFacade;
     }
 
    public List<DoctorDay> getDayList() {
-      for(DoctorDay n : dayList){
-          System.out.println (n.getDayOfYear()); 
-      }
+//      for(DoctorDay n : dayList){
+//          System.out.println (n.getDayOfYear()); 
+//      }
       return dayList;
    }
 

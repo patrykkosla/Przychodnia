@@ -9,8 +9,9 @@
     <h:head>
         <title><ui:insert name="title">Default Title</ui:insert></title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputStylesheet library="css" name="main.css"/> 
         <h:outputScript library="js" name="jsfcrud.js"/>
-        <h:outputStylesheet library="css" name="main.css"/>
+        <h:outputScript library="js" name="patient.js"/>
     </h:head>
 
     <h:body>
@@ -50,79 +51,69 @@
 
             <p:layoutUnit position="center">
         <h:form id="BookAppoitmentForm">
-            <p:growl id="msgs" showDetail="true" />
 
-                <p:dataTable 
-                    id="datalist" 
-                    value="#{makeAppoitmentBean.dayList}" 
-                    var="item"
-                    rowKey="#{item.dayOfYear}"
-                    rowStyleClass="#{(item.is and !item.patientHasApp) ? 'avaibleDate' : 'not_avaibleDate'}"
-                    >
-                  <p:column headerText="Dnia">
-                        <h:outputText value="#{item.date}">
-                            <f:convertDateTime pattern="MM/dd/yyyy"  />
-                        </h:outputText>
-                    </p:column>   
-                    <p:column headerText="Lekarz jest dopstępny">
-                        <h:outputText value="#{item.is}" />
-                    </p:column>
-                    <p:column headerText="Typ wizyt">
-                        <h:outputText value="#{item.vistType}" rendered="#{item.is}"/>
-                    </p:column>
-                    <p:column headerText="Przyjmuje od">
-                        <h:outputText value="#{item.customeStartTime}" rendered="#{item.is}"/>
-                    </p:column>
-                    <p:column headerText="Przyjmuje do">
-                        <h:outputText value="#{item.customeEndTime}" rendered="#{item.is}"/>
-                    </p:column>
-                    <p:column headerText="Maksymalnie przyjmuje">
-                        <h:outputText value="#{item.maxApp}" rendered="#{item.is}"/>
-                    </p:column>
-                    <p:column headerText="Rezerwacji">
-                        <h:outputText value="#{item.bookedApp}" rendered="#{item.is}"/>
-                    </p:column>
+            <p:dataTable 
+                id="datalist" 
+                value="#{makeAppoitmentBean.dayList}" 
+                var="item"
+                
+               selectionMode="single"   
+               selection="#{makeAppoitmentBean.selectedDoctorDay}"
+               rowKey="#{item.dayOfYear}"
+                rowStyleClass="#{(item.is and !item.patientHasApp) ? 'avaibleDate' : 'not_avaibleDate'}"
+                style="max-width: 90%;text-align: center"
+                >
+              <p:column headerText="Dnia">
+                    <h:outputText value="#{item.date}">
+                        <f:convertDateTime pattern="MM/dd/yyyy"  />
+                    </h:outputText>
+                </p:column>   
+                <p:column headerText="Lekarz jest dopstępny">
+                    <h:outputText value="#{item.is}" />
+                </p:column>
+                <p:column headerText="Typ wizyt">
+                    <h:outputText value="#{item.vistType}" rendered="#{item.is}"/>
+                </p:column>
+                <p:column headerText="Przyjmuje od">
+                    <h:outputText value="#{item.customeStartTime}" rendered="#{item.is}"/>
+                </p:column>
+                <p:column headerText="Przyjmuje do">
+                    <h:outputText value="#{item.customeEndTime}" rendered="#{item.is}"/>
+                </p:column>
+                <p:column headerText="Maksymalnie przyjmuje"  style="width:30px;text-align: center">
+                    <h:outputText value="#{item.maxApp}" rendered="#{item.is}"/>
+                </p:column>
+                <p:column headerText="Rezerwacji" style="width:30px;text-align: center">
+                    <h:outputText value="#{item.bookedApp}" rendered="#{item.is}"/>
+                </p:column>
 
-            <p:column style="width:32px;text-align: center">
-                 <p:commandButton 
-                     rendered="#{(item.is and !item.patientHasApp)}"
-                     update=":BookAppoitmentForm:DoctorViewDlg" 
-                     oncomplete="PF('doctorDialog').show()" 
-                     icon="ui-icon-search"
-                     title="View">
-                    <f:setPropertyActionListener 
-                        value="#{item}" 
-                        target="#{makeAppoitmentBean.selectedDoctorDay}" />
-                </p:commandButton>
-            </p:column>
+                <p:column >
+                     <p:commandButton 
+                            rendered="#{(item.is and !item.patientHasApp)}"
+                            action="#{makeAppoitmentBean.bookAppoitment(item)}"
+                            value="zabookuj"    
+                            oncomplete="handleAppoitmentRequest(xhr, status, args)"
+                            >
+                        <f:setPropertyActionListener 
+                            value="#{item}" 
+                            target="#{makeAppoitmentBean.selectedDoctorDay}" />
+                    </p:commandButton>
+                     <p:commandButton 
+                            rendered="#{(item.is and item.patientHasApp)}"
+                            action="#{makeAppoitmentBean.cancelBookAppoitment(item)}"
+                            value="Anuluj"    
+                            oncomplete="handleAppoitmentRequest(xhr, status, args)" 
+                            >
+                        <f:setPropertyActionListener 
+                            value="#{item}" 
+                            target="#{makeAppoitmentBean.selectedDoctorDay}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+            <p:growl id="growl" showDetail="true" life="4000"  />
 
-
-                </p:dataTable>
-
-            <p:dialog id="DoctorViewDlg" header="Potwierdzenie wizyty" widgetVar="doctorDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" appendTo="@(body)" >
-    
-
-                          <h:outputText value="Id:" />
-                          <h:outputText value="#{makeAppoitmentBean.selectedDoctorDay.date}" >
-                            <f:convertDateTime pattern="MM/dd/yyyy"  />
-                          </h:outputText>
-                          <h:outputText value="Lekarz" />
-                          <h:outputText value="#{makeAppoitmentBean.selectedDoctorDay.doctor.firstName} #{makeAppoitmentBean.selectedDoctorDay.doctor.lastName}"  />
-                          <p:commandButton 
-                              value="Rezerwuj"
-                              actionListener="makeAppoitmentBean.bookAppoitment()"
-                             
-                              oncomplete="handleAppoitmentRequest(xhr, status, args)" 
-                              />
-                          <p:commandButton 
-                              value="Anuluj"
-                              onclick="PF('doctorDialog').hide()"/>
-        
-
-            </p:dialog>
         </h:form>
-            </p:layoutUnit>
-
+        </p:layoutUnit>
         </p:layout>
 
     </h:body>
