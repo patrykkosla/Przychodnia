@@ -9,16 +9,12 @@
             <var>bundle</var>
         </resource-bundle>
         <resource-bundle>
-            <base-name>/Bundle</base-name>
-            <var>bundle</var>
+            <base-name>/messages</base-name>
+            <var>msg</var>
         </resource-bundle>
         <resource-bundle>
-            <base-name>/Bundle</base-name>
-            <var>bundle</var>
-        </resource-bundle>
-        <resource-bundle>
-            <base-name>/Bundle</base-name>
-            <var>bundle</var>
+            <base-name>/StuffMessages</base-name>
+            <var>stf</var>
         </resource-bundle>
     </application>
 </faces-config>

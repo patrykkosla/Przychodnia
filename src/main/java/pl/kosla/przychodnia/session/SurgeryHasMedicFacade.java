@@ -6,6 +6,7 @@ package pl.kosla.przychodnia.session;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import pl.kosla.przychodnia.model.Medic;
@@ -34,6 +35,23 @@ public class SurgeryHasMedicFacade extends AbstractFacade<SurgeryHasMedic> {
         TypedQuery<Surgery> q = em.createNamedQuery("SurgeryHasMedic.findSugeryForMedic", Surgery.class);
         q.setParameter("medicId", medic );
         return q.getResultList();
+    }
+
+   /**
+    * Find all Surgery for  specific medic
+    * @param medic - id medica 
+    * @param isAtive - status aktywności bool
+    * @return
+    */
+   public List<Surgery> findAllSurgeryFormMedicStatus(Integer medicId, boolean isAtive) {
+        TypedQuery<Surgery> q = em.createNamedQuery("SurgeryHasMedic.findActiveSurgeryforMedic", Surgery.class);
+        q.setParameter("medic", medicId );
+        q.setParameter("isAtive", isAtive );
+        return q.getResultList();
+        
+       // @NamedQuery(name = "SurgeryHasMedic.findActiveSurgeryforMedic",
+  // query = "SELECT shm.surgeryId FROM SurgeryHasMedic shm WHERE shm.medicId.id = :medic AND shm.isAtive = :isAtive" ),
+   
     }
 //    public List<Medic> findAllMedicForSurgery(Surgery surgery) {
 //       // TypedQuery<Surgery> q = em.createNamedQuery("SurgeryHasMedic.findSugeryForMedic", Medic.class);

@@ -58,11 +58,14 @@ import javax.xml.bind.annotation.XmlTransient;
     query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.patientId.patientId = :patientId"),
     @NamedQuery(name = "Appoitment.findAppoitmentByPatientMedicStausDate", 
     query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.patientId.patientId = :patientId AND a.medicId.id =:medicId AND a.appoitmentDate =:appDate"),
-    
     @NamedQuery(name = "Appoitment.findLastPatientAppoitment", 
     query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.patientId.patientId = :patientId ORDER BY a.appoitmentDate"),
     @NamedQuery(name = "Appoitment.findAppListForBooking", 
     query = "SELECT a.queuePositione FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId AND a.appoitmentDate =:appDate ORDER BY a.queuePositione "),
+    @NamedQuery(name = "Appoitment.AllAppForSingelDay", 
+    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId AND a.appoitmentDate =:appDate  ORDER BY a.queuePositione "),
+    @NamedQuery(name = "Appoitment.ttt", 
+    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId AND a.appoitmentDate =:appDate AND a.patientId.surgeryId.id =:sugeryId ORDER BY a.queuePositione "),
     
     @NamedQuery(name = "Appoitment.findByRadiologyTestOrder", query = "SELECT a FROM Appoitment a WHERE a.radiologyTestOrder = :radiologyTestOrder"),
     @NamedQuery(name = "Appoitment.findByBlodTestOrder", query = "SELECT a FROM Appoitment a WHERE a.blodTestOrder = :blodTestOrder")})

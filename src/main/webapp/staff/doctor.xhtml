@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/resources/template/doctor_template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="Przeglądaj i wybierz przechodnie"></h:outputText>
+        </ui:define>
+        <ui:define name="west_left_column">
+         
+            <h:form id="SurgeryMedicListForm">
+                <h:outputText   value="Witaj  #{staffBean.medic.firstName} #{staffBean.medic.lastName}"/><br/>
+            <p:spacer></p:spacer>
+            <p:growl id="growl" showDetail="true" sticky="true" />      
+            <p:panel  id="curentSurgeryInfo" header="">
+
+            </p:panel>
+            </h:form>
+            
+            <h:form id="drugatab">
+                <p:panel header="Lekarze w przychodni"  id="pierdolero">
+                    <p:dataTable 
+                        id="doctorsdatalist"
+                        value="#{nurseBean.doctorsList}"
+                        var="doctor"
+                        selectionMode="single"
+                        selection="#{nurseBean.selectedDoctor}"
+                        rowKey="#{doctor.id}"
+                        lazy="true"
+                                 >
+                    <p:ajax event="rowSelect"   update="selectdoctorbutton"/>
+                    <p:ajax event="rowUnselect" update="selectdoctorbutton"/>
+                    
+                    
+                    <p:column headerText="Imie">
+                        <h:outputText value="#{doctor.firstName}"/>
+                    </p:column>
+                    <p:column headerText="Nazwisko">
+                        <h:outputText value="#{doctor.lastName}"/>
+                    </p:column>
+                    
+                    <f:facet name="footer">
+                        <p:commandButton 
+                            id="selectdoctorbutton"
+                            value="Wybierz"
+                            action="#{nurseBean.setDocftorforView(nurseBean.selectedDoctor)}"
+                            disabled="#{empty nurseBean.selectedDoctor}"
+                            update="@(.ui-datatable), :surgeryInfoHeader, :doctorInfoHeader ,:doctorInfoHeader"
+                            />
+                        
+                    </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+        </ui:define>
+        
+        <ui:define name="body">
+            <h:form id="apptab">
+                <p:panel header="Dzisiejsze wizyty">
+                    <p:dataTable 
+                        id="appdatalist"
+                        value="#{doctorBean.appoitmentList}"
+                        var="app"
+                        selectionMode="single"
+                        selection="#{nurseBean.selectedDoctor}"
+                        rowKey="#{app.id}"
+                        lazy="true"
+                                 >
+                    <p:ajax event="rowSelect"   update="selectdoctorbutton"/>
+                    <p:ajax event="rowUnselect" update="selectdoctorbutton"/>
+                    
+                    
+                    <p:column headerText="Imie">
+                        <h:outputText value="#{doctor.firstName}"/>
+                    </p:column>
+                    <p:column headerText="Nazwisko">
+                        <h:outputText value="#{doctor.lastName}"/>
+                    </p:column>
+                    
+                    <f:facet name="footer">
+                        <p:commandButton 
+                            id="selectdoctorbutton"
+                            value="Wybierz"
+                            action="#{doctorBean.setDocftorforView(nurseBean.selectedDoctor)}"
+                            disabled="#{empty nurseBean.selectedDoctor}"
+                            update="@(.ui-datatable), :surgeryInfoHeader, :doctorInfoHeader ,:doctorInfoHeader"
+                            />
+                        
+                    </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>    
+            
+            <h:outputText id="surgeryInfoHeader"    value="Twoja wybrana przychodnia to #{nurseBean.curentSurgery.name}"/><br/>
+            <p:spacer></p:spacer>
+            <h:outputText id="surgeryInfoHeader2"    value="Twoja zaznaczona  to #{nurseBean.selectedSurgery.name}"/><br/>
+            <p:spacer></p:spacer>
+            <h:outputText id="doctorInfoHeader"    value="Twoj wybrany lekarz to  #{nurseBean.selectedDoctor.firstName}"/><br/>
+
+
+        </ui:define>
+    </ui:composition>
+
+</html>

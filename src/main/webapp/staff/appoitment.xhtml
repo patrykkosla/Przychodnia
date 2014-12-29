@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/resources/template/appoitment_template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="Przeglądaj i wybierz przechodnie"/>
+        </ui:define>
+        <ui:define name="west_left_column">
+         
+            <h:form id="AppoitmentActioneForm">
+                
+
+            </h:form>
+        </ui:define>
+         <ui:define name="east_right_column" >
+         
+            <h:form id="fdgs">
+                <h:outputText value="#{appoitmentBean.curentAppoitment.patientId.firstName} #{appoitmentBean.curentAppoitment.patientId.lastName}/>
+                <h:outputText  value="#{appoitmentBean.curentAppoitment.patientId.bornDate} />
+                
+
+            </h:form>
+        </ui:define>       
+        <ui:define name="body">
+            <p:panel  id="curentSurgeryInfo" header="#{appoitmentBean.curentAppoitment.patientId.firstName} #{appoitmentBean.curentAppoitment.patientId.lastName} " rendered="#{appoitmentBean.curentAppoitment}">
+            
+           </p:panel>
+
+
+        </ui:define>
+    </ui:composition>
+
+</html>

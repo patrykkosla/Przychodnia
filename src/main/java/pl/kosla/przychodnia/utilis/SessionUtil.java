@@ -2,6 +2,7 @@
 package pl.kosla.przychodnia.utilis;
  
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 /**
@@ -38,4 +39,9 @@ public class SessionUtil {
     else
         return null;
   }
+   public static Cookie[] checkCookie(){
+    FacesContext facesContext = FacesContext.getCurrentInstance();
+    return  ((HttpServletRequest)facesContext.getExternalContext().getRequest()).getCookies();
+    
+   }
 }

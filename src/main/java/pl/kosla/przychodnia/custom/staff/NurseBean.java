@@ -1,27 +1,22 @@
 /*
  * Mój jest kawałek podłogi...  * 
  */
-package pl.kosla.przychodnia.custom;
+package pl.kosla.przychodnia.custom.staff;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
-import pl.kosla.przychodnia.controler.MedicController;
 import pl.kosla.przychodnia.controler.PatientController;
 import pl.kosla.przychodnia.controler.SurgeryController;
 import pl.kosla.przychodnia.controler.SurgeryHasMedicController;
 import pl.kosla.przychodnia.model.Medic;
 import pl.kosla.przychodnia.model.Patient;
 import pl.kosla.przychodnia.model.Surgery;
-import pl.kosla.przychodnia.model.SurgeryHasMedic;
 
 
 /**
@@ -58,7 +53,10 @@ public class NurseBean implements Serializable {
     
     @PostConstruct
     private void init() {  
-       surgeryList =  getSurgeryList();
+      if(sf.getMedic() != null &&  sf.getMedic().getType().equals("nurse") ){
+         surgeryList =  getSurgeryList();
+      }
+      
     }
 
     public boolean checkSurgery(){

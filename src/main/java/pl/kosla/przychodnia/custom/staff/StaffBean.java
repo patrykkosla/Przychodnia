@@ -1,25 +1,21 @@
 /*
  * StaffBean jest dla pielęgniarek ma obsługiwać widok na przychodnie etc
  */
-package pl.kosla.przychodnia.custom;
+package pl.kosla.przychodnia.custom.staff;
 
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.inject.Inject;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
-import pl.kosla.przychodnia.controler.PatientController;
 import pl.kosla.przychodnia.model.Medic;
-import pl.kosla.przychodnia.model.Surgery;
 import pl.kosla.przychodnia.session.MedicFacade;
 import pl.kosla.przychodnia.utilis.SessionUtil;
 /**
@@ -30,10 +26,7 @@ import pl.kosla.przychodnia.utilis.SessionUtil;
 @SessionScoped
 public class StaffBean implements Serializable {
 
-    @EJB
-    private MedicFacade medicFacade;
-    
-    
+    @EJB private MedicFacade medicFacade;
     /**
      * Creates a new instance of StaffBean
      */
@@ -44,7 +37,7 @@ public class StaffBean implements Serializable {
     private Medic medic;
     private String password;
     private String uname;
-
+// jan@o2.pl
     
     
     //zapamiętywanie chasła
@@ -58,17 +51,17 @@ public class StaffBean implements Serializable {
       
         medic.setPassword(password);
         medic.setUsername(uname);
-        
+        String role ="";  
        if( medicFacade.authenticate( medic ) ){
 
            loggedIn = true;
            medic = medicFacade.getMedicByUsername(medic);
            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", medic.getUsername());
-
+            
             HttpSession session = SessionUtil.getSession();
             session.setAttribute("username", medic.getUsername());
             session.setAttribute("role", medic.getType());
-                  
+                
             FacesContext facesContext = FacesContext.getCurrentInstance();
            
             // Save the uname and password in a cookie
@@ -88,16 +81,19 @@ public class StaffBean implements Serializable {
             ((HttpServletResponse)facesContext.getExternalContext().getResponse()).addCookie(btremember);
             
             if(medic.getType().equals("doc")){
+               role = "doc";
             }
-            
             if(medic.getType().equals("nurse")){
+               role = "nurse";
             }
        }else {
             loggedIn = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
+            role = "error";
         }
         FacesContext.getCurrentInstance().addMessage(null, message);
         context.addCallbackParam("loggedIn", loggedIn);              
+        context.addCallbackParam("role", role);              
     } 
     public void checkCookie(){
     FacesContext facesContext = FacesContext.getCurrentInstance();

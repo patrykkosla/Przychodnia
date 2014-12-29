@@ -171,4 +171,29 @@ public Integer bookAppoitment(Appoitment appoitment, int maxApp){
    }
    public void  cancelAppoitment(Appoitment a){
    }
+
+   /**
+    * Find appotimens for singel day tha are booked to selected doctor
+    *
+    * @param doctorId
+    * @param surgeryId
+    * @param appDate
+    * @param status
+    * @return
+    */
+   public List<Appoitment> allDocAppForSingelDay(Integer doctorId, Integer surgeryId, Date appDate, String status){
+      TypedQuery<Appoitment> q = em.createNamedQuery("Appoitment.ttt", Appoitment.class);
+      q.setParameter("doctorId", doctorId);
+      q.setParameter("surgeryId", surgeryId);
+      q.setParameter("status", status);
+      q.setParameter("appDate", appDate, TemporalType.DATE);       
+      return q.getResultList();
+
+   }
+   public Appoitment findById(Integer appId){
+      TypedQuery<Appoitment> q = em.createNamedQuery("Appoitment.findById", Appoitment.class);
+      q.setParameter("id", appId);
+      return q.getSingleResult();
+   }
+   
 } 
