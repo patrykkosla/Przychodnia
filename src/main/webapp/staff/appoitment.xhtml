@@ -14,16 +14,73 @@
         </ui:define>
         <ui:define name="west_left_column">
          
-            <h:form id="AppoitmentActioneForm">
-                
+            <h:form id="PerscripionListAppForm">
+                <p:panel header="Recepty">
+                    <p:dataTable 
+                         id="recepty_datalist" 
+                         value="#{appoitmentBean.sickLeaveItems}" 
+                         var="slitem"
+                         >
+                        <p:column  headerText="Zwolnienie od" >
+                            <h:outputText value="#{slitem.dateFrom}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        
+                        <p:column  headerText="Do" >
+                            <h:outputText value="#{slitem.dateTo}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>          
+                    </p:dataTable>
+                    
+                    <p:commandButton
+                        icon="ui-icon-plus" 
+                        value="Wystaw zwolnienie"
+                        actionListener="#{appoitmentBean.prepareCreateSickLeave()}"
+                        update=":SickLeaveCreateForm"
+                        oncomplete="PF('SickLeaveCreateDialog').show()"
+                        />
+                </p:panel>
+            </h:form>    
 
+            <h:form id="SickLeaveAppList">
+                <p:panel header="Zwolnienia lekarskie">
+                    <p:dataTable 
+                         id="sl_datalist" 
+                         value="#{appoitmentBean.sickLeaveItems}" 
+                         var="slitem"
+                         >
+                        <p:column  headerText="Zwolnienie od" >
+                            <h:outputText value="#{slitem.dateFrom}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        
+                        <p:column  headerText="Do" >
+                            <h:outputText value="#{slitem.dateTo}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>          
+                    </p:dataTable>
+                    
+                    <p:commandButton
+                        icon="ui-icon-plus" 
+                        value="Wystaw zwolnienie"
+                        actionListener="#{appoitmentBean.prepareCreateSickLeave()}"
+                        update=":SickLeaveCreateForm"
+                        oncomplete="PF('SickLeaveCreateDialog').show()"
+                        />
+                </p:panel>
             </h:form>
+                
+            <ui:include src="/custom_views/staffviews/CreateSickLeave.xhtml"/>
         </ui:define>
          <ui:define name="east_right_column" >
          
             <h:form id="fdgs">
-                <h:outputText value="#{appoitmentBean.curentAppoitment.patientId.firstName} #{appoitmentBean.curentAppoitment.patientId.lastName}/>
-                <h:outputText  value="#{appoitmentBean.curentAppoitment.patientId.bornDate} />
+                <h:outputText value="#{appoitmentBean.curentAppoitment.patientId.firstName} #{appoitmentBean.curentAppoitment.patientId.lastName}"/>
+                <h:outputText  value="#{appoitmentBean.curentAppoitment.patientId.bornDate}" />
                 
 
             </h:form>
@@ -33,7 +90,7 @@
             
            </p:panel>
 
-
+            
         </ui:define>
     </ui:composition>
 
