@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Patient.findAll", query = "SELECT p FROM Patient p"),
-    @NamedQuery(name = "Patient.findPatientForDoctorAndSurgery", query = "SELECT p FROM Patient p WHERE p.medicId.id =: medicId AND p.surgeryId.id = surgeryId AND p.enable =: enable"),
+    @NamedQuery(name = "Patient.findPatientForDoctorAndSurgery", query = "SELECT p FROM Patient p WHERE p.medicId.id = :medicId AND p.surgeryId.id = :surgeryId AND p.enable = :enable"),
     @NamedQuery(name = "Patient.findByPatientId", query = "SELECT p FROM Patient p WHERE p.patientId = :patientId"),
     @NamedQuery(name = "Patient.findByUsername", query = "SELECT p FROM Patient p WHERE p.username = :username"),
     @NamedQuery(name = "Patient.findByFirstName", query = "SELECT p FROM Patient p WHERE p.firstName = :firstName"),
@@ -60,8 +60,6 @@ public class Patient extends Persone implements Serializable {
     private Integer height;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "patientId")
     private Collection<Appoitment> appoitmentCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "patientId")
-    private Collection<Perscripion> perscripionCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "patientId")
     private Collection<BloodTest> bloodTestCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "patientFk")
@@ -134,15 +132,6 @@ public class Patient extends Persone implements Serializable {
 
     public void setAppoitmentCollection(Collection<Appoitment> appoitmentCollection) {
         this.appoitmentCollection = appoitmentCollection;
-    }
-
-    @XmlTransient
-    public Collection<Perscripion> getPerscripionCollection() {
-        return perscripionCollection;
-    }
-
-    public void setPerscripionCollection(Collection<Perscripion> perscripionCollection) {
-        this.perscripionCollection = perscripionCollection;
     }
 
     @XmlTransient

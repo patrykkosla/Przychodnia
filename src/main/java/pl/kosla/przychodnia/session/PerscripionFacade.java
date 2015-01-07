@@ -3,6 +3,7 @@
  */
 package pl.kosla.przychodnia.session;
 
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,5 +26,7 @@ public class PerscripionFacade extends AbstractFacade<Perscripion> {
     public PerscripionFacade() {
         super(Perscripion.class);
     }
-    
+    public void findPerscripionForApp(int medicId, int patientId, Date date){
+       
+    }
 }

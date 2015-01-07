@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PerscripionCreateDlg" widgetVar="PerscripionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreatePerscripionTitle}">
+            <h:form id="PerscripionCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{appoitmentBean.perscripionSelected != null}">
+                       
+                        <p:outputLabel value="#{bundle.CreatePerscripionLabel_dose}" for="dose" />
+                        <p:inputText id="dose" value="#{appoitmentBean.perscripionSelected.dose}" title="#{bundle.CreatePerscripionTitle_dose}" required="true" requiredMessage="#{bundle.CreatePerscripionRequiredMessage_dose}"/>
+                 
+                        <p:outputLabel value="Lek" for="perscripionSerch" />                       
+                        <p:selectOneMenu 
+                            id="perscripionSerch" 
+                            value="#{appoitmentBean.perscripionSelected.medicineFk}" 
+                            required="true" 
+                            converter="medicineConverter" 
+                            effect="fade" 
+                            var="l" 
+                            filter="true" 
+                            filterMatchMode="startsWith">
+                         <f:selectItems 
+                             value="#{appoitmentBean.medicineController.itemsAvailableSelectOne}" 
+                             var="lek" 
+                             itemLabel="lek" 
+                             itemValue="#{lek}"
+                             />
+
+                         <p:column >
+                             <h:outputText value="#{l.name}" />
+                         </p:column>
+                         <p:column >
+                             <h:outputText value="#{l.decryption}" />
+                         </p:column>
+
+                         <p:column>
+                             <h:outputText value="#{l.amount}" />
+                         </p:column>
+                       </p:selectOneMenu>  
+                        
+                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{appoitmentBean.createPerscripion}" value="#{bundle.Save}" update="display,:PerscripionListForm:datalist,:growl" oncomplete="handleSubmit(args,'PerscripionCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PerscripionCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

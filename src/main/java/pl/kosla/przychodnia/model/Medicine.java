@@ -32,7 +32,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Medicine.findByName", query = "SELECT m FROM Medicine m WHERE m.name = :name"),
     @NamedQuery(name = "Medicine.findByLatineName", query = "SELECT m FROM Medicine m WHERE m.latineName = :latineName"),
     @NamedQuery(name = "Medicine.findByDecryption", query = "SELECT m FROM Medicine m WHERE m.decryption = :decryption"),
-    @NamedQuery(name = "Medicine.findByRefundactionLevel", query = "SELECT m FROM Medicine m WHERE m.refundactionLevel = :refundactionLevel"),
     @NamedQuery(name = "Medicine.findByAmount", query = "SELECT m FROM Medicine m WHERE m.amount = :amount")})
 public class Medicine implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -47,11 +46,10 @@ public class Medicine implements Serializable {
     @Size(max = 200)
     @Column(name = "latine_name")
     private String latineName;
-    @Size(max = 200)
+    @Size(max = 255)
     private String decryption;
-    @Column(name = "refundaction_level")
-    private Integer refundactionLevel;
-    @Size(max = 45)
+    @Size(max = 55)
+    @NotNull
     private String amount;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicineFk")
     private Collection<Perscripion> perscripionCollection;
@@ -98,14 +96,6 @@ public class Medicine implements Serializable {
 
     public void setDecryption(String decryption) {
         this.decryption = decryption;
-    }
-
-    public Integer getRefundactionLevel() {
-        return refundactionLevel;
-    }
-
-    public void setRefundactionLevel(Integer refundactionLevel) {
-        this.refundactionLevel = refundactionLevel;
     }
 
     public String getAmount() {

@@ -65,9 +65,6 @@ public class Medic extends Persone implements Serializable {
     private Addres addresId;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicId")
-    private Collection<Perscripion> perscripionCollection;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicId")
     private Collection<BloodTest> bloodTestCollection;
     
     @OneToMany(mappedBy = "medicId")
@@ -124,15 +121,6 @@ public class Medic extends Persone implements Serializable {
 
     public void setAddresId(Addres addresId) {
         this.addresId = addresId;
-    }
-
-    @XmlTransient
-    public Collection<Perscripion> getPerscripionCollection() {
-        return perscripionCollection;
-    }
-
-    public void setPerscripionCollection(Collection<Perscripion> perscripionCollection) {
-        this.perscripionCollection = perscripionCollection;
     }
 
     @XmlTransient

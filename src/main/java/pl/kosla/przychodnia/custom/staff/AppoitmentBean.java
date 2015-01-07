@@ -15,6 +15,8 @@ import pl.kosla.przychodnia.model.Appoitment;
 import pl.kosla.przychodnia.model.SickLeave;
 import pl.kosla.przychodnia.session.AppoitmentFacade;
 import static org.apache.commons.lang3.RandomStringUtils.random;
+import pl.kosla.przychodnia.controler.MedicineController;
+import pl.kosla.przychodnia.model.Medicine;
 import pl.kosla.przychodnia.model.Perscripion;
 import pl.kosla.przychodnia.session.PerscripionFacade;
 import static pl.kosla.przychodnia.utilis.FacesUtils.getFromSession;
@@ -29,6 +31,8 @@ import static pl.kosla.przychodnia.utilis.FacesUtils.getFromSession;
 public class AppoitmentBean implements Serializable {
     @Inject private StaffBean sf;
     @Inject private AppoitmentController apc;
+    @Inject private MedicineController medicineController;
+    
     @EJB private AppoitmentFacade appoitmentFacade;
     @EJB private pl.kosla.przychodnia.session.SickLeaveFacade sickLeaveFacade;
     @EJB private PerscripionFacade perscripionFacade;
@@ -37,6 +41,10 @@ public class AppoitmentBean implements Serializable {
     private SickLeave sickLeaveSelected;
     private List<Perscripion> perscripionItems = null;
     private Perscripion perscripionSelected;
+    
+    
+    
+    
    /**
     * Creates a new instance of AppoitmentBean
     */
@@ -53,7 +61,7 @@ public class AppoitmentBean implements Serializable {
    }
    public void refresch(){
       sickLeaveItems = (List<SickLeave>) curentAppoitment.getSickLeaveCollection();
-  
+      perscripionItems = (List) curentAppoitment.getPerscripionCollection();
    }
    public SickLeave prepareCreateSickLeave() {
       sickLeaveSelected = new SickLeave();
@@ -69,11 +77,13 @@ public class AppoitmentBean implements Serializable {
         return perscripionSelected;
    }
    public void createPerscripion() {
-      perscripionSelected.setMedicId(curentAppoitment.getMedicId());
-      perscripionSelected.setPatientId(curentAppoitment.getPatientId());
+      perscripionSelected.setAppoitmentId(curentAppoitment);
       perscripionFacade.create(perscripionSelected);
    }
-   
+   public void addNote(){
+      
+      /// zrobic 
+   }
    
    
    public Appoitment getCurentAppoitment() {
@@ -100,6 +110,30 @@ public class AppoitmentBean implements Serializable {
 
    public void setSickLeaveSelected(SickLeave sickLeaveSelected) {
       this.sickLeaveSelected = sickLeaveSelected;
+   }
+
+   public List<Perscripion> getPerscripionItems() {
+      return perscripionItems;
+   }
+
+   public void setPerscripionItems(List<Perscripion> perscripionItems) {
+      this.perscripionItems = perscripionItems;
+   }
+
+   public Perscripion getPerscripionSelected() {
+      return perscripionSelected;
+   }
+
+   public void setPerscripionSelected(Perscripion perscripionSelected) {
+      this.perscripionSelected = perscripionSelected;
+   }
+
+   public MedicineController getMedicineController() {
+      return medicineController;
+   }
+
+   public void setMedicineController(MedicineController medicineController) {
+      this.medicineController = medicineController;
    }
 
 

@@ -10,6 +10,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +23,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -56,8 +57,14 @@ public class SurgeryHasMedic implements Serializable {
     @Basic(optional = false)
     private Integer id;
     private Integer secureLevel;
-    @Size(max = 3)
-    private String positione;
+    
+    @Enumerated(EnumType.STRING)
+    private Positione positione;
+    
+    public static enum Positione {
+      Doctor,
+      Nurse;
+   }
     @Column(name = "is_ative")
     private Boolean isAtive;
     private Boolean onHoliday;
@@ -105,11 +112,11 @@ public class SurgeryHasMedic implements Serializable {
         this.secureLevel = secureLevel;
     }
 
-    public String getPositione() {
+    public Positione getPositione() {
         return positione;
     }
 
-    public void setPositione(String positione) {
+    public void setPositione(Positione positione) {
         this.positione = positione;
     }
 

@@ -34,7 +34,7 @@ public class ReciptPatientControler {
       }
     }
    private void setperscripionList(){      
-      perscripionList  = (List<Perscripion>) pb.getPatient().getPerscripionCollection();
+     // perscripionList  = (List<Perscripion>) pb.getPatient().getPerscripionCollection();
    }
    /**
     * Creates a new instance of ReciptPatientControler

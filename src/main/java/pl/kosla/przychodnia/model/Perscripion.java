@@ -48,12 +48,9 @@ public class Perscripion implements Serializable {
     @JoinColumn(name = "medicine_fk", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Medicine medicineFk;
-    @JoinColumn(name = "patient_id", referencedColumnName = "patient_id")
+    @JoinColumn(name = "appoitment_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Patient patientId;
-    @JoinColumn(name = "medic_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Medic medicId;
+    private Appoitment appoitmentId;
 
     public Perscripion() {
     }
@@ -99,21 +96,14 @@ public class Perscripion implements Serializable {
         this.medicineFk = medicineFk;
     }
 
-    public Patient getPatientId() {
-        return patientId;
-    }
+   public Appoitment getAppoitmentId() {
+      return appoitmentId;
+   }
 
-    public void setPatientId(Patient patientId) {
-        this.patientId = patientId;
-    }
+   public void setAppoitmentId(Appoitment appoitmentId) {
+      this.appoitmentId = appoitmentId;
+   }
 
-    public Medic getMedicId() {
-        return medicId;
-    }
-
-    public void setMedicId(Medic medicId) {
-        this.medicId = medicId;
-    }
 
     @Override
     public int hashCode() {

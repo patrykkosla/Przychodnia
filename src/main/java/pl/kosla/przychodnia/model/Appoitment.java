@@ -118,6 +118,8 @@ public class Appoitment implements Serializable {
     private Collection<ReferralAppoitment> referralAppoitmentCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "appoitmentId")
     private Collection<Diagnose> diagnoseCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "appoitmentId")
+    private Collection<Diagnose> perscripionCollection;
 
     public Appoitment() {
     }
@@ -232,6 +234,15 @@ public class Appoitment implements Serializable {
     public void setDiagnoseCollection(Collection<Diagnose> diagnoseCollection) {
         this.diagnoseCollection = diagnoseCollection;
     }
+
+   @XmlTransient 
+   public Collection<Diagnose> getPerscripionCollection() {
+      return perscripionCollection;
+   }
+
+   public void setPerscripionCollection(Collection<Diagnose> perscripionCollection) {
+      this.perscripionCollection = perscripionCollection;
+   }
 
     @Override
     public int hashCode() {

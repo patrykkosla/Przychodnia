@@ -18,26 +18,27 @@
                 <p:panel header="Recepty">
                     <p:dataTable 
                          id="recepty_datalist" 
-                         value="#{appoitmentBean.sickLeaveItems}" 
-                         var="slitem"
+                         value="#{appoitmentBean.perscripionItems}" 
+                         var="pitem"
                          >
-                        <p:column  headerText="Zwolnienie od" >
-                            <h:outputText value="#{slitem.dateFrom}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
+                        <p:column  headerText="Nazwa" >
+                            <h:outputText value="#{pitem.medicineFk.name}"/>
                         </p:column>
-                        
-                        <p:column  headerText="Do" >
-                            <h:outputText value="#{slitem.dateTo}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                        </p:column>          
+                        <p:column  headerText="Opis" >
+                            <h:outputText value="#{pitem.medicineFk.decryption}"/>
+                        </p:column>
+                        <p:column  headerText="Ilość" >
+                            <h:outputText value="#{pitem.medicineFk.amount}"/>
+                        </p:column>      
+                        <p:column  headerText="Dawkowanie" >
+                            <h:outputText value="#{pitem.dose}"/>
+                        </p:column>      
                     </p:dataTable>
                     
                     <p:commandButton
                         icon="ui-icon-plus" 
-                        value="Wystaw zwolnienie"
-                        actionListener="#{appoitmentBean.prepareCreateSickLeave()}"
+                        value="Wystaw recepte"
+                        actionListener="#{appoitmentBean.prepareCreatePerscripion()}"
                         update=":SickLeaveCreateForm"
                         oncomplete="PF('SickLeaveCreateDialog').show()"
                         />
@@ -76,7 +77,8 @@
                 
             <ui:include src="/custom_views/staffviews/CreateSickLeave.xhtml"/>
         </ui:define>
-         <ui:define name="east_right_column" >
+        
+        <ui:define name="east_right_column" >
          
             <h:form id="fdgs">
                 <h:outputText value="#{appoitmentBean.curentAppoitment.patientId.firstName} #{appoitmentBean.curentAppoitment.patientId.lastName}"/>
@@ -86,8 +88,20 @@
             </h:form>
         </ui:define>       
         <ui:define name="body">
-            <p:panel  id="curentSurgeryInfo" header="#{appoitmentBean.curentAppoitment.patientId.firstName} #{appoitmentBean.curentAppoitment.patientId.lastName} " rendered="#{appoitmentBean.curentAppoitment}">
-            
+           <p:panel  id="curentSurgeryInfo" header="#{appoitmentBean.curentAppoitment.patientId.firstName} #{appoitmentBean.curentAppoitment.patientId.lastName} " rendered="#{appoitmentBean.curentAppoitment}">
+                <h:form>           
+                    <p:editor id="editor" widgetVar="editorWidget" value="#{appoitmentBean.curentAppoitment.note}" width="600" />
+
+                   <h:panelGrid columns="2" style="margin-top: 10px">
+                       <p:commandButton 
+                           value="Submit" 
+                           icon="ui-icon-disk" 
+                           actionListener="#{appoitmentBean.addNote}"
+                           />
+
+                       <p:commandButton value="Clear" type="button" onclick="PF('editorWidget').clear();" icon="ui-icon-close" />
+                   </h:panelGrid>
+               </h:form> 
            </p:panel>
 
             

@@ -43,9 +43,9 @@ public class SurgeryHasMedicFacade extends AbstractFacade<SurgeryHasMedic> {
     * @param isAtive - status aktywności bool
     * @return
     */
-   public List<Surgery> findAllSurgeryFormMedicStatus(Integer medicId, boolean isAtive) {
+   public List<Surgery> findAllSurgeryFormMedicStatus(int medicId, boolean isAtive) {
         TypedQuery<Surgery> q = em.createNamedQuery("SurgeryHasMedic.findActiveSurgeryforMedic", Surgery.class);
-        q.setParameter("medic", medicId );
+        q.setParameter("medicId", medicId );
         q.setParameter("isAtive", isAtive );
         return q.getResultList();
         
