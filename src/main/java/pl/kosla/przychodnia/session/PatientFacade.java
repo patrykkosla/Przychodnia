@@ -76,9 +76,7 @@ public class PatientFacade extends AbstractFacade<Patient> {
         return q.getSingleResult();
     }
     
-    public List<Patient> getPatiensForDoctro(Integer doctorId, Integer surgeryId,boolean enable){
-       
-       // Patient.findByUsernamenie
+    public List<Patient> getPatiensForDoctro(Integer doctorId, Integer surgeryId, boolean enable){
         TypedQuery<Patient> q = em.createNamedQuery("Patient.findPatientForDoctorAndSurgery", Patient.class);
         q.setParameter("medicId", doctorId  );
         q.setParameter("surgeryId",surgeryId  );

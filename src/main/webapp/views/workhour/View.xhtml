@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="WorkhourViewDlg" widgetVar="WorkhourViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewWorkhourTitle}">
+            <h:form id="WorkhourViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{workhourController.selected != null}">
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_id}"/>
+                        <h:outputText value="#{workhourController.selected.id}" title="#{bundle.ViewWorkhourTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_monday}"/>
+                        <p:selectBooleanCheckbox value="#{workhourController.selected.monday}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_mondayType}"/>
+                        <h:outputText value="#{workhourController.selected.mondayType}" title="#{bundle.ViewWorkhourTitle_mondayType}"/>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_mondayStart}"/>
+                        <h:outputText value="#{workhourController.selected.mondayStart}" title="#{bundle.ViewWorkhourTitle_mondayStart}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_mondayEnd}"/>
+                        <h:outputText value="#{workhourController.selected.mondayEnd}" title="#{bundle.ViewWorkhourTitle_mondayEnd}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_mondayMaxApp}"/>
+                        <h:outputText value="#{workhourController.selected.mondayMaxApp}" title="#{bundle.ViewWorkhourTitle_mondayMaxApp}"/>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_tuesday}"/>
+                        <p:selectBooleanCheckbox value="#{workhourController.selected.tuesday}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_tuesdayType}"/>
+                        <h:outputText value="#{workhourController.selected.tuesdayType}" title="#{bundle.ViewWorkhourTitle_tuesdayType}"/>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_tuesdayStart}"/>
+                        <h:outputText value="#{workhourController.selected.tuesdayStart}" title="#{bundle.ViewWorkhourTitle_tuesdayStart}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_tuesdayEnd}"/>
+                        <h:outputText value="#{workhourController.selected.tuesdayEnd}" title="#{bundle.ViewWorkhourTitle_tuesdayEnd}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_tuesdayMaxApp}"/>
+                        <h:outputText value="#{workhourController.selected.tuesdayMaxApp}" title="#{bundle.ViewWorkhourTitle_tuesdayMaxApp}"/>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_wednesday}"/>
+                        <p:selectBooleanCheckbox value="#{workhourController.selected.wednesday}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_wednesdayType}"/>
+                        <h:outputText value="#{workhourController.selected.wednesdayType}" title="#{bundle.ViewWorkhourTitle_wednesdayType}"/>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_wednesdayStart}"/>
+                        <h:outputText value="#{workhourController.selected.wednesdayStart}" title="#{bundle.ViewWorkhourTitle_wednesdayStart}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_wednesdayEnd}"/>
+                        <h:outputText value="#{workhourController.selected.wednesdayEnd}" title="#{bundle.ViewWorkhourTitle_wednesdayEnd}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_wednesdayMaxApp}"/>
+                        <h:outputText value="#{workhourController.selected.wednesdayMaxApp}" title="#{bundle.ViewWorkhourTitle_wednesdayMaxApp}"/>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_thursday}"/>
+                        <p:selectBooleanCheckbox value="#{workhourController.selected.thursday}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_thursdayType}"/>
+                        <h:outputText value="#{workhourController.selected.thursdayType}" title="#{bundle.ViewWorkhourTitle_thursdayType}"/>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_thursdayStart}"/>
+                        <h:outputText value="#{workhourController.selected.thursdayStart}" title="#{bundle.ViewWorkhourTitle_thursdayStart}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_thursdayEnd}"/>
+                        <h:outputText value="#{workhourController.selected.thursdayEnd}" title="#{bundle.ViewWorkhourTitle_thursdayEnd}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_thursdayMaxApp}"/>
+                        <h:outputText value="#{workhourController.selected.thursdayMaxApp}" title="#{bundle.ViewWorkhourTitle_thursdayMaxApp}"/>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_friday}"/>
+                        <p:selectBooleanCheckbox value="#{workhourController.selected.friday}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_fridayType}"/>
+                        <h:outputText value="#{workhourController.selected.fridayType}" title="#{bundle.ViewWorkhourTitle_fridayType}"/>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_fridayStart}"/>
+                        <h:outputText value="#{workhourController.selected.fridayStart}" title="#{bundle.ViewWorkhourTitle_fridayStart}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_fridayEnd}"/>
+                        <h:outputText value="#{workhourController.selected.fridayEnd}" title="#{bundle.ViewWorkhourTitle_fridayEnd}">
+                            <f:convertDateTime pattern="HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_fridayMaxApp}"/>
+                        <h:outputText value="#{workhourController.selected.fridayMaxApp}" title="#{bundle.ViewWorkhourTitle_fridayMaxApp}"/>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_surgeryHasMedicId}"/>
+                        <h:outputText value="#{workhourController.selected.surgeryHasMedicId}" title="#{bundle.ViewWorkhourTitle_surgeryHasMedicId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="WorkhourViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

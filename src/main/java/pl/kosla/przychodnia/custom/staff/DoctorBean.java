@@ -11,15 +11,21 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
 import pl.kosla.przychodnia.controler.AppoitmentController;
+import pl.kosla.przychodnia.controler.WorkhourController;
 import pl.kosla.przychodnia.model.Appoitment;
 import pl.kosla.przychodnia.model.Patient;
 import pl.kosla.przychodnia.model.Surgery;
 import pl.kosla.przychodnia.session.AppoitmentFacade;
 import pl.kosla.przychodnia.session.PatientFacade;
 import pl.kosla.przychodnia.session.SurgeryHasMedicFacade;
+import pl.kosla.przychodnia.session.WorkhourFacade;
+import static pl.kosla.przychodnia.utilis.FacesUtils.addCookie;
 import static pl.kosla.przychodnia.utilis.FacesUtils.addToSession;
+import static pl.kosla.przychodnia.utilis.FacesUtils.getCookie;
 import static pl.kosla.przychodnia.utilis.FacesUtils.getFromSession;
+import static pl.kosla.przychodnia.utilis.FacesUtils.removeFromSession;
 
 /**
  *
@@ -35,9 +41,12 @@ public class DoctorBean implements Serializable {
 
     @Inject private StaffBean sf;
     @Inject private AppoitmentController apc;
+    @Inject private WorkhourController workhourController;
     @EJB private SurgeryHasMedicFacade surgeryHasMedicFacade;
     @EJB private PatientFacade patientFacade;
     @EJB private AppoitmentFacade appoitmentFacade;
+    @EJB private WorkhourFacade workhourFacade;
+ 
    public DoctorBean() {
     }
    @PostConstruct
@@ -45,14 +54,26 @@ public class DoctorBean implements Serializable {
       if(sf.getMedic() != null){
         curentSurgery = (Surgery) getFromSession("curentSurgery");
         surgeryList = surgeryHasMedicFacade.findAllSurgeryFormMedicStatus(sf.getMedic().getId(), true);
+        Cookie cookie = getCookie("curentSurgery");
+        if(cookie != null && cookie.getValue() != null){
+           for(Surgery s: surgeryList){
+              if( (s.getId().compareTo(Integer.parseInt( cookie.getValue()))) == 0){
+                 curentSurgery = s;
+              }
+           }  
+        }
         if(curentSurgery != null){
            //pobrać listę pacjentów
            //patiensList = patientFacade.getPatiensForDoctro(sf.getMedic().getId(), curentSurgery.getId(), true);
            //pobrać listę pacjentów którzy mają wizytę na dzisiaj
            appoitmentList = appoitmentFacade.allDocAppForSingelDay(sf.getMedic().getId(), curentSurgery.getId(), new Date(), Appoitment.REZERWACJA );
+           
+           workhourController.setSelected( workhourFacade.getWorkhourforMedicinSurgery(sf.getMedic().getId(), curentSurgery.getId()));
         }
         
       }
+      
+      
     }
         
     private List<Surgery> surgeryList;
@@ -67,11 +88,34 @@ public class DoctorBean implements Serializable {
     private Appoitment selextedAppoitment;
     private Appoitment curentAppoitment;
     
-    public void prepateAppView(Appoitment a){
+    
+   public void prepateAppView(Appoitment a){
        addToSession("CurentAppId", a);
     }
     
+ 
+   public void prepatePatientView(Patient patient){
+      
+   }
+   
+   public String changeCurentSurgery(){
+         
+      System.out.println(selectedSurgery.toString());
+      removeFromSession("curentSurgery");
+      addToSession("curentSurgery", selectedSurgery);
+      addCookie("curentSurgery", selectedSurgery.getId().toString());
+      return "";
     
+   } 
+   
+   
+   
+   
+   
+   
+   
+   
+   
     
     public void getBookedAppointment(int daysFuther){
        appoitmentList =  apc.getBookedAppointment(daysFuther, sf.getMedic().getId());

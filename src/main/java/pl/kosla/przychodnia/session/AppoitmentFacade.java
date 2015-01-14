@@ -183,7 +183,7 @@ public Integer bookAppoitment(Appoitment appoitment, int maxApp){
     */
    public List<Appoitment> allDocAppForSingelDay(Integer doctorId, Integer surgeryId, Date appDate, String status){
       TypedQuery<Appoitment> q = em.createNamedQuery("Appoitment.ttt", Appoitment.class);
-      q.setParameter("doctorId", doctorId);
+      q.setParameter("medicId", doctorId);
       q.setParameter("surgeryId", surgeryId);
       q.setParameter("status", status);
       q.setParameter("appDate", appDate, TemporalType.DATE);       

@@ -37,8 +37,6 @@ public class StaffBean implements Serializable {
     private Medic medic;
     private String password;
     private String uname;
-// jan@o2.pl
-    
     
     //zapamiętywanie chasła
     boolean remember;
@@ -95,6 +93,12 @@ public class StaffBean implements Serializable {
         context.addCallbackParam("loggedIn", loggedIn);              
         context.addCallbackParam("role", role);              
     } 
+   public String logout() {
+      HttpSession session = SessionUtil.getSession();
+      session.invalidate();
+      medic = null;
+      return "index.xhtml?faces-redirect=true";
+   }    
     public void checkCookie(){
     FacesContext facesContext = FacesContext.getCurrentInstance();
     String cookieName = null;

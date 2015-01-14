@@ -16,27 +16,48 @@
          
             <h:form id="SurgeryMedicListForm">
                 <h:outputText   value="Witaj  #{staffBean.medic.firstName} #{staffBean.medic.lastName}"/><br/>
-                <h:outputText   value="Wybrana przychodnia  #{doctorBean.curentSurgery.name} "/><br/>
             <p:spacer></p:spacer>
             <p:growl id="growl" showDetail="true" sticky="true" />      
-            <p:panel  header="Przychodnie">
-                <p:selectOneMenu 
-                    id="surgeryHasMedicDoctor" 
-                    value="#{doctorBean.selectedSurgery}" 
-                    required="true" >
-                    <f:selectItems value="#{doctorBean.surgeryList}"
-                                   var="selectedSurgeryDoc"
-                                   itemValue="#{selectedSurgeryDoc}"
+            <p:panel  id="curentSurgeryInfo" header="">
 
-                                   itemLabel="#{selectedSurgeryDoc.name} #{selectedSurgeryDoc.addresId.place}"/>
-                </p:selectOneMenu>
-                <p:commandButton 
-                    value="zmień"
-                    ajax="false"
-                    action="#{doctorBean.changeCurentSurgery()}"/>
             </p:panel>
             </h:form>
-            <ui:include src="/custom_views/common/WorkTimeView.xhtml"/>
+            
+            <h:form id="drugatab">
+                <p:panel header="Lekarze w przychodni"  id="pierdolero">
+                    <p:dataTable 
+                        id="doctorsdatalist"
+                        value="#{nurseBean.doctorsList}"
+                        var="doctor"
+                        selectionMode="single"
+                        selection="#{nurseBean.selectedDoctor}"
+                        rowKey="#{doctor.id}"
+                        lazy="true"
+                                 >
+                    <p:ajax event="rowSelect"   update="selectdoctorbutton"/>
+                    <p:ajax event="rowUnselect" update="selectdoctorbutton"/>
+                    
+                    
+                    <p:column headerText="Imie">
+                        <h:outputText value="#{doctor.firstName}"/>
+                    </p:column>
+                    <p:column headerText="Nazwisko">
+                        <h:outputText value="#{doctor.lastName}"/>
+                    </p:column>
+                    
+                    <f:facet name="footer">
+                        <p:commandButton 
+                            id="selectdoctorbutton"
+                            value="Wybierz"
+                            action="#{nurseBean.setDocftorforView(nurseBean.selectedDoctor)}"
+                            disabled="#{empty nurseBean.selectedDoctor}"
+                            update="@(.ui-datatable), :surgeryInfoHeader, :doctorInfoHeader ,:doctorInfoHeader"
+                            />
+                        
+                    </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
         </ui:define>
         
         <ui:define name="body">

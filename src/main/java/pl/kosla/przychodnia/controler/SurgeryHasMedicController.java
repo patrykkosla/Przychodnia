@@ -18,8 +18,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import pl.kosla.przychodnia.enums.Positione;
 import pl.kosla.przychodnia.model.Medic;
 import pl.kosla.przychodnia.model.Surgery;
+import static pl.kosla.przychodnia.model.SurgeryHasMedic_.positione;
 
 @Named("surgeryHasMedicController")
 @SessionScoped
@@ -121,6 +123,9 @@ public class SurgeryHasMedicController implements Serializable {
 
     public List<SurgeryHasMedic> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+    public List<SurgeryHasMedic> getDoctorsAvailableSelectOne() {
+        return getFacade().finaByPositineIsActive(Positione.DOCTOR , true);
     }
 
     @FacesConverter(forClass = SurgeryHasMedic.class)

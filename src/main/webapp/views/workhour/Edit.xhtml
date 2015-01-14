@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="WorkhourEditDlg" widgetVar="WorkhourEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditWorkhourTitle}">
+            <h:form id="WorkhourEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{workhourController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{workhourController.selected.id}" title="#{bundle.EditWorkhourTitle_id}" required="true" requiredMessage="#{bundle.EditWorkhourRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_monday}" for="monday" />
+                        <p:selectBooleanCheckbox id="monday" value="#{workhourController.selected.monday}" />
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_mondayType}" for="mondayType" />
+                        <p:inputText id="mondayType" value="#{workhourController.selected.mondayType}" title="#{bundle.EditWorkhourTitle_mondayType}" />
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_mondayStart}" for="mondayStart" />
+                        <p:calendar id="mondayStart" pattern="HH:mm:ss" value="#{workhourController.selected.mondayStart}" title="#{bundle.EditWorkhourTitle_mondayStart}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_mondayEnd}" for="mondayEnd" />
+                        <p:calendar id="mondayEnd" pattern="HH:mm:ss" value="#{workhourController.selected.mondayEnd}" title="#{bundle.EditWorkhourTitle_mondayEnd}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_mondayMaxApp}" for="mondayMaxApp" />
+                        <p:inputText id="mondayMaxApp" value="#{workhourController.selected.mondayMaxApp}" title="#{bundle.EditWorkhourTitle_mondayMaxApp}" />
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_tuesday}" for="tuesday" />
+                        <p:selectBooleanCheckbox id="tuesday" value="#{workhourController.selected.tuesday}" />
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_tuesdayType}" for="tuesdayType" />
+                        <p:inputText id="tuesdayType" value="#{workhourController.selected.tuesdayType}" title="#{bundle.EditWorkhourTitle_tuesdayType}" />
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_tuesdayStart}" for="tuesdayStart" />
+                        <p:calendar id="tuesdayStart" pattern="HH:mm:ss" value="#{workhourController.selected.tuesdayStart}" title="#{bundle.EditWorkhourTitle_tuesdayStart}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_tuesdayEnd}" for="tuesdayEnd" />
+                        <p:calendar id="tuesdayEnd" pattern="HH:mm:ss" value="#{workhourController.selected.tuesdayEnd}" title="#{bundle.EditWorkhourTitle_tuesdayEnd}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_tuesdayMaxApp}" for="tuesdayMaxApp" />
+                        <p:inputText id="tuesdayMaxApp" value="#{workhourController.selected.tuesdayMaxApp}" title="#{bundle.EditWorkhourTitle_tuesdayMaxApp}" />
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_wednesday}" for="wednesday" />
+                        <p:selectBooleanCheckbox id="wednesday" value="#{workhourController.selected.wednesday}" />
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_wednesdayType}" for="wednesdayType" />
+                        <p:inputText id="wednesdayType" value="#{workhourController.selected.wednesdayType}" title="#{bundle.EditWorkhourTitle_wednesdayType}" />
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_wednesdayStart}" for="wednesdayStart" />
+                        <p:calendar id="wednesdayStart" pattern="HH:mm:ss" value="#{workhourController.selected.wednesdayStart}" title="#{bundle.EditWorkhourTitle_wednesdayStart}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_wednesdayEnd}" for="wednesdayEnd" />
+                        <p:calendar id="wednesdayEnd" pattern="HH:mm:ss" value="#{workhourController.selected.wednesdayEnd}" title="#{bundle.EditWorkhourTitle_wednesdayEnd}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_wednesdayMaxApp}" for="wednesdayMaxApp" />
+                        <p:inputText id="wednesdayMaxApp" value="#{workhourController.selected.wednesdayMaxApp}" title="#{bundle.EditWorkhourTitle_wednesdayMaxApp}" />
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_thursday}" for="thursday" />
+                        <p:selectBooleanCheckbox id="thursday" value="#{workhourController.selected.thursday}" />
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_thursdayType}" for="thursdayType" />
+                        <p:inputText id="thursdayType" value="#{workhourController.selected.thursdayType}" title="#{bundle.EditWorkhourTitle_thursdayType}" />
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_thursdayStart}" for="thursdayStart" />
+                        <p:calendar id="thursdayStart" pattern="HH:mm:ss" value="#{workhourController.selected.thursdayStart}" title="#{bundle.EditWorkhourTitle_thursdayStart}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_thursdayEnd}" for="thursdayEnd" />
+                        <p:calendar id="thursdayEnd" pattern="HH:mm:ss" value="#{workhourController.selected.thursdayEnd}" title="#{bundle.EditWorkhourTitle_thursdayEnd}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_thursdayMaxApp}" for="thursdayMaxApp" />
+                        <p:inputText id="thursdayMaxApp" value="#{workhourController.selected.thursdayMaxApp}" title="#{bundle.EditWorkhourTitle_thursdayMaxApp}" />
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_friday}" for="friday" />
+                        <p:selectBooleanCheckbox id="friday" value="#{workhourController.selected.friday}" />
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_fridayType}" for="fridayType" />
+                        <p:inputText id="fridayType" value="#{workhourController.selected.fridayType}" title="#{bundle.EditWorkhourTitle_fridayType}" />
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_fridayStart}" for="fridayStart" />
+                        <p:calendar id="fridayStart" pattern="HH:mm:ss" value="#{workhourController.selected.fridayStart}" title="#{bundle.EditWorkhourTitle_fridayStart}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_fridayEnd}" for="fridayEnd" />
+                        <p:calendar id="fridayEnd" pattern="HH:mm:ss" value="#{workhourController.selected.fridayEnd}" title="#{bundle.EditWorkhourTitle_fridayEnd}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_fridayMaxApp}" for="fridayMaxApp" />
+                        <p:inputText id="fridayMaxApp" value="#{workhourController.selected.fridayMaxApp}" title="#{bundle.EditWorkhourTitle_fridayMaxApp}" />
+                        <p:outputLabel value="#{bundle.EditWorkhourLabel_surgeryHasMedicId}" for="surgeryHasMedicId" />
+                        <p:selectOneMenu id="surgeryHasMedicId" value="#{workhourController.selected.surgeryHasMedicId}" required="true" requiredMessage="#{bundle.EditWorkhourRequiredMessage_surgeryHasMedicId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{surgeryHasMedicController.itemsAvailableSelectOne}"
+                                           var="surgeryHasMedicIdItem"
+                                           itemValue="#{surgeryHasMedicIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{workhourController.update}" value="#{bundle.Save}" update="display,:WorkhourListForm:datalist,:growl" oncomplete="handleSubmit(args, 'WorkhourEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="WorkhourEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

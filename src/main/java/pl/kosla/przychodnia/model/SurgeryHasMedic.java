@@ -25,6 +25,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import pl.kosla.przychodnia.enums.Positione;
 
 /**
  *
@@ -42,6 +43,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SurgeryHasMedic.findByOnHoliday", query = "SELECT s FROM SurgeryHasMedic s WHERE s.onHoliday = :onHoliday"),
     @NamedQuery(name = "SurgeryHasMedic.findByCreationTime", query = "SELECT s FROM SurgeryHasMedic s WHERE s.creationTime = :creationTime"),
     @NamedQuery(name = "SurgeryHasMedic.findByStartDate", query = "SELECT s FROM SurgeryHasMedic s WHERE s.startDate = :startDate"), 
+   @NamedQuery(name = "SurgeryHasMedic.finaByPositineIsActive", 
+   query = "SELECT s FROM SurgeryHasMedic s WHERE s.positione = :positione AND  s.isAtive = :isAtive"), 
    @NamedQuery(name = "SurgeryHasMedic.findSugeryForMedic",
    query = "SELECT shm.surgeryId FROM SurgeryHasMedic shm WHERE shm.medicId = :medicId"),
    @NamedQuery(name = "SurgeryHasMedic.findMedicForSurgery",
@@ -61,10 +64,6 @@ public class SurgeryHasMedic implements Serializable {
     @Enumerated(EnumType.STRING)
     private Positione positione;
     
-    public static enum Positione {
-      Doctor,
-      Nurse;
-   }
     @Column(name = "is_ative")
     private Boolean isAtive;
     private Boolean onHoliday;

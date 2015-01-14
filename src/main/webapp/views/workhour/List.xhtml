@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+   <ui:composition template="/resources/template/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListWorkhourTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="WorkhourListForm">
+                <p:panel header="#{bundle.ListWorkhourTitle}">
+                    <p:dataTable id="datalist" value="#{workhourController.items}" var="item"
+                                 selectionMode="single" selection="#{workhourController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_monday}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.monday}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_mondayType}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.mondayType}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_mondayStart}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.mondayStart}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_mondayEnd}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.mondayEnd}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_mondayMaxApp}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.mondayMaxApp}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_tuesday}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.tuesday}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_tuesdayType}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tuesdayType}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_tuesdayStart}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tuesdayStart}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_tuesdayEnd}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tuesdayEnd}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_tuesdayMaxApp}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tuesdayMaxApp}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_wednesday}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.wednesday}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_wednesdayType}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.wednesdayType}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_wednesdayStart}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.wednesdayStart}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_wednesdayEnd}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.wednesdayEnd}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_wednesdayMaxApp}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.wednesdayMaxApp}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_thursday}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.thursday}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_thursdayType}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.thursdayType}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_thursdayStart}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.thursdayStart}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_thursdayEnd}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.thursdayEnd}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_thursdayMaxApp}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.thursdayMaxApp}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_friday}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.friday}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_fridayType}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fridayType}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_fridayStart}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fridayStart}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_fridayEnd}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fridayEnd}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_fridayMaxApp}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.fridayMaxApp}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_surgeryHasMedicId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.surgeryHasMedicId}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{workhourController.prepareCreate}" update=":WorkhourCreateForm" oncomplete="PF('WorkhourCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":WorkhourViewForm" oncomplete="PF('WorkhourViewDialog').show()" disabled="#{empty workhourController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":WorkhourEditForm" oncomplete="PF('WorkhourEditDialog').show()" disabled="#{empty workhourController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{workhourController.destroy}" update=":growl,datalist" disabled="#{empty workhourController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

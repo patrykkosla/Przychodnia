@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import pl.kosla.przychodnia.enums.Positione;
 import pl.kosla.przychodnia.model.Medic;
 import pl.kosla.przychodnia.model.Surgery;
 import pl.kosla.przychodnia.model.SurgeryHasMedic;
@@ -58,5 +59,11 @@ public class SurgeryHasMedicFacade extends AbstractFacade<SurgeryHasMedic> {
 //        //q.setParameter("medicId", medic );
 //        //return q.getResultList();
 //    }
-
+public List<SurgeryHasMedic> finaByPositineIsActive(Positione positione , boolean isAtive){
+      TypedQuery<SurgeryHasMedic> q = em.createNamedQuery( "SurgeryHasMedic.finaByPositineIsActive", SurgeryHasMedic.class);
+      q.setParameter("positione", positione);
+      q.setParameter("isAtive", isAtive);
+     return q.getResultList();
+   
+}
 }    

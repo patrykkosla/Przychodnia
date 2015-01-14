@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/resources/template/two_row_template.xhtml">
+    <ui:composition template="/resources/template/doctor_template.xhtml">
 
 
         <ui:define name="title">
@@ -16,19 +16,14 @@
          
             <h:form id="SurgeryMedicListForm">
                 <h:outputText   value="Witaj  #{staffBean.medic.firstName} #{staffBean.medic.lastName}"/><br/>
-
-            </h:form>
-            
-            <h:form id="drugatab">
-
+                <h:outputText   value="Wybrana przychodnia  #{doctorBean.curentSurgery.name} "/><br/>
+            <p:spacer></p:spacer>
+            <p:growl id="growl" showDetail="true" sticky="true" />
             </h:form>
         </ui:define>
         
         <ui:define name="body">
-            <h:form>
-              
-                
-            </h:form>
+            <ui:include src="/custom_views/staffviews/PatientsListView.xhtml"/>
         </ui:define>
     </ui:composition>
 
