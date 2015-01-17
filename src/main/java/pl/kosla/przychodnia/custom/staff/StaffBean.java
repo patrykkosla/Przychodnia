@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
+import pl.kosla.przychodnia.enums.MedicType;
 import pl.kosla.przychodnia.model.Medic;
 import pl.kosla.przychodnia.session.MedicFacade;
 import pl.kosla.przychodnia.utilis.SessionUtil;
@@ -78,10 +79,10 @@ public class StaffBean implements Serializable {
             ((HttpServletResponse)facesContext.getExternalContext().getResponse()).addCookie(btpasswd);
             ((HttpServletResponse)facesContext.getExternalContext().getResponse()).addCookie(btremember);
             
-            if(medic.getType().equals("doc")){
+            if(medic.getType().equals(MedicType.DOCTOR)){
                role = "doc";
             }
-            if(medic.getType().equals("nurse")){
+            if(medic.getType().equals(MedicType.NURSE)){
                role = "nurse";
             }
        }else {

@@ -7,8 +7,13 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-
-        <p:dialog id="SickLeaveCreateDlg" widgetVar="SickLeaveCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSickLeaveTitle}">
+        <p:dialog 
+            id="SickLeaveCreateDlg"
+            widgetVar="SickLeaveCreateDialog" 
+            modal="true"
+            resizable="false" 
+            appendTo="@(body)" 
+            header="#{bundle.CreateSickLeaveTitle}">
             <h:form id="SickLeaveCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{sickLeaveController.selected != null}">
@@ -17,7 +22,12 @@
                         <p:outputLabel value="#{bundle.CreateSickLeaveLabel_dateTo}" for="dateTo" />
                         <p:calendar id="dateTo" pattern="MM/dd/yyyy" value="#{sickLeaveController.selected.dateTo}" title="#{bundle.EditSickLeaveTitle_dateTo}"  showOn="button"/>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{appoitmentBean.createSickLeave}" value="#{bundle.Save}" update="display,:SickLeaveAppForm:sl_datalist,:growl" oncomplete="handleSubmit(args,'SickLeaveCreateDialog');"/>
+                    <p:commandButton
+                        actionListener="#{appoitmentBean.createSickLeave}" 
+                        value="#{bundle.Save}"
+                        update="display,:SickLeaveAppForm:sl_datalist"
+                        oncomplete="handleSubmit(args,'SickLeaveCreateDialog');"
+                        />
                     <p:commandButton value="#{bundle.Cancel}" onclick="SickLeaveCreateDialog.hide()"/>
                 </h:panelGroup>
             </h:form>

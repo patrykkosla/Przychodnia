@@ -30,13 +30,16 @@
                     id="patientsListTable"
                     value="#{patientsListBean.patiensList}"
                     var="patinet"
-                    selection="#{patientsListBean.selectedPatient}"
-                    selectionMode="singel"
+                    selectionMode="single"  selection="#{patientsListBean.selectedPatient}"
                     rowKey="#{patinet.patientId}"
                     lazy="true"
+                    paginator="true"
+                    rows="25"
+                    rowsPerPageTemplate="25,50,75,100,125"
                     >
-                    <p:ajax event="rowSelect"   update="selectpatientbutton"/>
-                    <p:ajax event="rowUnselect" update="selectpatientbutton"/>
+                    <p:ajax event="rowSelect"   update="selectpatientbutton wizytapatientbutton"/>
+                    <p:ajax event="rowUnselect" update="selectpatientbutton wizytapatientbutton"/>
+                    
                     <p:column headerText="Imie">
                         <h:outputText value="#{patinet.firstName}"/>
                     </p:column>
@@ -50,9 +53,15 @@
                         <p:commandButton 
                             id="selectpatientbutton"
                             value="Wybierz"
-                            action="#{doctorBean.prepatePatientView(patientsListBean.selectedPatient)}"
+                            action="#{patientsListBean.prepatePatientView(patientsListBean.selectedPatient)}"
                             disabled="#{empty patientsListBean.selectedPatient}"
-                            />
+                        />
+                        <p:commandButton 
+                            id="wizytapatientbutton"
+                            value="Wizyta"
+                            action="#{patientsListBean.prepatePatientAppoitment(patientsListBean.selectedPatient)}"
+                            disabled="#{empty patientsListBean.selectedPatient}"
+                        />
                         
                     </f:facet>
                     

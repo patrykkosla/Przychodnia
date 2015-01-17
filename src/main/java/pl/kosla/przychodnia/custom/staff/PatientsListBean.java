@@ -3,6 +3,7 @@
  */
 package pl.kosla.przychodnia.custom.staff;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import pl.kosla.przychodnia.model.Patient;
 import pl.kosla.przychodnia.model.Surgery;
 import pl.kosla.przychodnia.session.PatientFacade;
+import static pl.kosla.przychodnia.utilis.FacesUtils.addToSession;
 import static pl.kosla.przychodnia.utilis.FacesUtils.getFromSession;
 import pl.kosla.przychodnia.utilis.SessionUtil;
 
@@ -23,7 +25,7 @@ import pl.kosla.przychodnia.utilis.SessionUtil;
  */
 @Named(value = "patientsListBean")
 @ViewScoped
-public class PatientsListBean {
+public class PatientsListBean implements Serializable{
 
    /**
     * Creates a new instance of PatientsListBean
@@ -39,8 +41,14 @@ public class PatientsListBean {
     private void init() {  
 //      HttpSession session = SessionUtil.getSession();
 //      session.getAttribute(null)
+       
       Surgery curentSurgery = (Surgery) getFromSession("curentSurgery");
-      patiensList = patientFacade.getPatiensForDoctro(sf.getMedic().getId(), curentSurgery.getId(), true);
+      if(curentSurgery != null && curentSurgery.getId() != null){
+         patiensList = patientFacade.getPatiensForDoctro(sf.getMedic().getId(), curentSurgery.getId(), true);
+      }else{
+         System.out.println("patientsListBean: brak listy");
+      }
+     
     }
    private void setPatientsList(){
       
@@ -74,7 +82,13 @@ public class PatientsListBean {
       session.setAttribute("curentPatient", patient.getPatientId());
       
       
-      return "/staff/patientview.xhrml";
+      return "/staff/patientview.xhtml";
+   } 
+   public String prepatePatientAppoitment(Patient patient){
+      
+      addToSession("curentPatient", patient);
+      addToSession("newappoitment", true);
+      return "/staff/appoitment.xhtml";
    } 
     
     

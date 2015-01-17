@@ -16,7 +16,8 @@ import pl.kosla.przychodnia.model.SickLeave;
 import pl.kosla.przychodnia.session.AppoitmentFacade;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import pl.kosla.przychodnia.controler.MedicineController;
-import pl.kosla.przychodnia.model.Medicine;
+import pl.kosla.przychodnia.enums.MedicType;
+import pl.kosla.przychodnia.model.Patient;
 import pl.kosla.przychodnia.model.Perscripion;
 import pl.kosla.przychodnia.session.PerscripionFacade;
 import static pl.kosla.przychodnia.utilis.FacesUtils.getFromSession;
@@ -36,14 +37,12 @@ public class AppoitmentBean implements Serializable {
     @EJB private AppoitmentFacade appoitmentFacade;
     @EJB private pl.kosla.przychodnia.session.SickLeaveFacade sickLeaveFacade;
     @EJB private PerscripionFacade perscripionFacade;
+ 
     
     private List<SickLeave> sickLeaveItems = null;
     private SickLeave sickLeaveSelected;
-    private List<Perscripion> perscripionItems = null;
+    private List<Perscripion> perscripionItems;
     private Perscripion perscripionSelected;
-    
-    
-    
     
    /**
     * Creates a new instance of AppoitmentBean
@@ -54,10 +53,25 @@ public class AppoitmentBean implements Serializable {
    }
    @PostConstruct
    private void init() {  
-      if(sf.getMedic() != null && getFromSession("CurentAppId") != null ){
-         curentAppoitment = appoitmentFacade.findById( (Integer) getFromSession("CurentAppId") );
-         sickLeaveItems = (List<SickLeave>) curentAppoitment.getSickLeaveCollection();
+      if(sf.getMedic() != null){ //&& sf.getMedic().getType().equals(MedicType.DOCTOR)
+            if( getFromSession("CurentAppId") != null ){
+               
+               
+               curentAppoitment = appoitmentFacade.findById( (Integer) getFromSession("CurentAppId") );
+               //sprawdzanie czy wizyta z rezerwacji czy przegląd lub edycja 
+              // sickLeaveItems = (List<SickLeave>) curentAppoitment.getSickLeaveCollection();
+               
+            }else if(getFromSession("newappoitment").equals(true) && getFromSession("curentPatient") != null && sf.getMedic().getType().equals(MedicType.DOCTOR) ){//nowa wizyta
+               curentAppoitment = new Appoitment();
+               curentAppoitment.setMedicId(sf.getMedic());
+               curentAppoitment.setPatientId( (Patient) getFromSession("curentPatient") );
+               
+                  
+            }
+               
+         
       }
+
    }
    public void refresch(){
       sickLeaveItems = (List<SickLeave>) curentAppoitment.getSickLeaveCollection();

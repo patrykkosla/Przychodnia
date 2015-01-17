@@ -21,11 +21,11 @@
             <p:layoutUnit position="north" size="65" header="#{bundle.AppName}">
                   <h:form id="menuForm">
                     <p:menubar>
-                        <p:menuitem value="#{bundle.Home}" outcome="/home" icon="ui-icon-home"/>
-                        <p:menuitem value="#{stf.SelectSurgery}" outcome="/home" icon="ui-icon-home"/>
+                        <p:menuitem value="#{bundle.Home}" outcome="/staff/doctor.xhtml" icon="ui-icon-home"/>
+                        <p:menuitem value="#{stf.SelectSurgery}" outcome="/staff/doctor.xhtml" icon="ui-icon-home"/>
                         <p:submenu label="Listy" icon="ui-icon-gear">
-                            <p:menuitem value="Lista recept"  outcome="/staff/patents.xhtml"  />
-                            <p:menuitem value="Lista pacjentów" url="#" />
+                            <p:menuitem value="Lista recept"   />
+                            <p:menuitem value="Lista pacjentów" outcome="/doctor/patients.xhtml" />
                             <p:menuitem value="Lista zwolnień lekarskich" url="#" />
                             <p:menuitem value="Godzniny pracy" outcome="/views/workhour/List" />
                             <p:menuitem value="addres" outcome="/views/addres/List" />
@@ -34,7 +34,7 @@
                             <p:commandButton  value="#{msg.Logout}" icon="ui-icon-extlink" action="#{staffBean.logout()}"/>
                         </f:facet>
                     </p:menubar>
-                      
+  
                 </h:form>              
                
             </p:layoutUnit>

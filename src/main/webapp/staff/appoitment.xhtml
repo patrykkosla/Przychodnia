@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
 
     <ui:composition template="/resources/template/appoitment_template.xhtml">
 
@@ -15,7 +16,7 @@
         <ui:define name="west_left_column">
          
             <h:form id="PerscripionListAppForm">
-                <p:panel header="Recepty">
+                <p:panel header="Recepty" >
                     <p:dataTable 
                          id="recepty_datalist" 
                          value="#{appoitmentBean.perscripionItems}" 
@@ -39,13 +40,11 @@
                         icon="ui-icon-plus" 
                         value="Wystaw recepte"
                         actionListener="#{appoitmentBean.prepareCreatePerscripion()}"
-                        update=":SickLeaveCreateForm"
-                        oncomplete="PF('SickLeaveCreateDialog').show()"
                         />
                 </p:panel>
             </h:form>    
 
-            <h:form id="SickLeaveAppList">
+            <h:form id="SickLeaveAppForm">
                 <p:panel header="Zwolnienia lekarskie">
                     <p:dataTable 
                          id="sl_datalist" 
@@ -81,6 +80,9 @@
         <ui:define name="east_right_column" >
          
             <h:form id="fdgs">
+
+                <pe:analogClock/>
+
                 <h:outputText value="#{appoitmentBean.curentAppoitment.patientId.firstName} #{appoitmentBean.curentAppoitment.patientId.lastName}"/>
                 <h:outputText  value="#{appoitmentBean.curentAppoitment.patientId.bornDate}" />
                 
@@ -88,9 +90,10 @@
             </h:form>
         </ui:define>       
         <ui:define name="body">
-           <p:panel  id="curentSurgeryInfo" header="#{appoitmentBean.curentAppoitment.patientId.firstName} #{appoitmentBean.curentAppoitment.patientId.lastName} " rendered="#{appoitmentBean.curentAppoitment}">
+           <p:panel  id="curentSurgeryInfo" header="#{appoitmentBean.curentAppoitment.patientId.firstName} #{appoitmentBean.curentAppoitment.patientId.lastName}" 
+                     rendered="#{not empty appoitmentBean.curentAppoitment}">
                 <h:form>           
-                    <p:editor id="editor" widgetVar="editorWidget" value="#{appoitmentBean.curentAppoitment.note}" width="600" />
+                    <p:editor id="editor" widgetVar="editorWidget" value="#{appoitmentBean.curentAppoitment.note}" width="800" />
 
                    <h:panelGrid columns="2" style="margin-top: 10px">
                        <p:commandButton 
@@ -99,7 +102,11 @@
                            actionListener="#{appoitmentBean.addNote}"
                            />
 
-                       <p:commandButton value="Clear" type="button" onclick="PF('editorWidget').clear();" icon="ui-icon-close" />
+                       <p:commandButton 
+                           value="Clear" 
+                           type="button" 
+                           onclick="PF('editorWidget').clear();" 
+                           icon="ui-icon-close" />
                    </h:panelGrid>
                </h:form> 
            </p:panel>

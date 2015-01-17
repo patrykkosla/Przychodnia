@@ -52,16 +52,28 @@ public class DoctorBean implements Serializable {
    @PostConstruct
     private void init() {  
       if(sf.getMedic() != null){
-        curentSurgery = (Surgery) getFromSession("curentSurgery");
-        surgeryList = surgeryHasMedicFacade.findAllSurgeryFormMedicStatus(sf.getMedic().getId(), true);
-        Cookie cookie = getCookie("curentSurgery");
+         surgeryList = surgeryHasMedicFacade.findAllSurgeryFormMedicStatus(sf.getMedic().getId(), true);
+         
+         
+         
+         Cookie cookie = getCookie("curentSurgery");
         if(cookie != null && cookie.getValue() != null){
            for(Surgery s: surgeryList){
               if( (s.getId().compareTo(Integer.parseInt( cookie.getValue()))) == 0){
                  curentSurgery = s;
+                 addToSession("curentSurgery", curentSurgery);
+                 System.out.println("doctorBean: z ciastka");
               }
            }  
         }
+         
+         curentSurgery = (Surgery) getFromSession("curentSurgery");
+         if(curentSurgery != null){
+            System.out.println("doctorBean : z sesj");
+         }
+        
+        
+
         if(curentSurgery != null){
            //pobrać listę pacjentów
            //patiensList = patientFacade.getPatiensForDoctro(sf.getMedic().getId(), curentSurgery.getId(), true);

@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import pl.kosla.przychodnia.enums.MedicType;
 import pl.kosla.przychodnia.model.Medic;
 
 /**
@@ -33,7 +34,7 @@ public class MedicFacade extends AbstractFacade<Medic> {
          query.setParameter("surgeryId", id);
          query.setParameter("isAtive", true);
          query.setParameter("enable", true);
-         query.setParameter("type", "doc");
+         query.setParameter("type", MedicType.DOCTOR);
         List<Medic> ListaLekarzy = query.getResultList();
         
         return ListaLekarzy;

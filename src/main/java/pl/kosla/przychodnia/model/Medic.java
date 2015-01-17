@@ -9,6 +9,8 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import pl.kosla.przychodnia.enums.MedicType;
 
 /**
  *
@@ -54,8 +57,8 @@ public class Medic extends Persone implements Serializable {
     @Basic(optional = false)
     private Integer id;
     
-    @Size(max = 9)
-    private String type;
+   @Enumerated(EnumType.STRING)
+    private MedicType type;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "medicId")
     private Collection<Appoitment> appoitmentCollection;
@@ -98,11 +101,11 @@ public class Medic extends Persone implements Serializable {
         this.id = id;
     }
 
-    public String getType() {
+    public MedicType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(MedicType type) {
         this.type = type;
     }
 
