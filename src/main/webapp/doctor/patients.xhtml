@@ -59,6 +59,7 @@
                         <p:commandButton 
                             id="wizytapatientbutton"
                             value="Wizyta"
+                            ajax="false"
                             action="#{patientsListBean.prepatePatientAppoitment(patientsListBean.selectedPatient)}"
                             disabled="#{empty patientsListBean.selectedPatient}"
                         />

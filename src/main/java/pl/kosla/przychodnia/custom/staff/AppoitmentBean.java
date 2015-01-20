@@ -15,8 +15,10 @@ import pl.kosla.przychodnia.model.Appoitment;
 import pl.kosla.przychodnia.model.SickLeave;
 import pl.kosla.przychodnia.session.AppoitmentFacade;
 import static org.apache.commons.lang3.RandomStringUtils.random;
+import pl.kosla.przychodnia.controler.LabTestOrderController;
 import pl.kosla.przychodnia.controler.MedicineController;
 import pl.kosla.przychodnia.enums.MedicType;
+import pl.kosla.przychodnia.model.LabTestOrder;
 import pl.kosla.przychodnia.model.Patient;
 import pl.kosla.przychodnia.model.Perscripion;
 import pl.kosla.przychodnia.session.PerscripionFacade;
@@ -33,6 +35,7 @@ public class AppoitmentBean implements Serializable {
     @Inject private StaffBean sf;
     @Inject private AppoitmentController apc;
     @Inject private MedicineController medicineController;
+    @Inject private LabTestOrderController labTestOrderController;
     
     @EJB private AppoitmentFacade appoitmentFacade;
     @EJB private pl.kosla.przychodnia.session.SickLeaveFacade sickLeaveFacade;
@@ -43,6 +46,8 @@ public class AppoitmentBean implements Serializable {
     private SickLeave sickLeaveSelected;
     private List<Perscripion> perscripionItems;
     private Perscripion perscripionSelected;
+
+    
     
    /**
     * Creates a new instance of AppoitmentBean
@@ -149,8 +154,10 @@ public class AppoitmentBean implements Serializable {
    public void setMedicineController(MedicineController medicineController) {
       this.medicineController = medicineController;
    }
+   public List<LabTestOrder> getLabExamList(){
+    return  labTestOrderController.getOrdersAppList(curentAppoitment.getId());
 
-
+   }
    
    
    

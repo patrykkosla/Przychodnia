@@ -79,7 +79,7 @@ public class PatientsListBean implements Serializable{
    }
    public String prepatePatientView(Patient patient){
       HttpSession session = SessionUtil.getSession();
-      session.setAttribute("curentPatient", patient.getPatientId());
+      session.setAttribute("curentPatient", patient);
       
       
       return "/staff/patientview.xhtml";
@@ -88,7 +88,7 @@ public class PatientsListBean implements Serializable{
       
       addToSession("curentPatient", patient);
       addToSession("newappoitment", true);
-      return "/staff/appoitment.xhtml";
+      return "/staff/appoitment.xhtml?faces-redirect=true";
    } 
     
     

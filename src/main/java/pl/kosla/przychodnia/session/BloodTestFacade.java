@@ -3,9 +3,11 @@
  */
 package pl.kosla.przychodnia.session;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import pl.kosla.przychodnia.model.BloodTest;
 
 /**
@@ -24,6 +26,13 @@ public class BloodTestFacade extends AbstractFacade<BloodTest> {
 
     public BloodTestFacade() {
         super(BloodTest.class);
+    }
+    public List<BloodTest> getPatintsResults(int patinetId, int amount){     
+        TypedQuery<BloodTest> q = em.createNamedQuery("BloodTest.findByPatient", BloodTest.class);
+        q.setParameter("patientId", patinetId);
+        q.setMaxResults(amount);
+               
+        return q.getResultList();        
     }
     
 }

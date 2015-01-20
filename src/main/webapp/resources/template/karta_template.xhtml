@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+        <h:outputStylesheet library="css" name="main.css"/>
+    </h:head>
+
+    <h:body>
+
+        <p:growl id="growl" life="3000" />
+
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="65" header="#{bundle.AppName}">
+                  <h:form id="menuForm">
+                    <p:menubar>
+                        <p:menuitem value="#{bundle.Home}" outcome="/staff/doctor.xhtml" icon="ui-icon-home"/>
+                        <p:menuitem value="#{stf.SelectSurgery}" outcome="/staff/doctor.xhtml" icon="ui-icon-home"/>
+                        <p:submenu label="Listy" icon="ui-icon-gear">
+                            <p:menuitem value="Lista recept"   />
+                            <p:menuitem value="Lista pacjentów" outcome="/doctor/patients.xhtml" />
+                            <p:menuitem value="Lista zwolnień lekarskich" url="#" />
+                            <p:menuitem value="Godzniny pracy" outcome="/views/workhour/List" />
+                            <p:menuitem value="addres" outcome="/views/addres/List" />
+                        </p:submenu>
+                        <f:facet name="options">
+                            <p:commandButton  value="#{msg.Logout}" icon="ui-icon-extlink" action="#{staffBean.logout()}"/>
+                        </f:facet>
+                    </p:menubar>
+                </h:form>              
+            </p:layoutUnit>
+            
+            <p:layoutUnit position="west" size="300" header="" >
+                <ui:insert name="west_left_column"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="east" size="300"  >
+                <ui:insert name="east_right_column"/>
+            </p:layoutUnit>
+            
+            <p:layoutUnit position="south" size="60">
+                <ui:insert name="footer"/>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center" header="Wizyty">
+                <ui:insert name="body"/>
+            </p:layoutUnit>
+
+        </p:layout>
+
+    </h:body>
+
+</html>

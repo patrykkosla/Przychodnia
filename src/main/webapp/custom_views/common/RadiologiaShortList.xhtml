@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+            <h:form id="RadiologiaListForm">
+                <p:panel header="#{bundle.ListRadiologiaTitle}">
+                    <p:dataTable id="datalist" value="#{kartaBean.radiologiasList}" var="RadiologiaItem"
+                                 selectionMode="single" selection="#{radiologiaController.selected}"
+                                 rowKey="#{RadiologiaItem.id}"
+                                    >
+
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRadiologiaTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRadiologiaTitle_examDate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.examDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRadiologiaTitle_descriptione}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descriptione}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListRadiologiaTitle_imagesAmount}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.imagesAmount}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{radiologiaController.prepareCreate}" update=":RadiologiaCreateForm" oncomplete="PF('RadiologiaCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":RadiologiaViewForm" oncomplete="PF('RadiologiaViewDialog').show()" disabled="#{empty radiologiaController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":RadiologiaEditForm" oncomplete="PF('RadiologiaEditDialog').show()" disabled="#{empty radiologiaController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{radiologiaController.destroy}" update=":growl,datalist" disabled="#{empty radiologiaController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+    </ui:composition>
+
+</html>

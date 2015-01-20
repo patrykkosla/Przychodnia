@@ -73,7 +73,40 @@
                         />
                 </p:panel>
             </h:form>
-                
+            <h:form>
+                <p:panel header="Badania labolatoryjne">
+                    <p:dataTable 
+                         id="app_lab_datalist" 
+                         value="#{appoitmentBean.labExamList}" 
+                         var="labitem"
+                         >
+                         <p:column  headerText="Czerwone krwinki" >
+                             <h:outputText value="#{labitem.labBlodCells}"/>
+                         </p:column>
+                         <p:column  headerText="Morfologia krwi" >
+                             <h:outputText value="#{labitem.labBlodMorfologia}"/>
+                         </p:column>
+                         <p:column  headerText="OB" >
+                             <h:outputText value="#{labitem.labBlodOb}"/>
+                         </p:column>
+                         <p:column  headerText="Badanie moczu" >
+                             <h:outputText value="#{labitem.labUrineGeneralTest}"/>
+                         </p:column>
+                         <p:column  headerText="Badanie kału" >
+                             <h:outputText value="#{labitem.labFecesGeneralTest}"/>
+                         </p:column>
+                        
+                    </p:dataTable> 
+                    
+                    <p:commandButton
+                        icon="ui-icon-plus" 
+                        value="Zleć badanie"
+                        actionListener="#{appoitmentBean.prepareCreateSickLeave()}"
+                        update=":SickLeaveCreateForm"
+                        oncomplete="PF('SickLeaveCreateDialog').show()"
+                        />                    
+                </p:panel>
+            </h:form>    
             <ui:include src="/custom_views/staffviews/CreateSickLeave.xhtml"/>
         </ui:define>
         

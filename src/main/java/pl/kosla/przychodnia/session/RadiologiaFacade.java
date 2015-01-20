@@ -3,9 +3,11 @@
  */
 package pl.kosla.przychodnia.session;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import pl.kosla.przychodnia.model.Radiologia;
 
 /**
@@ -25,5 +27,11 @@ public class RadiologiaFacade extends AbstractFacade<Radiologia> {
     public RadiologiaFacade() {
         super(Radiologia.class);
     }
-    
+     public List<Radiologia> getPatintsResults(int patinetId, int amount){     
+        TypedQuery<Radiologia> q = em.createNamedQuery("Radiologia.findByPatient", Radiologia.class);
+        q.setParameter("patientId", patinetId);
+        q.setMaxResults(amount);
+               
+        return q.getResultList();        
+    }   
 }

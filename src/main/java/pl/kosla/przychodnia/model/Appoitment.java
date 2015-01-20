@@ -65,10 +65,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Appoitment.AllAppForSingelDay", 
     query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId AND a.appoitmentDate =:appDate  ORDER BY a.queuePositione "),
     @NamedQuery(name = "Appoitment.ttt", 
-    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId AND a.appoitmentDate =:appDate AND a.patientId.surgeryId.id =:surgeryId ORDER BY a.queuePositione "),
-    
-    @NamedQuery(name = "Appoitment.findByRadiologyTestOrder", query = "SELECT a FROM Appoitment a WHERE a.radiologyTestOrder = :radiologyTestOrder"),
-    @NamedQuery(name = "Appoitment.findByBlodTestOrder", query = "SELECT a FROM Appoitment a WHERE a.blodTestOrder = :blodTestOrder")})
+    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId AND a.appoitmentDate =:appDate AND a.patientId.surgeryId.id =:surgeryId ORDER BY a.queuePositione ")})
 public class Appoitment implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -98,12 +95,6 @@ public class Appoitment implements Serializable {
     @Lob
     @Size(max = 65535)
     private String note;
-    @Size(max = 220)
-    @Column(name = "radiology_test_order")
-    private String radiologyTestOrder;
-    @Size(max = 45)
-    @Column(name = "blod_test_order")
-    private String blodTestOrder;
     @JoinColumn(name = "patient_id", referencedColumnName = "patient_id")
     @ManyToOne(optional = false)
     private Patient patientId;
@@ -120,7 +111,11 @@ public class Appoitment implements Serializable {
     private Collection<Diagnose> diagnoseCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "appoitmentId")
     private Collection<Diagnose> perscripionCollection;
-
+   @OneToMany(cascade = CascadeType.ALL, mappedBy = "appoitmentId")
+   private Collection<RadiologyExamOrder> radiologyExamOrderCollection;
+   @OneToMany(cascade = CascadeType.ALL, mappedBy = "appoitmentId")
+   private Collection<LabTestOrder> labTestOrderCollection;
+   
     public Appoitment() {
     }
 
@@ -176,22 +171,6 @@ public class Appoitment implements Serializable {
         this.note = note;
     }
 
-    public String getRadiologyTestOrder() {
-        return radiologyTestOrder;
-    }
-
-    public void setRadiologyTestOrder(String radiologyTestOrder) {
-        this.radiologyTestOrder = radiologyTestOrder;
-    }
-
-    public String getBlodTestOrder() {
-        return blodTestOrder;
-    }
-
-    public void setBlodTestOrder(String blodTestOrder) {
-        this.blodTestOrder = blodTestOrder;
-    }
-
     public Patient getPatientId() {
         return patientId;
     }
@@ -244,6 +223,23 @@ public class Appoitment implements Serializable {
       this.perscripionCollection = perscripionCollection;
    }
 
+   public Collection<RadiologyExamOrder> getRadiologyExamOrderCollection() {
+      return radiologyExamOrderCollection;
+   }
+
+   public void setRadiologyExamOrderCollection(Collection<RadiologyExamOrder> radiologyExamOrderCollection) {
+      this.radiologyExamOrderCollection = radiologyExamOrderCollection;
+   }
+
+   public Collection<LabTestOrder> getLabTestOrderCollection() {
+      return labTestOrderCollection;
+   }
+
+   public void setLabTestOrderCollection(Collection<LabTestOrder> labTestOrderCollection) {
+      this.labTestOrderCollection = labTestOrderCollection;
+   }
+
+   
     @Override
     public int hashCode() {
         int hash = 0;

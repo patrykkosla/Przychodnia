@@ -29,8 +29,7 @@ import pl.kosla.przychodnia.session.AppoitmentFacade;
 public class HomePatientBean implements Serializable{
     private static final long serialVersionUID = 1L;
     @Inject private PatientBean pb;
-    @EJB
-    private AppoitmentFacade appoitmentFacade;
+    @EJB private AppoitmentFacade appoitmentFacade;
     
     private Patient p;
     private Surgery selectedSurgery;
