@@ -21,6 +21,7 @@
                          id="recepty_datalist" 
                          value="#{appoitmentBean.perscripionItems}" 
                          var="pitem"
+                         
                          >
                         <p:column  headerText="Nazwa" >
                             <h:outputText value="#{pitem.medicineFk.name}"/>
@@ -123,6 +124,37 @@
             </h:form>
         </ui:define>       
         <ui:define name="body">
+              <h:form id="DiagnoseListForm">
+                <p:panel header="Diagnozy">
+                    <p:dataTable id="datalist" value="#{diagnoseController.items}" var="item"
+                                 selectionMode="single" selection="#{diagnoseController.selected}"
+                                 rowKey="#{item.id}"
+                                 >
+                        <p:ajax event="rowSelect"   update="createDiagnoseButton"/>
+                        <p:ajax event="rowUnselect" update="createDiagnoseButton"/>
+                        <p:column headerText="Diagnoza">
+                            <h:outputText value="#{item.diagnosis}"/>
+                        </p:column>
+                        <p:column headerText="Choroba zdiagnozowana">
+                            <h:outputText value="#{item.sicknessFk.name} #{item.sicknessFk.icd10}"/>
+                        </p:column>
+                         <f:facet name="footer">
+                            <p:commandButton 
+                                id="createDiagnoseButton" 
+                                icon="ui-icon-plus"   
+                                value="#{bundle.Create}"
+                                actionListener="#{diagnoseController.prepareCreate}" 
+                                update=":DiagnoseCreateForm" 
+                                oncomplete="PF('DiagnoseCreateDialog').show()"
+                                action="#{diagnoseController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}"
+                                />
+                            
+                        </f:facet>                           
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+            <ui:include src="/views/diagnose/DiagnoseAppCreate.xhtml"/>
+           
            <p:panel  id="curentSurgeryInfo" header="#{appoitmentBean.curentAppoitment.patientId.firstName} #{appoitmentBean.curentAppoitment.patientId.lastName}" 
                      rendered="#{not empty appoitmentBean.curentAppoitment}">
                 <h:form>           

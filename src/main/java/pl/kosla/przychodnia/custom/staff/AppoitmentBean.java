@@ -18,10 +18,12 @@ import static org.apache.commons.lang3.RandomStringUtils.random;
 import pl.kosla.przychodnia.controler.LabTestOrderController;
 import pl.kosla.przychodnia.controler.MedicineController;
 import pl.kosla.przychodnia.enums.MedicType;
+import pl.kosla.przychodnia.model.Diagnose;
 import pl.kosla.przychodnia.model.LabTestOrder;
 import pl.kosla.przychodnia.model.Patient;
 import pl.kosla.przychodnia.model.Perscripion;
 import pl.kosla.przychodnia.session.PerscripionFacade;
+import pl.kosla.przychodnia.session.SickLeaveFacade;
 import static pl.kosla.przychodnia.utilis.FacesUtils.getFromSession;
 
 
@@ -38,7 +40,7 @@ public class AppoitmentBean implements Serializable {
     @Inject private LabTestOrderController labTestOrderController;
     
     @EJB private AppoitmentFacade appoitmentFacade;
-    @EJB private pl.kosla.przychodnia.session.SickLeaveFacade sickLeaveFacade;
+    @EJB private SickLeaveFacade sickLeaveFacade;
     @EJB private PerscripionFacade perscripionFacade;
  
     
@@ -46,35 +48,32 @@ public class AppoitmentBean implements Serializable {
     private SickLeave sickLeaveSelected;
     private List<Perscripion> perscripionItems;
     private Perscripion perscripionSelected;
-
-    
-    
-   /**
-    * Creates a new instance of AppoitmentBean
-    */
-   private Appoitment curentAppoitment; 
+    private Appoitment curentAppoitment; 
+    private List<Diagnose> diagnoseList;
    
    public AppoitmentBean() {
    }
    @PostConstruct
    private void init() {  
       if(sf.getMedic() != null){ //&& sf.getMedic().getType().equals(MedicType.DOCTOR)
-            if( getFromSession("CurentAppId") != null ){
-               
-               
-               curentAppoitment = appoitmentFacade.findById( (Integer) getFromSession("CurentAppId") );
+            if( getFromSession("CurentApp") != null ){
+               curentAppoitment =  (Appoitment) getFromSession("CurentApp");
                //sprawdzanie czy wizyta z rezerwacji czy przegląd lub edycja 
               // sickLeaveItems = (List<SickLeave>) curentAppoitment.getSickLeaveCollection();
+               System.out.println("appoitmentBean z sesji");
                
             }else if(getFromSession("newappoitment").equals(true) && getFromSession("curentPatient") != null && sf.getMedic().getType().equals(MedicType.DOCTOR) ){//nowa wizyta
+                  System.out.println("faza 2");
                curentAppoitment = new Appoitment();
                curentAppoitment.setMedicId(sf.getMedic());
                curentAppoitment.setPatientId( (Patient) getFromSession("curentPatient") );
-               
+               appoitmentFacade.create(curentAppoitment);
+               //apc.setSelected(curentAppoitment);
+               //apc.create();
+               //curentAppoitment = apc.getSelected();
+               System.out.println("appoitmentBean nowe");
                   
             }
-               
-         
       }
 
    }
@@ -99,9 +98,10 @@ public class AppoitmentBean implements Serializable {
       perscripionSelected.setAppoitmentId(curentAppoitment);
       perscripionFacade.create(perscripionSelected);
    }
-   public void addNote(){
-      
-      /// zrobic 
+   public String addNote(){
+      apc.setSelected(curentAppoitment);
+      apc.create();
+      return "/staff/patients.xhtml?faces-redirect=true";
    }
    
    
@@ -132,7 +132,7 @@ public class AppoitmentBean implements Serializable {
    }
 
    public List<Perscripion> getPerscripionItems() {
-      return perscripionItems;
+      return  perscripionFacade.findPerscripionForApp(curentAppoitment.getId());
    }
 
    public void setPerscripionItems(List<Perscripion> perscripionItems) {
@@ -157,6 +157,14 @@ public class AppoitmentBean implements Serializable {
    public List<LabTestOrder> getLabExamList(){
     return  labTestOrderController.getOrdersAppList(curentAppoitment.getId());
 
+   }
+
+   public List<Diagnose> getDiagnoseList() {
+    return (List<Diagnose>) curentAppoitment.getDiagnoseCollection();
+   }
+
+   public void setDiagnoseList(List<Diagnose> diagnoseList) {
+      this.diagnoseList = diagnoseList;
    }
    
    

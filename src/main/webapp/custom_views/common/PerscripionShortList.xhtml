@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form id="PerscripionListForm">
+            <p:panel header="Ostatnie wystawione recepty">
+                <p:dataTable 
+                    id="datalist" 
+                     value="#{kartaBean.perscripionsList}"
+                     var="PerscripionItem"
+                     selectionMode="single" 
+                     selection="#{perscripionController.selected}"
+                     rowKey="#{PerscripionItem.id}"
+                     >
+                    <p:column headerText="Nazwa leku">
+                        <h:outputText value="#{PerscripionItem.medicineFk.name}"/>
+                    </p:column>
+                    <p:column headerText="Dawka">
+                        <h:outputText value="#{PerscripionItem.dose}"/>
+                    </p:column>
+                    <p:column headerText="Data wystawienia">
+                        <h:outputText value="#{PerscripionItem.posteData}">
+                            <f:convertDateTime pattern="MM/dd/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Przez">
+                        <h:outputText value="#{item.appoitmentId.medicId.firstName} #{item.appoitmentId.medicId.lastName}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </ui:composition>
+
+</html>

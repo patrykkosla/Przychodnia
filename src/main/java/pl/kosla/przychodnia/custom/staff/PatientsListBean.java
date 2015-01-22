@@ -17,6 +17,7 @@ import pl.kosla.przychodnia.model.Surgery;
 import pl.kosla.przychodnia.session.PatientFacade;
 import static pl.kosla.przychodnia.utilis.FacesUtils.addToSession;
 import static pl.kosla.przychodnia.utilis.FacesUtils.getFromSession;
+import static pl.kosla.przychodnia.utilis.FacesUtils.removeFromSession;
 import pl.kosla.przychodnia.utilis.SessionUtil;
 
 /**
@@ -80,12 +81,10 @@ public class PatientsListBean implements Serializable{
    public String prepatePatientView(Patient patient){
       HttpSession session = SessionUtil.getSession();
       session.setAttribute("curentPatient", patient);
-      
-      
-      return "/staff/patientview.xhtml";
+      return "/staff/karta.xhtml?faces-redirect=true";
    } 
    public String prepatePatientAppoitment(Patient patient){
-      
+      removeFromSession("CurentApp");
       addToSession("curentPatient", patient);
       addToSession("newappoitment", true);
       return "/staff/appoitment.xhtml?faces-redirect=true";

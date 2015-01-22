@@ -27,10 +27,10 @@ public class RadiologiaFacade extends AbstractFacade<Radiologia> {
     public RadiologiaFacade() {
         super(Radiologia.class);
     }
-     public List<Radiologia> getPatintsResults(int patinetId, int amount){     
+    public List<Radiologia> getPatintsResults(int patientId, int amount){     
         TypedQuery<Radiologia> q = em.createNamedQuery("Radiologia.findByPatient", Radiologia.class);
-        q.setParameter("patientId", patinetId);
-        q.setMaxResults(amount);
+        q.setParameter("patientId", patientId);
+        //q.setMaxResults(amount);
                
         return q.getResultList();        
     }   

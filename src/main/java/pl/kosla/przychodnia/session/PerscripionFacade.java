@@ -4,9 +4,11 @@
 package pl.kosla.przychodnia.session;
 
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import pl.kosla.przychodnia.model.Perscripion;
 
 /**
@@ -26,7 +28,15 @@ public class PerscripionFacade extends AbstractFacade<Perscripion> {
     public PerscripionFacade() {
         super(Perscripion.class);
     }
-    public void findPerscripionForApp(int medicId, int patientId, Date date){
-       
+    public List<Perscripion> findPerscripionForApp(int appoitmentId){
+       Query q = em.createQuery("SELECT p FROM Perscripion p WHERE p.appoitmentId.id = :appoitmentId");
+       q.setParameter("appoitmentId", appoitmentId);
+       return (List<Perscripion>) q.getResultList();
+    }
+    public List<Perscripion> findPerscripionForPatient(int patientId, int amount){
+       Query q = em.createQuery("SELECT p FROM Perscripion p WHERE p.appoitmentId.patientId.patientId = :patientId");
+       q.setParameter("patientId",patientId );
+       q.setMaxResults(amount);
+       return q.getResultList();
     }
 }

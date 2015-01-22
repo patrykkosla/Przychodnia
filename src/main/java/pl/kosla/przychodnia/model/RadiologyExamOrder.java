@@ -8,6 +8,8 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +22,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import pl.kosla.przychodnia.enums.RadiologyExamPart;
 
 /**
  *
@@ -40,9 +43,9 @@ public class RadiologyExamOrder implements Serializable {
    @Basic(optional = false)
    @Column(name = "id")
    private Integer id;
-   @Size(max = 45)
+   @Enumerated(EnumType.STRING)
    @Column(name = "radiology_exam_part")
-   private String radiologyExamPart;
+   private RadiologyExamPart radiologyExamPart;
    @Size(max = 45)
    @Column(name = "radiology_exam_type")
    private String radiologyExamType;
@@ -67,11 +70,11 @@ public class RadiologyExamOrder implements Serializable {
       this.id = id;
    }
 
-   public String getRadiologyExamPart() {
+   public RadiologyExamPart getRadiologyExamPart() {
       return radiologyExamPart;
    }
 
-   public void setRadiologyExamPart(String radiologyExamPart) {
+   public void setRadiologyExamPart(RadiologyExamPart radiologyExamPart) {
       this.radiologyExamPart = radiologyExamPart;
    }
 

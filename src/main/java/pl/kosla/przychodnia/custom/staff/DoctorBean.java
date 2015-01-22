@@ -120,15 +120,7 @@ public class DoctorBean implements Serializable {
     
    } 
    
-   
-   
-   
-   
-   
-   
-   
-   
-    
+  
     public void getBookedAppointment(int daysFuther){
        appoitmentList =  apc.getBookedAppointment(daysFuther, sf.getMedic().getId());
     }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DiagnoseCreateDlg" widgetVar="DiagnoseCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDiagnoseTitle}">
+            <h:form id="DiagnoseCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{diagnoseController.selected != null}">
+                                                
+                        <p:outputLabel value="#{bundle.CreateDiagnoseLabel_diagnosis}" for="diagnosis" />
+                        <p:inputTextarea rows="4" cols="30" id="diagnosis" value="#{diagnoseController.selected.diagnosis}" title="#{bundle.CreateDiagnoseTitle_diagnosis}" />
+                        
+                        <p:outputLabel value="#{bundle.CreateDiagnoseLabel_markAsImportant}" for="markAsImportant" />
+                        <p:selectBooleanCheckbox id="markAsImportant" value="#{diagnoseController.selected.markAsImportant}" />
+                         
+                        <p:outputLabel value="#{bundle.CreateDiagnoseLabel_sicknessFk}" for="sicknessFk" />
+                        <p:selectOneMenu id="sicknessFk" value="#{diagnoseController.selected.sicknessFk}" required="true" requiredMessage="#{bundle.EditDiagnoseRequiredMessage_sicknessFk}">
+                            <f:selectItems value="#{sicknessdicController.itemsAvailableSelectOne}"
+                                           var="sicknessFkItem"
+                                           itemValue="#{sicknessFkItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{diagnoseController.create}" value="#{bundle.Save}" update="display,:DiagnoseListForm:datalist,:growl" oncomplete="handleSubmit(args,'DiagnoseCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DiagnoseCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -37,9 +37,9 @@ public class Sicknessdic implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     private Integer id;
-    @Size(max = 222)
+    @Size(max = 255)
     private String name;
-    @Size(max = 222)
+    @Size(max = 255)
     @Column(name = "latin_name")
     private String latinName;
     @Size(max = 12)
