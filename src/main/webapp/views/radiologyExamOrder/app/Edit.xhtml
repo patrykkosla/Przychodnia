@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+ <pe:importEnum type="pl.kosla.przychodnia.enums.RadiologyExamPart" var="JsfRadiologyExamPart" allSuffix="ALL_ENUM_VALUES" /> 
+ <pe:importEnum type="pl.kosla.przychodnia.enums.RadiologyExamType" var="JsfRadiologyExamType" allSuffix="ALL_ENUM_VALUES" /> 
+        <p:dialog id="RadiologyExamOrderEditDlg" widgetVar="RadiologyExamOrderEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditRadiologyExamOrderTitle}">
+            <h:form id="RadiologyExamOrderEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{radiologyExamOrderController.selected != null}">
+                        
+                        <p:outputLabel value="#{bundle.CreateRadiologyExamOrderLabel_radiologyExamPart}" for="radiologyExamPart" />
+                        <p:selectOneMenu id="radiologyExamPart" value="#{radiologyExamOrderController.selected.radiologyExamPart}" >
+                            <f:selectItems value="#{JsfRadiologyExamPart.ALL_ENUM_VALUES}"/>
+                        </p:selectOneMenu>
+                           
+                        <p:outputLabel value="#{bundle.CreateRadiologyExamOrderLabel_radiologyExamType}" for="radiologyExamType" />
+                        <p:selectOneMenu id="radiologyExamType" value="#{radiologyExamOrderController.selected.radiologyExamType}" >
+                            <f:selectItems value="#{JsfRadiologyExamType.ALL_ENUM_VALUES}"/>
+                        </p:selectOneMenu>             
+                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{radiologyExamOrderController.update}" value="#{bundle.Save}" update="display,:RadiologyExamOrderListForm:rtgdatalist,:growl" oncomplete="handleSubmit(args, 'RadiologyExamOrderEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="RadiologyExamOrderEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

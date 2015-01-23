@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LabTestOrderEditDlg" widgetVar="LabTestOrderEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditLabTestOrderTitle}">
+            <h:form id="LabTestOrderEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{labTestOrderController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditLabTestOrderLabel_labBlodOb}" for="labBlodOb" />
+                        <p:selectBooleanCheckbox id="labBlodOb" value="#{labTestOrderController.selected.labBlodOb}" />
+                        <p:outputLabel value="#{bundle.EditLabTestOrderLabel_labBlodMorfologia}" for="labBlodMorfologia" />
+                        <p:selectBooleanCheckbox id="labBlodMorfologia" value="#{labTestOrderController.selected.labBlodMorfologia}" />
+                        <p:outputLabel value="#{bundle.EditLabTestOrderLabel_labBlodCells}" for="labBlodCells" />
+                        <p:selectBooleanCheckbox id="labBlodCells" value="#{labTestOrderController.selected.labBlodCells}" />
+                        <p:outputLabel value="#{bundle.EditLabTestOrderLabel_labFecesGeneralTest}" for="labFecesGeneralTest" />
+                        <p:selectBooleanCheckbox id="labFecesGeneralTest" value="#{labTestOrderController.selected.labFecesGeneralTest}" />
+                        <p:outputLabel value="#{bundle.EditLabTestOrderLabel_labUrineGeneralTest}" for="labUrineGeneralTest" />
+                        <p:selectBooleanCheckbox id="labUrineGeneralTest" value="#{labTestOrderController.selected.labUrineGeneralTest}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{labTestOrderController.update}" value="#{bundle.Save}" update="display,:LabTestOrderListForm:app_lab_datalist,:growl" oncomplete="handleSubmit(args, 'LabTestOrderEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="LabTestOrderEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

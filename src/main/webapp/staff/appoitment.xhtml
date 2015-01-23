@@ -15,73 +15,95 @@
         </ui:define>
         <ui:define name="west_left_column">
          
-            <h:form id="PerscripionListAppForm">
-                <p:panel header="Recepty" >
-                    <p:dataTable 
-                         id="recepty_datalist" 
-                         value="#{appoitmentBean.perscripionItems}" 
-                         var="pitem"
-                         
-                         >
-                        <p:column  headerText="Nazwa" >
-                            <h:outputText value="#{pitem.medicineFk.name}"/>
-                        </p:column>
-                        <p:column  headerText="Opis" >
-                            <h:outputText value="#{pitem.medicineFk.decryption}"/>
-                        </p:column>
-                        <p:column  headerText="Ilość" >
-                            <h:outputText value="#{pitem.medicineFk.amount}"/>
-                        </p:column>      
-                        <p:column  headerText="Dawkowanie" >
-                            <h:outputText value="#{pitem.dose}"/>
-                        </p:column>      
-                    </p:dataTable>
-                    
-                    <p:commandButton
-                        icon="ui-icon-plus" 
-                        value="Wystaw recepte"
-                        actionListener="#{appoitmentBean.prepareCreatePerscripion()}"
-                        />
-                </p:panel>
+            <h:form id="PerscripionListForm">
+            <p:panel header="Recepty" >
+            <p:dataTable 
+                 id="recepty_datalist" 
+                 value="#{appoitmentBean.perscripionItems}" 
+                 selectionMode="single" selection="#{perscripionController.selected}"
+                 var="pitem"
+                 rowKey="#{pitem.id}"
+                 >
+                <p:ajax event="rowSelect"   update="createPerscripionButton viewPerscripionButton editPerscripionButton deletePerscripionButton"/>
+                <p:ajax event="rowUnselect" update="createPerscripionButton viewPerscripionButton editPerscripionButton deletePerscripionButton"/>
+                <p:column  headerText="Nazwa" >
+                    <h:outputText value="#{pitem.medicineFk.name}"/>
+                </p:column>
+                <p:column  headerText="Opis" >
+                    <h:outputText value="#{pitem.medicineFk.decryption}"/>
+                </p:column>
+                <p:column  headerText="Ilość" >
+                    <h:outputText value="#{pitem.medicineFk.amount}"/>
+                </p:column>      
+                <p:column  headerText="Dawkowanie" >
+                    <h:outputText value="#{pitem.dose}"/>
+                </p:column>  
+                <f:facet name="footer">
+                    <p:commandButton id="createPerscripionButton" icon="ui-icon-plus"   value="Wystaw recepte" actionListener="#{perscripionController.prepareCreate}" update=":PerscripionCreateForm" 
+                                     oncomplete="PF('PerscripionCreateDialog').show()"
+                                     action="#{perscripionController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}"
+                                     />
+                    <p:commandButton id="viewPerscripionButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PerscripionViewForm" oncomplete="PF('PerscripionViewDialog').show()" disabled="#{empty perscripionController.selected}"/>
+                    <p:commandButton id="editPerscripionButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PerscripionEditForm" oncomplete="PF('PerscripionEditDialog').show()" disabled="#{empty perscripionController.selected}"/>
+                    <p:commandButton id="deletePerscripionButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{perscripionController.destroy}" update=":growl,recepty_datalist" disabled="#{empty perscripionController.selected}"/>
+                </f:facet>
+            </p:dataTable>
+            </p:panel>
             </h:form>    
-
-            <h:form id="SickLeaveAppForm">
+                <ui:include src="/views/perscripion/app/Create.xhtml"/>
+                <ui:include src="/views/perscripion/app/Edit.xhtml"/>
+                <ui:include src="/views/perscripion/app/View.xhtml"/>
+            <h:form id="SickLeaveListForm">
                 <p:panel header="Zwolnienia lekarskie">
                     <p:dataTable 
-                         id="sl_datalist" 
-                         value="#{appoitmentBean.sickLeaveItems}" 
-                         var="slitem"
-                         >
+                        id="sldatalist" 
+                        value="#{appoitmentBean.sickLeaveItems}" 
+                        selectionMode="single" selection="#{sickLeaveController.selected}"
+                        var="slitem" 
+                        rowKey="#{slitem.id}">
+                        
+                        <p:ajax event="rowSelect"   update="createSickLeaveButton viewSickLeaveButton editSickLeaveButton deleteSickLeaveButton"/>
+                        <p:ajax event="rowUnselect" update="createSickLeaveButton viewSickLeaveButton editSickLeaveButton deleteSickLeaveButton"/>
+                        <p:column  headerText="Zwolnienie od" >
+                            <h:outputText value="#{slitem.appoitmentId.patientId.firstName}">
+                            </h:outputText>
+                        </p:column>
                         <p:column  headerText="Zwolnienie od" >
                             <h:outputText value="#{slitem.dateFrom}">
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
-                        
                         <p:column  headerText="Do" >
                             <h:outputText value="#{slitem.dateTo}">
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
-                        </p:column>          
+                        </p:column>   
+                         <f:facet name="footer">
+                            <p:commandButton id="createSickLeaveButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{sickLeaveController.prepareCreate}" update=":SickLeaveCreateForm" oncomplete="PF('SickLeaveCreateDialog').show()"
+                                             action="#{sickLeaveController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}" />
+                            <p:commandButton id="viewSickLeaveButton"   icon="ui-icon-search" value="#{bundle.View}" update=":SickLeaveViewForm" oncomplete="PF('SickLeaveViewDialog').show()" disabled="#{empty sickLeaveController.selected}"/>
+                            <p:commandButton id="editSickLeaveButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":SickLeaveEditForm" oncomplete="PF('SickLeaveEditDialog').show()" disabled="#{empty sickLeaveController.selected}"/>
+                            <p:commandButton id="deleteSickLeaveButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{sickLeaveController.destroy}" update=":growl,sldatalist" disabled="#{empty sickLeaveController.selected}"/>
+                        </f:facet>
                     </p:dataTable>
-                    
-                    <p:commandButton
-                        icon="ui-icon-plus" 
-                        value="Wystaw zwolnienie"
-                        actionListener="#{appoitmentBean.prepareCreateSickLeave()}"
-                        update=":SickLeaveCreateForm"
-                        oncomplete="PF('SickLeaveCreateDialog').show()"
-                        />
                 </p:panel>
             </h:form>
-            <ui:include src="/custom_views/staffviews/CreateSickLeave.xhtml"/>
-            <h:form>
+            <ui:include src="/views/sickLeave/app/Create.xhtml"/>
+            <ui:include src="/views/sickLeave/app/Edit.xhtml"/>
+            <ui:include src="/views/sickLeave/app/View.xhtml"/>
+            
+             <h:form id="LabTestOrderListForm">
                 <p:panel header="Badania labolatoryjne">
                     <p:dataTable 
                          id="app_lab_datalist" 
                          value="#{appoitmentBean.labExamList}" 
                          var="labitem"
-                         >
+                         selectionMode="single" selection="#{labTestOrderController.selected}"
+                         rowKey="#{labitem.id}">
+
+                        <p:ajax event="rowSelect"   update="createLabTestOrderButton viewLabTestOrderButton editLabTestOrderButton deleteLabTestOrderButton"/>
+                        <p:ajax event="rowUnselect" update="createLabTestOrderButton viewLabTestOrderButton editLabTestOrderButton deleteLabTestOrderButton"/>
+                      
                          <p:column  headerText="Czerwone krwinki" >
                              <h:outputText value="#{labitem.labBlodCells}"/>
                          </p:column>
@@ -97,51 +119,56 @@
                          <p:column  headerText="Badanie kału" >
                              <h:outputText value="#{labitem.labFecesGeneralTest}"/>
                          </p:column>
-                        
-                    </p:dataTable> 
-                    
-                    <p:commandButton
-                        icon="ui-icon-plus" 
-                        value="Zleć badanie"
-                        actionListener="#{appoitmentBean.prepareCreateSickLeave()}"
-                        update=":SickLeaveCreateForm"
-                        oncomplete="PF('SickLeaveCreateDialog').show()"
-                        />                    
+                         <f:facet name="footer">
+                            <p:commandButton id="createLabTestOrderButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{labTestOrderController.prepareCreate}" 
+                                             update=":LabTestOrderCreateForm" 
+                                             oncomplete="PF('LabTestOrderCreateDialog').show()"
+                                             action="#{labTestOrderController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}"/>
+                            <p:commandButton id="viewLabTestOrderButton"   icon="ui-icon-search" value="#{bundle.View}" update=":LabTestOrderViewForm" oncomplete="PF('LabTestOrderViewDialog').show()" disabled="#{empty labTestOrderController.selected}"/>
+                            <p:commandButton id="editLabTestOrderButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":LabTestOrderEditForm" oncomplete="PF('LabTestOrderEditDialog').show()" disabled="#{empty labTestOrderController.selected}"/>
+                            <p:commandButton id="deleteLabTestOrderButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{labTestOrderController.destroy}" update=":growl,app_lab_datalist" disabled="#{empty labTestOrderController.selected}"/>
+                        </f:facet>                        
+                    </p:dataTable>         
                 </p:panel>
-            </h:form>    
+            </h:form>   
+            <ui:include src="/views/labTestOrder/app/Create.xhtml"/>
+            <ui:include src="/views/labTestOrder/app/Edit.xhtml"/>
+            <ui:include src="/views/labTestOrder/app/View.xhtml"/>  
+            
             <h:form id="RadiologyExamOrderListForm" >
                 <p:panel header="Badania RTG/USG">
                     <p:dataTable 
-                         id="app_RTG_datalist" 
-                         value="#{appoitmentBean.curentAppoitment.radiologyExamOrderCollection}" 
+                         id="rtgdatalist" 
+                         value="#{appoitmentBean.radiologyExamOrderList}" 
                          selectionMode="single" selection="#{radiologyExamOrderController.selected}"
                          var="rtgitem"
-                         >
+                         rowKey="#{rtgitem.id}"   >
+ 
+                        <p:ajax event="rowSelect"   update="createRTGButton viewRTGButton editRTGButton deleteRTGButton"/>
+                        <p:ajax event="rowUnselect" update="createRTGButton viewRTGButton editRTGButton deleteRTGButton"/>
+                       
                          <p:column  headerText="Przedmiot Badań" >
                              <h:outputText value="#{rtgitem.radiologyExamPart}"/>
                          </p:column>
                          <p:column  headerText="Typ badania" >
                              <h:outputText value="#{rtgitem.radiologyExamType}"/>
                          </p:column>              
-                    
-                    
-                    
-                        <f:facet name="footer">
-                                <p:commandButton 
-                                    id="createButton" 
-                                    icon="ui-icon-plus"   
-                                    value="#{bundle.Create}" 
-                                    actionListener="#{radiologyExamOrderController.prepareCreate}" 
-                                    update=":RadiologyExamOrderCreateForm" 
-                                    oncomplete="PF('RadiologyExamOrderCreateDialog').show()"
-                                    action="#{radiologyExamOrderController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}"
-                                    />
-                               
-                        </f:facet>
+                         <p:column  headerText="Typ badania" >
+                             <h:outputText value="#{rtgitem.id}"/>
+                         </p:column>              
+                         <f:facet name="footer">
+                            <p:commandButton id="createRTGButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{radiologyExamOrderController.prepareCreate}" update=":RadiologyExamOrderCreateForm" oncomplete="PF('RadiologyExamOrderCreateDialog').show()"
+                                              action="#{radiologyExamOrderController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}"/>
+                            <p:commandButton id="viewRTGButton"   icon="ui-icon-search" value="#{bundle.View}" update=":RadiologyExamOrderViewForm" oncomplete="PF('RadiologyExamOrderViewDialog').show()" disabled="#{empty radiologyExamOrderController.selected}"/>
+                            <p:commandButton id="editRTGButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":RadiologyExamOrderEditForm" oncomplete="PF('RadiologyExamOrderEditDialog').show()" disabled="#{empty radiologyExamOrderController.selected}"/>
+                            <p:commandButton id="deleteRTGButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{radiologyExamOrderController.destroy}" update=":growl,rtgdatalist" disabled="#{empty radiologyExamOrderController.selected}"/>
+                        </f:facet>                   
                     </p:dataTable> 
                 </p:panel>
             </h:form>    
-            <ui:include src="/views/radiologyExamOrder/RtgOrderAppCreat.xhtml"/>
+            <ui:include src="/views/radiologyExamOrder/app/Create.xhtml"/>
+            <ui:include src="/views/radiologyExamOrder/app/Edit.xhtml"/>
+            <ui:include src="/views/radiologyExamOrder/app/View.xhtml"/>             
         </ui:define>
         
         <ui:define name="east_right_column" >
@@ -201,22 +228,19 @@
            
            <p:panel  id="curentSurgeryInfo" header="#{appoitmentBean.curentAppoitment.patientId.firstName} #{appoitmentBean.curentAppoitment.patientId.lastName}" 
                      rendered="#{not empty appoitmentBean.curentAppoitment}">
-                <h:form>           
-                    <p:editor id="editor" widgetVar="editorWidget" value="#{appoitmentBean.curentAppoitment.note}" width="900" />
-
-                   <h:panelGrid columns="2" style="margin-top: 10px">
-                       <p:commandButton 
-                           value="Submit" 
-                           icon="ui-icon-disk" 
-                           actionListener="#{appoitmentBean.addNote}"
-                           />
+                <h:form>        
+                    <p:inputTextarea 
+                        rows="10" 
+                        cols="50" 
+                         value="#{appoitmentBean.curentAppoitment.note}" 
+                        />
+ 
 
                        <p:commandButton 
-                           value="Clear" 
-                           type="button" 
-                           onclick="PF('editorWidget').clear();" 
-                           icon="ui-icon-close" />
-                   </h:panelGrid>
+                           value="Zapisz i zakończ wizytę" 
+                           icon="ui-icon-disk"
+                           action="#{appoitmentBean.FinischCurentAppoitment}"  />
+
                </h:form> 
            </p:panel>
 

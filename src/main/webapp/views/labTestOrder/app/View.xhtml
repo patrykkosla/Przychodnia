@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LabTestOrderViewDlg" widgetVar="LabTestOrderViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewLabTestOrderTitle}">
+            <h:form id="LabTestOrderViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{labTestOrderController.selected != null}">
+                        <h:outputText value="#{bundle.ViewLabTestOrderLabel_id}"/>
+                        <h:outputText value="#{labTestOrderController.selected.id}" title="#{bundle.ViewLabTestOrderTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewLabTestOrderLabel_labBlodOb}"/>
+                        <p:selectBooleanCheckbox value="#{labTestOrderController.selected.labBlodOb}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewLabTestOrderLabel_labBlodMorfologia}"/>
+                        <p:selectBooleanCheckbox value="#{labTestOrderController.selected.labBlodMorfologia}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewLabTestOrderLabel_labBlodCells}"/>
+                        <p:selectBooleanCheckbox value="#{labTestOrderController.selected.labBlodCells}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewLabTestOrderLabel_labFecesGeneralTest}"/>
+                        <p:selectBooleanCheckbox value="#{labTestOrderController.selected.labFecesGeneralTest}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewLabTestOrderLabel_labUrineGeneralTest}"/>
+                        <p:selectBooleanCheckbox value="#{labTestOrderController.selected.labUrineGeneralTest}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewLabTestOrderLabel_appoitmentId}"/>
+                        <h:outputText value="#{labTestOrderController.selected.appoitmentId}" title="#{bundle.ViewLabTestOrderTitle_appoitmentId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="LabTestOrderViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RadiologyExamOrderViewDlg" widgetVar="RadiologyExamOrderViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewRadiologyExamOrderTitle}">
+            <h:form id="RadiologyExamOrderViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{radiologyExamOrderController.selected != null}">
+                        <h:outputText value="#{bundle.ViewRadiologyExamOrderLabel_id}"/>
+                        <h:outputText value="#{radiologyExamOrderController.selected.id}" title="#{bundle.ViewRadiologyExamOrderTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewRadiologyExamOrderLabel_radiologyExamPart}"/>
+                        <h:outputText value="#{radiologyExamOrderController.selected.radiologyExamPart}" title="#{bundle.ViewRadiologyExamOrderTitle_radiologyExamPart}"/>
+                        <h:outputText value="#{bundle.ViewRadiologyExamOrderLabel_radiologyExamType}"/>
+                        <h:outputText value="#{radiologyExamOrderController.selected.radiologyExamType}" title="#{bundle.ViewRadiologyExamOrderTitle_radiologyExamType}"/>
+                        <h:outputText value="#{bundle.ViewRadiologyExamOrderLabel_appoitmentId}"/>
+                        <h:outputText value="#{radiologyExamOrderController.selected.appoitmentId}" title="#{bundle.ViewRadiologyExamOrderTitle_appoitmentId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="RadiologyExamOrderViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

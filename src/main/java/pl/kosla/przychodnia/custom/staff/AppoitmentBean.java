@@ -23,10 +23,14 @@ import pl.kosla.przychodnia.model.Diagnose;
 import pl.kosla.przychodnia.model.LabTestOrder;
 import pl.kosla.przychodnia.model.Patient;
 import pl.kosla.przychodnia.model.Perscripion;
+import pl.kosla.przychodnia.model.RadiologyExamOrder;
 import pl.kosla.przychodnia.session.DiagnoseFacade;
 import pl.kosla.przychodnia.session.PerscripionFacade;
+import pl.kosla.przychodnia.session.RadiologyExamOrderFacade;
 import pl.kosla.przychodnia.session.SickLeaveFacade;
+import static pl.kosla.przychodnia.utilis.FacesUtils.addToSession;
 import static pl.kosla.przychodnia.utilis.FacesUtils.getFromSession;
+import static pl.kosla.przychodnia.utilis.FacesUtils.removeFromSession;
 
 
 /**
@@ -41,18 +45,21 @@ public class AppoitmentBean implements Serializable {
     @Inject private MedicineController medicineController;
     @Inject private LabTestOrderController labTestOrderController;
     
+    
     @EJB private AppoitmentFacade appoitmentFacade;
     @EJB private SickLeaveFacade sickLeaveFacade;
     @EJB private PerscripionFacade perscripionFacade;
     @EJB private DiagnoseFacade diagnoseFacade;
+    @EJB private RadiologyExamOrderFacade radiologyExamOrderFacade ;
  
     
-    private List<SickLeave> sickLeaveItems = null;
+    private List<SickLeave> sickLeaveItems;
     private SickLeave sickLeaveSelected;
     private List<Perscripion> perscripionItems;
     private Perscripion perscripionSelected;
     private Appoitment curentAppoitment; 
     private List<Diagnose> diagnoseList;
+    private List<RadiologyExamOrder> radiologyExamOrderList;
     
    
    public AppoitmentBean() {
@@ -66,21 +73,31 @@ public class AppoitmentBean implements Serializable {
               // sickLeaveItems = (List<SickLeave>) curentAppoitment.getSickLeaveCollection();
                System.out.println("appoitmentBean z sesji");
                
-            }else if(getFromSession("newappoitment").equals(true) && getFromSession("curentPatient") != null && sf.getMedic().getType().equals(MedicType.DOCTOR) ){//nowa wizyta
-                  System.out.println("faza 2");
-               curentAppoitment = new Appoitment();
-               curentAppoitment.setMedicId(sf.getMedic());
-               curentAppoitment.setPatientId( (Patient) getFromSession("curentPatient") );
-               curentAppoitment.setAppoitmentDate(new Date());
-               appoitmentFacade.create(curentAppoitment);
-               //apc.setSelected(curentAppoitment);
-               //apc.create();
-               //curentAppoitment = apc.getSelected();
-               System.out.println("appoitmentBean nowe");
+            }else if(getFromSession("newappoitment").equals(true) && getFromSession("curentPatient") != null && sf.getMedic().getType().equals(MedicType.DOCTOR)  ){//nowa wizyta
+               System.out.println("faza 2");
                   
+              // if( ((Appoitment)  getFromSession("CurentApp")).getPatientId().equals( (Patient) getFromSession("curentPatient")) )   {
+               //   System.out.println("appoitmentBean kontynuacja");
+                  
+              // }else{
+                  curentAppoitment = new Appoitment();
+                  curentAppoitment.setMedicId(sf.getMedic());
+                  curentAppoitment.setPatientId( (Patient) getFromSession("curentPatient") );
+                  curentAppoitment.setAppoitmentDate(new Date());
+                  appoitmentFacade.create(curentAppoitment);
+                  addToSession("CurentApp", curentAppoitment);
+                  addToSession("newappoitment", false);
+                  System.out.println("appoitmentBean nowe");
+                  
+              // }
             }
       }
 
+   }
+   public String FinischCurentAppoitment(){
+      
+      removeFromSession("CurentApp");
+      return "/staff/doctor.xhtml?faces-redirect=true";
    }
    public void refresch(){
       sickLeaveItems = (List<SickLeave>) curentAppoitment.getSickLeaveCollection();
@@ -121,7 +138,7 @@ public class AppoitmentBean implements Serializable {
    } 
 
    public List<SickLeave> getSickLeaveItems() {
-      return sickLeaveItems;
+      return  sickLeaveFacade.getSickLeavesLitByAppoitmentId(curentAppoitment.getId());
    }
 
    public void setSickLeaveItems(List<SickLeave> sickLeaveItems) {
@@ -171,6 +188,14 @@ public class AppoitmentBean implements Serializable {
 
    public void setDiagnoseList(List<Diagnose> diagnoseList) {
       this.diagnoseList = diagnoseList;
+   }
+
+   public List<RadiologyExamOrder> getRadiologyExamOrderList() {
+      return radiologyExamOrderFacade.getRadiologyExamOrderAppList(curentAppoitment.getId());
+   }
+
+   public void setRadiologyExamOrderList(List<RadiologyExamOrder> radiologyExamOrderList) {
+      this.radiologyExamOrderList = radiologyExamOrderList;
    }
    
    

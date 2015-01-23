@@ -23,6 +23,4 @@ public enum RadiologyExamPart {
    PALCA,
    STAWSKOKOWY,
    KOSCIDLUGIE;
-   
-   
 }

@@ -6,6 +6,7 @@ import pl.kosla.przychodnia.controler.util.JsfUtil.PersistAction;
 import pl.kosla.przychodnia.session.PerscripionFacade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -120,7 +121,11 @@ public class PerscripionController implements Serializable {
     public List<Perscripion> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
-
+   public void setAppIdAndDocId(Perscripion p){
+      selected.setAppoitmentId(p.getAppoitmentId());
+      selected.setPosteData(new Date());
+      
+   }
     @FacesConverter(forClass = Perscripion.class)
     public static class PerscripionControllerConverter implements Converter {
 

@@ -16,13 +16,16 @@ import pl.kosla.przychodnia.enums.VisitType;
  */
 @Named(value = "enumData")
 @ApplicationScoped
-public class EnumData  implements Serializable{
+public class EnumData  {
 
-   /**
+   /**implements Serializablimplements Serializable
     * Creates a new instance of EnumData
     */
    public EnumData() {
    }
+  // public RadiologyExamPart[] enumRadiologyExamPart;
+  // public RadiologyExamType[] enumRadiologyExamType;
+   
    public static VisitType[] getEnumVisitType(){
       return  VisitType.values();
    }

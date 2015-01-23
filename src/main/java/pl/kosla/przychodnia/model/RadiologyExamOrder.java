@@ -34,6 +34,8 @@ import pl.kosla.przychodnia.enums.RadiologyExamPart;
 @NamedQueries({
    @NamedQuery(name = "RadiologyExamOrder.findAll", query = "SELECT r FROM RadiologyExamOrder r"),
    @NamedQuery(name = "RadiologyExamOrder.findById", query = "SELECT r FROM RadiologyExamOrder r WHERE r.id = :id"),
+   @NamedQuery(name = "RadiologyExamOrder.findByAppoitmentId", query = "SELECT r FROM RadiologyExamOrder r WHERE r.appoitmentId.id = :appoitmentId"),
+   @NamedQuery(name = "RadiologyExamOrder.findByPatientId", query = "SELECT r FROM RadiologyExamOrder r WHERE r.appoitmentId.patientId.patientId = :patientId"),
    @NamedQuery(name = "RadiologyExamOrder.findByRadiologyExamPart", query = "SELECT r FROM RadiologyExamOrder r WHERE r.radiologyExamPart = :radiologyExamPart"),
    @NamedQuery(name = "RadiologyExamOrder.findByRadiologyExamType", query = "SELECT r FROM RadiologyExamOrder r WHERE r.radiologyExamType = :radiologyExamType")})
 public class RadiologyExamOrder implements Serializable {

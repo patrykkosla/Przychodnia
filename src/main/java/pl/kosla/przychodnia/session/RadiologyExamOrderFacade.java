@@ -3,9 +3,11 @@
  */
 package pl.kosla.przychodnia.session;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import pl.kosla.przychodnia.model.RadiologyExamOrder;
 
 /**
@@ -25,5 +27,9 @@ public class RadiologyExamOrderFacade extends AbstractFacade<RadiologyExamOrder>
    public RadiologyExamOrderFacade() {
       super(RadiologyExamOrder.class);
    }
-   
+   public List<RadiologyExamOrder> getRadiologyExamOrderAppList(int appoitmentId){
+      TypedQuery q = em.createNamedQuery("RadiologyExamOrder.findByAppoitmentId", RadiologyExamOrder.class);
+      q.setParameter("appoitmentId", appoitmentId);
+      return q.getResultList();
+   }
 }

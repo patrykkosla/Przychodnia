@@ -42,7 +42,8 @@ public class Perscripion implements Serializable {
     @NotNull
     @Size(min = 1, max = 220)
     private String dose;
-    @Column(name = "poste_data")
+   // @Column(name = "poste_data") wsadzenie defaulta do jpa
+    @Column(name = "poste_data", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     private Date posteData;
     @JoinColumn(name = "medicine_fk", referencedColumnName = "id")
