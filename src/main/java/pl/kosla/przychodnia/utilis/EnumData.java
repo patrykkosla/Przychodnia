@@ -6,6 +6,8 @@ package pl.kosla.przychodnia.utilis;
 import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
+import pl.kosla.przychodnia.enums.RadiologyExamPart;
+import pl.kosla.przychodnia.enums.RadiologyExamType;
 import pl.kosla.przychodnia.enums.VisitType;
 
 /**
@@ -23,5 +25,11 @@ public class EnumData  implements Serializable{
    }
    public static VisitType[] getEnumVisitType(){
       return  VisitType.values();
+   }
+   public static RadiologyExamPart[] getEnumRadiologyExamPart(){
+      return RadiologyExamPart.values();
+   }
+   public static RadiologyExamType[] getEnumRadiologyExamType(){
+      return RadiologyExamType.values();
    }
 }

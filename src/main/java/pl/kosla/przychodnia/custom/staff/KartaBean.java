@@ -15,11 +15,13 @@ import pl.kosla.przychodnia.controler.PatientController;
 import pl.kosla.przychodnia.enums.MedicType;
 import pl.kosla.przychodnia.model.Appoitment;
 import pl.kosla.przychodnia.model.BloodTest;
+import pl.kosla.przychodnia.model.Diagnose;
 import pl.kosla.przychodnia.model.Patient;
 import pl.kosla.przychodnia.model.Perscripion;
 import pl.kosla.przychodnia.model.Radiologia;
 import pl.kosla.przychodnia.session.AppoitmentFacade;
 import pl.kosla.przychodnia.session.BloodTestFacade;
+import pl.kosla.przychodnia.session.DiagnoseFacade;
 import pl.kosla.przychodnia.session.PerscripionFacade;
 import pl.kosla.przychodnia.session.RadiologiaFacade;
 import static pl.kosla.przychodnia.utilis.FacesUtils.getFromSession;
@@ -38,6 +40,7 @@ public class KartaBean implements Serializable{
    @EJB private BloodTestFacade bloodTestFacade;
    @EJB private RadiologiaFacade radiologiaFacade;
    @EJB private PerscripionFacade perscripionFacade;
+   @EJB private DiagnoseFacade diagnoseFacade;
    
    private Patient p;
    private List<Appoitment> bookedAppoitmentsList;
@@ -45,6 +48,7 @@ public class KartaBean implements Serializable{
    private List<BloodTest> bloodTestList;
    private List<Radiologia> radiologiasList;
    private List<Perscripion> perscripionsList;
+   private List<Diagnose> diagnosesList;
    
    /**
     * Creates a new instance of KartaBean
@@ -111,6 +115,14 @@ public class KartaBean implements Serializable{
 
    public void setPerscripionsList(List<Perscripion> perscripionsList) {
       this.perscripionsList = perscripionsList;
+   }
+
+   public List<Diagnose> getDiagnosesList() {
+      return diagnosesList = diagnoseFacade.getDiagnosesListForPatient(patientController.getSelected().getPatientId(), 10);
+   }
+
+   public void setDiagnosesList(List<Diagnose> diagnosesList) {
+      this.diagnosesList = diagnosesList;
    }
    
    

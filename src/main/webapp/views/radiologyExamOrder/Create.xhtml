@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RadiologyExamOrderCreateDlg" widgetVar="RadiologyExamOrderCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateRadiologyExamOrderTitle}">
+            <h:form id="RadiologyExamOrderCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{radiologyExamOrderController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateRadiologyExamOrderLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{radiologyExamOrderController.selected.id}" title="#{bundle.CreateRadiologyExamOrderTitle_id}" required="true" requiredMessage="#{bundle.CreateRadiologyExamOrderRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateRadiologyExamOrderLabel_radiologyExamPart}" for="radiologyExamPart" />
+                        <p:inputText id="radiologyExamPart" value="#{radiologyExamOrderController.selected.radiologyExamPart}" title="#{bundle.CreateRadiologyExamOrderTitle_radiologyExamPart}" />
+                        <p:outputLabel value="#{bundle.CreateRadiologyExamOrderLabel_radiologyExamType}" for="radiologyExamType" />
+                        <p:inputText id="radiologyExamType" value="#{radiologyExamOrderController.selected.radiologyExamType}" title="#{bundle.CreateRadiologyExamOrderTitle_radiologyExamType}" />
+                        <p:outputLabel value="#{bundle.CreateRadiologyExamOrderLabel_appoitmentId}" for="appoitmentId" />
+                        <p:selectOneMenu id="appoitmentId" value="#{radiologyExamOrderController.selected.appoitmentId}" required="true" requiredMessage="#{bundle.EditRadiologyExamOrderRequiredMessage_appoitmentId}">
+                            <f:selectItems value="#{appoitmentController.itemsAvailableSelectOne}"
+                                           var="appoitmentIdItem"
+                                           itemValue="#{appoitmentIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{radiologyExamOrderController.create}" value="#{bundle.Save}" update="display,:RadiologyExamOrderListForm:datalist,:growl" oncomplete="handleSubmit(args,'RadiologyExamOrderCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="RadiologyExamOrderCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

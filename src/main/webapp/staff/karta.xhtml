@@ -55,6 +55,26 @@
                         </p:column>
                     </p:dataTable>
                 </p:panel>                
+                <p:panel header="Lista ostatnich diagnoz">
+                    <p:dataTable id="Diagnosedatalist"
+                                 value="#{kartaBean.diagnosesList}" 
+                                 var="DiagnoseItem"
+                                 rowKey="#{DiagnoseItem.id}"
+                                    >
+
+                        <p:column headerText="Opis">
+                            <h:outputText value="#{DiagnoseItem.diagnosis}"/>
+                        </p:column>
+                        <p:column headerText="zdiagnozowania choroba">
+                            <h:outputText value="#{DiagnoseItem.sicknessFk.name} #{DiagnoseItem.sicknessFk.icd10}"/>
+                        </p:column>
+                        <p:column headerText="Data wizyty">
+                            <h:outputText value="#{DiagnoseItem.appoitmentId.appoitmentDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>                
             </h:form>
         </ui:define>
     </ui:composition>

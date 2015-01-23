@@ -4,6 +4,7 @@
 package pl.kosla.przychodnia.custom.staff;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -22,6 +23,7 @@ import pl.kosla.przychodnia.model.Diagnose;
 import pl.kosla.przychodnia.model.LabTestOrder;
 import pl.kosla.przychodnia.model.Patient;
 import pl.kosla.przychodnia.model.Perscripion;
+import pl.kosla.przychodnia.session.DiagnoseFacade;
 import pl.kosla.przychodnia.session.PerscripionFacade;
 import pl.kosla.przychodnia.session.SickLeaveFacade;
 import static pl.kosla.przychodnia.utilis.FacesUtils.getFromSession;
@@ -42,6 +44,7 @@ public class AppoitmentBean implements Serializable {
     @EJB private AppoitmentFacade appoitmentFacade;
     @EJB private SickLeaveFacade sickLeaveFacade;
     @EJB private PerscripionFacade perscripionFacade;
+    @EJB private DiagnoseFacade diagnoseFacade;
  
     
     private List<SickLeave> sickLeaveItems = null;
@@ -50,6 +53,7 @@ public class AppoitmentBean implements Serializable {
     private Perscripion perscripionSelected;
     private Appoitment curentAppoitment; 
     private List<Diagnose> diagnoseList;
+    
    
    public AppoitmentBean() {
    }
@@ -67,6 +71,7 @@ public class AppoitmentBean implements Serializable {
                curentAppoitment = new Appoitment();
                curentAppoitment.setMedicId(sf.getMedic());
                curentAppoitment.setPatientId( (Patient) getFromSession("curentPatient") );
+               curentAppoitment.setAppoitmentDate(new Date());
                appoitmentFacade.create(curentAppoitment);
                //apc.setSelected(curentAppoitment);
                //apc.create();
@@ -160,7 +165,8 @@ public class AppoitmentBean implements Serializable {
    }
 
    public List<Diagnose> getDiagnoseList() {
-    return (List<Diagnose>) curentAppoitment.getDiagnoseCollection();
+   // return (List<Diagnose>) curentAppoitment.getDiagnoseCollection();
+      return diagnoseFacade.getDiagnosesListFoArappoitmentId(curentAppoitment.getId());
    }
 
    public void setDiagnoseList(List<Diagnose> diagnoseList) {

@@ -1,6 +1,3 @@
-/*
- * Mój jest kawałek podłogi...  * 
- */
 package pl.kosla.przychodnia.session;
 
 import javax.ejb.Stateless;

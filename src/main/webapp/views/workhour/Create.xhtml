@@ -133,11 +133,11 @@
                             requiredMessage="#{bundle.EditWorkhourRequiredMessage_surgeryHasMedicId}"
                             filter="true" 
                             filterMatchMode="startsWith">
-                            <f:selectItems value="#{surgeryHasMedicController.doctorsAvailableSelectOne}"
-                                           var="surgeryHasMedicIdItem"
-                                           itemValue="#{surgeryHasMedicIdItem}"
-                                           
-                                           itemLabel="#{surgeryHasMedicIdItem.medicId.firstName} #{surgeryHasMedicIdItem.medicId.lastName} #{surgeryHasMedicIdItem.surgeryId.name} "/>
+                            <f:selectItems 
+                                value="#{surgeryHasMedicController.doctorsAvailableSelectOne}"
+                                var="surgeryHasMedicIdItem"
+                                itemValue="#{surgeryHasMedicIdItem}"
+                                itemLabel="#{surgeryHasMedicIdItem.medicId.firstName} #{surgeryHasMedicIdItem.medicId.lastName} #{surgeryHasMedicIdItem.surgeryId.name} "/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{workhourController.create}" value="#{bundle.Save}" update="display,:WorkhourListForm:datalist,:growl" oncomplete="handleSubmit(args,'WorkhourCreateDialog');"/>

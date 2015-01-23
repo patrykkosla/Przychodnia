@@ -30,6 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Diagnose.findAll", query = "SELECT d FROM Diagnose d"),
     @NamedQuery(name = "Diagnose.findById", query = "SELECT d FROM Diagnose d WHERE d.id = :id"),
+    @NamedQuery(name = "Diagnose.findByPatientId", query = "SELECT d FROM Diagnose d WHERE d.appoitmentId.patientId.patientId = :patientId"),
+    @NamedQuery(name = "Diagnose.findByAppoitmentId", query = "SELECT d FROM Diagnose d WHERE d.appoitmentId.id = :appoitmentId"),
     @NamedQuery(name = "Diagnose.findByMarkAsImportant", query = "SELECT d FROM Diagnose d WHERE d.markAsImportant = :markAsImportant")})
 public class Diagnose implements Serializable {
     private static final long serialVersionUID = 1L;
