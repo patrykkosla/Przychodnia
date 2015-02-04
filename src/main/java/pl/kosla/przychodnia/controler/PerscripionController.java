@@ -57,6 +57,7 @@ public class PerscripionController implements Serializable {
     }
 
     public void create() {
+       getSelected().setPosteData(new Date());
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PerscripionCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.

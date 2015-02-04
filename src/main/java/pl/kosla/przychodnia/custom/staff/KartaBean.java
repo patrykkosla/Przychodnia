@@ -10,7 +10,6 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
-import pl.kosla.przychodnia.controler.LabTestOrderController;
 import pl.kosla.przychodnia.controler.PatientController;
 import pl.kosla.przychodnia.enums.MedicType;
 import pl.kosla.przychodnia.model.Appoitment;
@@ -19,11 +18,13 @@ import pl.kosla.przychodnia.model.Diagnose;
 import pl.kosla.przychodnia.model.Patient;
 import pl.kosla.przychodnia.model.Perscripion;
 import pl.kosla.przychodnia.model.Radiologia;
+import pl.kosla.przychodnia.model.SickLeave;
 import pl.kosla.przychodnia.session.AppoitmentFacade;
 import pl.kosla.przychodnia.session.BloodTestFacade;
 import pl.kosla.przychodnia.session.DiagnoseFacade;
 import pl.kosla.przychodnia.session.PerscripionFacade;
 import pl.kosla.przychodnia.session.RadiologiaFacade;
+import pl.kosla.przychodnia.session.SickLeaveFacade;
 import static pl.kosla.przychodnia.utilis.FacesUtils.getFromSession;
 
 /**
@@ -41,6 +42,7 @@ public class KartaBean implements Serializable{
    @EJB private RadiologiaFacade radiologiaFacade;
    @EJB private PerscripionFacade perscripionFacade;
    @EJB private DiagnoseFacade diagnoseFacade;
+   @EJB private SickLeaveFacade sickLeaveFacade;
    
    private Patient p;
    private List<Appoitment> bookedAppoitmentsList;
@@ -49,7 +51,9 @@ public class KartaBean implements Serializable{
    private List<Radiologia> radiologiasList;
    private List<Perscripion> perscripionsList;
    private List<Diagnose> diagnosesList;
+   private List<SickLeave> sickLeaveList;
    
+   private String role;
    /**
     * Creates a new instance of KartaBean
     */
@@ -57,11 +61,31 @@ public class KartaBean implements Serializable{
    }
     @PostConstruct
    private void init() {  
+      /*
+      1 sprawdzic kto 
+      
+      
+      */
+      
    if( getFromSession("curentPatient") != null){
       System.out.println("kartaBean: jest pacjent");
       patientController.setSelected( (Patient) getFromSession("curentPatient") );
+      if( getFromSession("role") != null){
+            System.out.println("kartaBean: sprawdza uprawnienia");
+            if(getFromSession("role").equals(MedicType.DOCTOR)){
+               role = "doctor";
+            }
+            if(getFromSession("role").equals(MedicType.NURSE)){
+               role = "nurse";
+            }
+      
+      }else{
+         role = "patient";
+         
       }
- System.out.println("kartaBean: brak pacjenta");
+      
+      }
+      System.out.println("kartaBean: brak pacjenta");
    }
    
    public void fillBookedAppoitmentsList() {
@@ -112,6 +136,9 @@ public class KartaBean implements Serializable{
    public List<Perscripion> getPerscripionsList() {
       return perscripionFacade.findPerscripionForPatient(patientController.getSelected().getPatientId(), 5);
    }
+   public List<Perscripion> getPerscripionsListLong() {
+      return perscripionFacade.findPerscripionForPatient(patientController.getSelected().getPatientId());
+   }
 
    public void setPerscripionsList(List<Perscripion> perscripionsList) {
       this.perscripionsList = perscripionsList;
@@ -123,6 +150,18 @@ public class KartaBean implements Serializable{
 
    public void setDiagnosesList(List<Diagnose> diagnosesList) {
       this.diagnosesList = diagnosesList;
+   }
+
+   public List<SickLeave> getSickLeaveList() {
+      return sickLeaveList;
+   }
+
+   public void setSickLeaveList(List<SickLeave> sickLeaveList) {
+      this.sickLeaveList = sickLeaveList;
+   }
+   public List<SickLeave> getSickLeaveListLong() {
+     return sickLeaveFacade.getSickLeavesLitByPatientId(patientController.getSelected().getPatientId());
+      //return sickLeaveList;
    }
    
    

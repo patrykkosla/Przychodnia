@@ -33,8 +33,12 @@ import javax.xml.bind.annotation.XmlRootElement;
    @NamedQuery(name = "BloodTest.findByExamDate", query = "SELECT b FROM BloodTest b WHERE b.examDate = :examDate"),
    @NamedQuery(name = "BloodTest.findByHemoglobine", query = "SELECT b FROM BloodTest b WHERE b.hemoglobine = :hemoglobine"),
    @NamedQuery(name = "BloodTest.findByErytrocyt", query = "SELECT b FROM BloodTest b WHERE b.erytrocyt = :erytrocyt"),
+   @NamedQuery(name = "BloodTest.findByMcv", query = "SELECT b FROM BloodTest b WHERE b.mcv = :mcv"),
    @NamedQuery(name = "BloodTest.findByPatient", query = "SELECT b FROM BloodTest b WHERE b.patientId.patientId = :patientId ORDER BY b.examDate"),
-   @NamedQuery(name = "BloodTest.findByMcv", query = "SELECT b FROM BloodTest b WHERE b.mcv = :mcv")})
+   @NamedQuery(name = "BloodTest.findByMedicId", query = "SELECT b FROM BloodTest b WHERE b.medicId.id = :medicId ORDER BY b.examDate"),
+   @NamedQuery(name = "BloodTest.findByOrderId", query = "SELECT b FROM BloodTest b WHERE b.labTestOrderId.id = :orderId ORDER BY b.examDate")
+   
+})
 public class BloodTest implements Serializable {
    private static final long serialVersionUID = 1L;
    @Id

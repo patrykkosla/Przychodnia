@@ -48,8 +48,8 @@
                          rows="20"
                          rowsPerPageTemplate="20,40,60,80,100"
                          >
-                        <p:ajax event="rowSelect"   update=" AppoitmentSchowButton "/>
-                        <p:ajax event="rowUnselect" update=" AppoitmentSchowButton "/>
+                        <p:ajax event="rowSelect"   update=" perscripionSchowButton "/>
+                        <p:ajax event="rowUnselect" update=" perscripionSchowButton "/>
                         
                         
                         <p:column headerText="Data wystawienia">
@@ -58,8 +58,7 @@
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Wystawiona przez:">
-                            <h:outputText value="#{perscripion.medicId.firstName }"/>
-                            <h:outputText value="#{perscripion.medicId.lastName}"/>
+                            <h:outputText value="#{perscripion.appoitmentId.medicId.firstName } #{perscripion.appoitmentId.medicId.lastName }"/>
                         </p:column>
                         <p:column headerText="Dawka">
                             <h:outputText value="#{perscripion.dose}"/>
@@ -70,6 +69,9 @@
                         <p:column headerText="Wielkośc opakowania">
                             <h:outputText value="#{perscripion.medicineFk.amount}"/>
                         </p:column>      
+                        <p:column headerText="Opisleku">
+                            <h:outputText value="#{perscripion.medicineFk.decryption}"/>
+                        </p:column>      
                         <f:facet name="footer">
 
                             <p:commandButton 
@@ -78,7 +80,7 @@
                                 value="Wybierz receptę" 
 
                                 disabled="#{empty reciptPatientControler.selectedPerscripion}"/>
-
+                        </f:facet>       
                     </p:dataTable>
                 </p:panel>
             </h:form>

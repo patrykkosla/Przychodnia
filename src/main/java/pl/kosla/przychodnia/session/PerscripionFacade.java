@@ -39,4 +39,9 @@ public class PerscripionFacade extends AbstractFacade<Perscripion> {
        q.setMaxResults(amount);
        return q.getResultList();
     }
+    public List<Perscripion> findPerscripionForPatient(int patientId){
+       Query q = em.createQuery("SELECT p FROM Perscripion p WHERE p.appoitmentId.patientId.patientId = :patientId");
+       q.setParameter("patientId",patientId );
+       return q.getResultList();
+    }
 }

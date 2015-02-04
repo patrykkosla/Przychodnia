@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BloodTestEditDlg" widgetVar="BloodTestEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditBloodTestTitle}">
+            <h:form id="BloodTestEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{bloodTestController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditBloodTestLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{bloodTestController.selected.id}" title="#{bundle.EditBloodTestTitle_id}" required="true" requiredMessage="#{bundle.EditBloodTestRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditBloodTestLabel_examDate}" for="examDate" />
+                        <p:calendar id="examDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{bloodTestController.selected.examDate}" title="#{bundle.EditBloodTestTitle_examDate}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditBloodTestLabel_hemoglobine}" for="hemoglobine" />
+                        <p:inputText id="hemoglobine" value="#{bloodTestController.selected.hemoglobine}" title="#{bundle.EditBloodTestTitle_hemoglobine}" />
+                        <p:outputLabel value="#{bundle.EditBloodTestLabel_erytrocyt}" for="erytrocyt" />
+                        <p:inputText id="erytrocyt" value="#{bloodTestController.selected.erytrocyt}" title="#{bundle.EditBloodTestTitle_erytrocyt}" />
+                        <p:outputLabel value="#{bundle.EditBloodTestLabel_mcv}" for="mcv" />
+                        <p:inputText id="mcv" value="#{bloodTestController.selected.mcv}" title="#{bundle.EditBloodTestTitle_mcv}" />
+                        <p:outputLabel value="#{bundle.EditBloodTestLabel_patientId}" for="patientId" />
+                        <p:selectOneMenu id="patientId" value="#{bloodTestController.selected.patientId}" required="true" requiredMessage="#{bundle.EditBloodTestRequiredMessage_patientId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{patientController.itemsAvailableSelectOne}"
+                                           var="patientIdItem"
+                                           itemValue="#{patientIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditBloodTestLabel_labTestOrderId}" for="labTestOrderId" />
+                        <p:selectOneMenu id="labTestOrderId" value="#{bloodTestController.selected.labTestOrderId}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{labTestOrderController.itemsAvailableSelectOne}"
+                                           var="labTestOrderIdItem"
+                                           itemValue="#{labTestOrderIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditBloodTestLabel_medicId}" for="medicId" />
+                        <p:selectOneMenu id="medicId" value="#{bloodTestController.selected.medicId}" required="true" requiredMessage="#{bundle.EditBloodTestRequiredMessage_medicId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{medicController.itemsAvailableSelectOne}"
+                                           var="medicIdItem"
+                                           itemValue="#{medicIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{bloodTestController.update}" value="#{bundle.Save}" update="display,:BloodTestListForm:datalist,:growl" oncomplete="handleSubmit(args, 'BloodTestEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="BloodTestEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

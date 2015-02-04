@@ -6,17 +6,29 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition>
+    <ui:composition template="/resources/template/home_template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="Lista recept"></h:outputText>
+        </ui:define>
+               
+        <ui:define name="body">  
         <h:form id="PerscripionListForm">
             <p:panel header="Ostatnie wystawione recepty">
                 <p:dataTable 
                     id="datalist" 
-                     value="#{kartaBean.perscripionsList}"
+                    value="#{kartaBean.perscripionsListLong}"
                      var="PerscripionItem"
                      selectionMode="single" 
                      selection="#{perscripionController.selected}"
                      rowKey="#{PerscripionItem.id}"
-                     >
+                     rows="50"
+                     rowsPerPageTemplate="50,100,150,200,250">
+                    
+                     <p:ajax event="rowSelect"   update="viewButton"/>
+                     <p:ajax event="rowUnselect" update=" viewButton"/>
+                    
                     <p:column headerText="Nazwa leku">
                         <h:outputText value="#{PerscripionItem.medicineFk.name}"/>
                     </p:column>
@@ -29,19 +41,22 @@
                         </h:outputText>
                     </p:column>
                     <p:column headerText="Przez">
-                        <h:outputText value="#{PerscripionItem.appoitmentId.medicId.firstName} #{item.appoitmentId.medicId.lastName}"/>
+                        <h:outputText value="#{PerscripionItem.appoitmentId.medicId.firstName} #{PerscripionItem.appoitmentId.medicId.lastName}"/>
                     </p:column>
-                </p:dataTable>
                 <f:facet name="footer">
-                    <p:button 
-                        icon="ui-icon-search"         
-                        id="PerscripionListButton" 
-                        value="Pełna list recept" 
-                        href="/listarecept.xhtml"
-                        />
+                <p:commandButton 
+                    id="viewButton"  
+                    icon="ui-icon-search"
+                    value="#{bundle.View}"
+                    update=":PerscripionViewForm"
+                    oncomplete="PF('PerscripionViewDialog').show()"
+                    disabled="#{empty perscripionController.selected}"/>
                 </f:facet>
+                </p:dataTable>
             </p:panel>
         </h:form>
+        <ui:include src="/views/perscripion/app/View.xhtml"/>
+        </ui:define>
     </ui:composition>
 
 </html>

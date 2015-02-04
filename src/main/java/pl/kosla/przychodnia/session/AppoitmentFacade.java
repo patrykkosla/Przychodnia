@@ -195,5 +195,12 @@ public Integer bookAppoitment(Appoitment appoitment, int maxApp){
       q.setParameter("id", appId);
       return q.getSingleResult();
    }
-   
+   public List<Appoitment> getListofOldBookedAppp(){
+     //      Query  q = em.createQuery("SELECT a.queuePositione FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId AND a.appoitmentDate =:appDate ORDER BY a.queuePositione");
+     Date d = new Date();
+     Query q = em.createQuery("SELECT a FROM Appoitment a WHERE a.status = :status AND a.appoitmentDate < :appDate");
+     q.setParameter("status", Appoitment.REZERWACJA);
+     q.setParameter("appDate", d, TemporalType.DATE); 
+     return q.getResultList();
+   }
 } 

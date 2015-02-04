@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/resources/template/doctor_template.xhtml">
+
+        <ui:define name="title">
+            <h:outputText value="Godzny Pracy "></h:outputText>
+        </ui:define>
+          
+        <ui:define name="body">
+            <h:form id="WorkhourListForm">
+                <p:panel header="#{bundle.ListWorkhourTitle}">
+                    <p:dataTable id="datalist" value="#{workHourBean.workHourList}" var="item"
+                                 selectionMode="single" selection="#{workhourController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="30"
+                                 rowsPerPageTemplate="30,60"
+                                 >
+
+
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListWorkhourTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column headerText="#{wh.Surgery}">
+                            <h:outputText value="#{item.surgeryHasMedicId.surgeryId.name}"/>
+                        </p:column>
+                        
+                        
+                        <p:column headerText="#{wh.Monday}  #{wh.Open}">
+                            <p:selectBooleanCheckbox value="#{item.monday}" disabled="true"/>
+                        </p:column>
+                        <p:column headerText="#{wh.AppType}" rendered="#{item.monday}">
+                            <h:outputText value="#{item.mondayType}"/>
+                        </p:column>
+                        <p:column headerText="#{wh.StartTime}" rendered="#{item.monday}">
+                            <h:outputText value="#{item.mondayStart}">
+                                <f:convertDateTime pattern="HH:mm" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{wh.EndTime}" rendered="#{item.monday}">
+                            <h:outputText value="#{item.mondayEnd}">
+                                <f:convertDateTime pattern="HH:mm" />
+                            </h:outputText>
+                        </p:column >
+                        <p:column headerText="#{wh.MaxApp}" rendered="#{item.monday}">
+                            <h:outputText value="#{item.mondayMaxApp}"/>
+                        </p:column>
+                        
+                        
+                        <p:column headerText="#{wh.Tuesday}  #{wh.Open}">
+                            <p:selectBooleanCheckbox value="#{item.tuesday}" disabled="true"/>
+                        </p:column>
+                        <p:column headerText="#{wh.AppType}">
+                            <h:outputText value="#{item.tuesdayType}"/>
+                        </p:column>
+                        <p:column headerText="#{wh.StartTime}">
+                            <h:outputText value="#{item.tuesdayStart}">
+                                <f:convertDateTime pattern="HH:mm" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{wh.EndTime}">
+                            <h:outputText value="#{item.tuesdayEnd}">
+                                <f:convertDateTime pattern="HH:mm" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{wh.MaxApp}">
+                            <h:outputText value="#{item.tuesdayMaxApp}"/>
+                        </p:column>
+                        
+                        <p:column headerText="#{wh.Wednesday} #{wh.Open}">
+                            <p:selectBooleanCheckbox value="#{item.wednesday}" disabled="true"/>
+                        </p:column>
+                        <p:column headerText="#{wh.AppType}">
+                            <h:outputText value="#{item.wednesdayType}"/>
+                        </p:column>
+                        <p:column headerText="#{wh.StartTime}">
+                            <h:outputText value="#{item.wednesdayStart}">
+                                <f:convertDateTime pattern="HH:mm" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{wh.EndTime}">
+                            <h:outputText value="#{item.wednesdayEnd}">
+                                <f:convertDateTime pattern="HH:mm" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{wh.MaxApp}">
+                            <h:outputText value="#{item.wednesdayMaxApp}"/>
+                        </p:column>
+                        
+                        <p:column headerText="#{wh.Thursday} #{wh.Open}">
+                            <p:selectBooleanCheckbox value="#{item.thursday}" disabled="true"/>
+                        </p:column>
+                        <p:column headerText="#{wh.AppType}">
+                            <h:outputText value="#{item.thursdayType}"/>
+                        </p:column>
+                        <p:column headerText="#{wh.StartTime}">
+                            <h:outputText value="#{item.thursdayStart}">
+                                <f:convertDateTime pattern="HH:mm" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{wh.EndTime}">
+                            <h:outputText value="#{item.thursdayEnd}">
+                                <f:convertDateTime pattern="HH:mm" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{wh.MaxApp}">
+                            <h:outputText value="#{item.thursdayMaxApp}"/>
+                        </p:column>
+                        
+                        <p:column headerText="#{wh.Friday} #{wh.Open}">
+                            <p:selectBooleanCheckbox value="#{item.friday}" disabled="true"/>
+                        </p:column>
+                        <p:column headerText="#{wh.AppType}">
+                            <h:outputText value="#{item.fridayType}"/>
+                        </p:column>
+                        <p:column headerText="#{wh.StartTime}">
+                            <h:outputText value="#{item.fridayStart}">
+                                <f:convertDateTime pattern="HH:mm" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{wh.EndTime}">
+                            <h:outputText value="#{item.fridayEnd}">
+                                <f:convertDateTime pattern="HH:mm" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{wh.MaxApp}">
+                            <h:outputText value="#{item.fridayMaxApp}"/>
+                        </p:column>
+                       
+
+
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

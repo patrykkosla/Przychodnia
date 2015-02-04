@@ -72,6 +72,7 @@ public class AppoitmentBean implements Serializable {
                //sprawdzanie czy wizyta z rezerwacji czy przegląd lub edycja 
               // sickLeaveItems = (List<SickLeave>) curentAppoitment.getSickLeaveCollection();
                System.out.println("appoitmentBean z sesji");
+               curentAppoitment.setStatus(Appoitment.PAST);
                
             }else if(getFromSession("newappoitment").equals(true) && getFromSession("curentPatient") != null && sf.getMedic().getType().equals(MedicType.DOCTOR)  ){//nowa wizyta
                System.out.println("faza 2");

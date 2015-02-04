@@ -6,6 +6,7 @@ import pl.kosla.przychodnia.controler.util.JsfUtil.PersistAction;
 import pl.kosla.przychodnia.session.BloodTestFacade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -108,7 +109,12 @@ public class BloodTestController implements Serializable {
             }
         }
     }
-
+    public void createSet(BloodTest bl){
+      selected.setLabTestOrderId(bl.getLabTestOrderId());
+      selected.setExamDate(new Date());
+      selected.setMedicId(bl.getMedicId());
+      selected.setPatientId(bl.getPatientId());
+    }
     public BloodTest getBloodTest(java.lang.Integer id) {
         return getFacade().find(id);
     }

@@ -38,4 +38,9 @@ public class WorkhourFacade extends AbstractFacade<Workhour> {
         return result.isEmpty() ? null : result.get(0);
            
     }
+   public List<Workhour> getWorkhourForMedicId(int medicId){
+      TypedQuery<Workhour> q = em.createNamedQuery("Workhour.findByMedicId", Workhour.class);
+      q.setParameter("medicId", medicId);
+      return q.getResultList();
+   }
 }

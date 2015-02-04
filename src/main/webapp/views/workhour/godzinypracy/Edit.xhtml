@@ -5,12 +5,11 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pe="http://primefaces.org/ui/extensions">
-
+     xmlns:pe="http://primefaces.org/ui/extensions">
     <ui:composition>
         <pe:importEnum type="pl.kosla.przychodnia.enums.VisitType" var="JsfVisitType" allSuffix="ALL_ENUM_VALUES" /> 
-        <p:dialog id="WorkhourCreateDlg" widgetVar="WorkhourCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateWorkhourTitle}">
-            <h:form id="WorkhourCreateForm">
+        <p:dialog id="WorkhourEditDlg" widgetVar="WorkhourEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditWorkhourTitle}">
+            <h:form id="WorkhourEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="4" rendered="#{workhourController.selected != null}">
                         <p:outputLabel value="#{bundle.CreateWorkhourLabel_monday}" for="monday" />
@@ -124,23 +123,9 @@
                             widgetVar="fridayEnd"/> 
                         <p:outputLabel value="#{bundle.CreateWorkhourLabel_fridayMaxApp}" for="fridayMaxApp" />
                         <p:inputText id="fridayMaxApp" value="#{workhourController.selected.fridayMaxApp}" title="#{bundle.CreateWorkhourTitle_fridayMaxApp}" />
-                        <p:outputLabel value="#{bundle.CreateWorkhourLabel_surgeryHasMedicId}" for="surgeryHasMedicId" />
-                        <p:selectOneMenu 
-                            id="surgeryHasMedicId" 
-                            value="#{workhourController.selected.surgeryHasMedicId}" 
-                            required="true" 
-                            requiredMessage="#{bundle.EditWorkhourRequiredMessage_surgeryHasMedicId}"
-                            filter="true" 
-                            filterMatchMode="startsWith">
-                            <f:selectItems 
-                                value="#{surgeryHasMedicController.doctorsAvailableSelectOne}"
-                                var="surgeryHasMedicIdItem"
-                                itemValue="#{surgeryHasMedicIdItem}"
-                                itemLabel="#{surgeryHasMedicIdItem.medicId.firstName} #{surgeryHasMedicIdItem.medicId.lastName} #{surgeryHasMedicIdItem.surgeryId.name} "/>
-                        </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{workhourController.create}" value="#{bundle.Save}" update="display,:WorkhourListForm:datalist,:growl" oncomplete="handleSubmit(args,'WorkhourCreateDialog');"/>
-                    <p:commandButton value="#{bundle.Cancel}" onclick="WorkhourCreateDialog.hide()"/>
+                    <p:commandButton actionListener="#{workhourController.update}" value="#{bundle.Save}" update="display,:WorkhourListForm:datalist,:growl" oncomplete="handleSubmit(args, 'WorkhourEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="WorkhourEditDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

@@ -133,31 +133,31 @@ public class MakeAppoitmentBean implements Serializable{
          startTime = workhour.getMondayStart();
          endTime = workhour.getMondayEnd();
          prop = workhour.getMondayType();
-         maxApp = workhour.getMondayMaxApp();
+         maxApp = (workhour.getMondayMaxApp() != null) ?  workhour.getMondayMaxApp() : 0;
          break;
       case 2:  
          startTime = workhour.getTuesdayStart();
          endTime = workhour.getTuesdayEnd();
          prop = workhour.getTuesdayType();
-         maxApp = workhour.getTuesdayMaxApp();
+         maxApp = (workhour.getTuesdayMaxApp() != null)  ?  workhour.getTuesdayMaxApp() : 0;
          break;
       case 3:  
          startTime = workhour.getWednesdayStart();
          endTime = workhour.getWednesdayEnd();
          prop = workhour.getWednesdayType();
-         maxApp = workhour.getWednesdayMaxApp();
+         maxApp = (workhour.getWednesdayMaxApp() != null)  ?  workhour.getWednesdayMaxApp() : 0;
          break;
       case 4:  
          startTime = workhour.getThursdayStart();
          endTime = workhour.getThursdayEnd();
          prop = workhour.getThursdayType();
-         maxApp = workhour.getThursdayMaxApp();
+         maxApp = (workhour.getThursdayMaxApp() != null)  ?  workhour.getThursdayMaxApp() : 0;
          break;
       case 5:  
          startTime = workhour.getFridayStart();
          endTime = workhour.getFridayEnd();
          prop = workhour.getFridayType();
-         maxApp = workhour.getFridayMaxApp();
+         maxApp = (workhour.getFridayMaxApp() != null) ?  workhour.getFridayMaxApp() : 0;
          break;
       }
 //      if ( startTime != null && endTime != null){

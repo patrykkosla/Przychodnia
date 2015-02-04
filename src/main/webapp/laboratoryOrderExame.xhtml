@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/resources/template/doctor_template.xhtml">
+
+        <ui:define name="west_left_column">
+            <h2>Zlecenie badania</h2>
+            <p:panel >
+                <h:form>
+                    <p:panelGrid columns="2" rendered="#{labolatoryOEBean.labTestOrder != null}">
+                        <h:outputText value="#{bundle.ViewLabTestOrderLabel_id}"/>
+                        <h:outputText value="#{labolatoryOEBean.labTestOrder.id}" title="#{bundle.ViewLabTestOrderTitle_id}"/>
+                        
+                        <h:outputText value="#{bundle.ViewLabTestOrderLabel_labBlodOb}"/>
+                        <p:selectBooleanCheckbox value="#{labolatoryOEBean.labTestOrder.labBlodOb}" disabled="true"/>
+                        
+                        <h:outputText value="#{bundle.ViewLabTestOrderLabel_labBlodMorfologia}"/>
+                        <p:selectBooleanCheckbox value="#{labolatoryOEBean.labTestOrder.labBlodMorfologia}" disabled="true"/>
+                        
+                        <h:outputText value="#{bundle.ViewLabTestOrderLabel_labBlodCells}"/>
+                        <p:selectBooleanCheckbox value="#{labolatoryOEBean.labTestOrder.labBlodCells}" disabled="true"/>
+                        
+                        <h:outputText value="#{bundle.ViewLabTestOrderLabel_labFecesGeneralTest}"/>
+                        <p:selectBooleanCheckbox value="#{labolatoryOEBean.labTestOrder.labFecesGeneralTest}" disabled="true"/>
+                        
+                        <h:outputText value="#{bundle.ViewLabTestOrderLabel_labUrineGeneralTest}"/>
+                        <p:selectBooleanCheckbox value="#{labolatoryOEBean.labTestOrder.labUrineGeneralTest}" disabled="true"/>
+                        
+                        <h:outputText value="#{bundle.ViewLabTestOrderLabel_appoitmentId}"/>
+                        <h:outputText value="#{labolatoryOEBean.labTestOrder.appoitmentId}" title="#{bundle.ViewLabTestOrderTitle_appoitmentId}"/>
+                    </p:panelGrid>
+                </h:form>    
+            </p:panel>            
+        </ui:define>
+        
+        <ui:define name="body">  
+            <p:panel header="Badanie" >
+            <h:form id="BloodTestViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{labolatoryOEBean.bloodTest != null}">
+                        <h:outputText value="#{bundle.ViewBloodTestLabel_id}"/>
+                        <h:outputText value="#{labolatoryOEBean.bloodTest.id}" title="#{bundle.ViewBloodTestTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewBloodTestLabel_examDate}"/>
+                        <h:outputText value="#{labolatoryOEBean.bloodTest.examDate}" title="#{bundle.ViewBloodTestTitle_examDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewBloodTestLabel_hemoglobine}"/>
+                        <h:outputText value="#{labolatoryOEBean.bloodTest.hemoglobine}" title="#{bundle.ViewBloodTestTitle_hemoglobine}"/>
+                        <h:outputText value="#{bundle.ViewBloodTestLabel_erytrocyt}"/>
+                        <h:outputText value="#{labolatoryOEBean.bloodTest.erytrocyt}" title="#{bundle.ViewBloodTestTitle_erytrocyt}"/>
+                        <h:outputText value="#{bundle.ViewBloodTestLabel_mcv}"/>
+                        <h:outputText value="#{labolatoryOEBean.bloodTest.mcv}" title="#{bundle.ViewBloodTestTitle_mcv}"/>
+                        <h:outputText value="#{bundle.ViewBloodTestLabel_patientId}"/>
+                        <h:outputText value="#{labolatoryOEBean.bloodTest.patientId}" title="#{bundle.ViewBloodTestTitle_patientId}"/>
+                        <h:outputText value="Dane Pacjenta"/>
+                        <h:outputText value="#{labolatoryOEBean.bloodTest.patientId.firstName} #{labolatoryOEBean.bloodTest.patientId.lastName}" title="#{bundle.ViewBloodTestTitle_patientId}"/>
+                        
+                        <h:outputText value="#{bundle.ViewBloodTestLabel_labTestOrderId}"/>
+                        <h:outputText value="#{labolatoryOEBean.bloodTest.labTestOrderId}" title="#{bundle.ViewBloodTestTitle_labTestOrderId}"/>
+                        <h:outputText value="Wykonane przez id"/>
+                        <h:outputText value="#{labolatoryOEBean.bloodTest.medicId}" title="#{bundle.ViewBloodTestTitle_medicId}"/>
+                        <h:outputText value="Wykonane przez: imie nazwisko"/>
+                        <h:outputText value="#{labolatoryOEBean.bloodTest.medicId.firstName}  #{labolatoryOEBean.bloodTest.medicId.lastName} " title="#{bundle.ViewBloodTestTitle_medicId}"/>
+                    </p:panelGrid>
+                    <p:button 
+                        value="Wstecz" 
+                        rendered="#{labolatoryOEBean.bloodTest != null}"
+                        href="/laboratory.xhtml"
+                        />
+                </h:panelGroup>
+            
+                    <p:commandButton 
+                        rendered="#{labolatoryOEBean.bloodTest == null}"
+                        id="createButton" 
+                        icon="ui-icon-plus"  
+                        value="#{bundle.Create}"
+                        actionListener="#{bloodTestController.prepareCreate}"
+                        action="#{bloodTestController.createSet( labolatoryOEBean.tempTest )}"
+                        update=":BloodTestCreateForm"
+                        oncomplete="PF('BloodTestCreateDialog').show()"
+                        />
+            </h:form>        
+            </p:panel>
+  
+            <ui:include src="/views/bloodTest/lab/FromOrderCreate.xhtml"/>
+         </ui:define>
+
+         
+    </ui:composition>
+
+</html>

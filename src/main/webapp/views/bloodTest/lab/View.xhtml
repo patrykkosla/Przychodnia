@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BloodTestViewDlg" widgetVar="BloodTestViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewBloodTestTitle}">
+            <h:form id="BloodTestViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{bloodTestController.selected != null}">
+                        <h:outputText value="#{bundle.ViewBloodTestLabel_id}"/>
+                        <h:outputText value="#{bloodTestController.selected.id}" title="#{bundle.ViewBloodTestTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewBloodTestLabel_examDate}"/>
+                        <h:outputText value="#{bloodTestController.selected.examDate}" title="#{bundle.ViewBloodTestTitle_examDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewBloodTestLabel_hemoglobine}"/>
+                        <h:outputText value="#{bloodTestController.selected.hemoglobine}" title="#{bundle.ViewBloodTestTitle_hemoglobine}"/>
+                        <h:outputText value="#{bundle.ViewBloodTestLabel_erytrocyt}"/>
+                        <h:outputText value="#{bloodTestController.selected.erytrocyt}" title="#{bundle.ViewBloodTestTitle_erytrocyt}"/>
+                        <h:outputText value="#{bundle.ViewBloodTestLabel_mcv}"/>
+                        <h:outputText value="#{bloodTestController.selected.mcv}" title="#{bundle.ViewBloodTestTitle_mcv}"/>
+                        <h:outputText value="#{bundle.ViewBloodTestLabel_patientId}"/>
+                        <h:outputText value="#{bloodTestController.selected.patientId}" title="#{bundle.ViewBloodTestTitle_patientId}"/>
+                        <h:outputText value="#{bundle.ViewBloodTestLabel_labTestOrderId}"/>
+                        <h:outputText value="#{bloodTestController.selected.labTestOrderId}" title="#{bundle.ViewBloodTestTitle_labTestOrderId}"/>
+                        <h:outputText value="#{bundle.ViewBloodTestLabel_medicId}"/>
+                        <h:outputText value="#{bloodTestController.selected.medicId}" title="#{bundle.ViewBloodTestTitle_medicId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="BloodTestViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

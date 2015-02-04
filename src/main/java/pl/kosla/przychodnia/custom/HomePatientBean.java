@@ -49,15 +49,14 @@ public class HomePatientBean implements Serializable{
       boolean docSet = false; 
       if(pb.getPatient().getSurgeryId() != null){
          if(pb.getPatient().getMedicId() != null){
-            if(pb.getAppRezCount() > 3){
-              docSet = false;
-              addMessage("Możliwe są tylko 3 jednoczesne rezerwacje"); 
-            }
-            else{
+            //if(pb.getAppRezCount() > 3){
+            //  docSet = false;
+            //  addMessage("Możliwe są tylko 3 jednoczesne rezerwacje"); 
+            //}
+            //else{
                // tu aktywacje listy możliwych terminów
                docSet = true;
-               
-            }
+            //}
          }
          else{
             docSet = false;

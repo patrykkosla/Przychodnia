@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
    @NamedQuery(name = "LabTestOrder.findByLabBlodMorfologia", query = "SELECT l FROM LabTestOrder l WHERE l.labBlodMorfologia = :labBlodMorfologia"),
    @NamedQuery(name = "LabTestOrder.findByLabBlodCells", query = "SELECT l FROM LabTestOrder l WHERE l.labBlodCells = :labBlodCells"),
    @NamedQuery(name = "LabTestOrder.findByAppoitmentId", query = "SELECT l FROM LabTestOrder l WHERE l.appoitmentId.id = :appId"),
+   @NamedQuery(name = "LabTestOrder.findByMedicId", query = "SELECT l FROM LabTestOrder l WHERE l.appoitmentId.medicId.id = :medicId"),
    @NamedQuery(name = "LabTestOrder.findByLabFecesGeneralTest", query = "SELECT l FROM LabTestOrder l WHERE l.labFecesGeneralTest = :labFecesGeneralTest"),
    @NamedQuery(name = "LabTestOrder.findByLabUrineGeneralTest", query = "SELECT l FROM LabTestOrder l WHERE l.labUrineGeneralTest = :labUrineGeneralTest")})
 public class LabTestOrder implements Serializable {

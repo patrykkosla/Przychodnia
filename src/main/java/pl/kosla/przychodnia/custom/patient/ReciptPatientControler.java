@@ -43,7 +43,8 @@ public class ReciptPatientControler {
    }
 
    public List<Perscripion> getPerscripionList() {
-      return perscripionList;
+      return perscripionFacade.findPerscripionForPatient(pb.getPatient().getPatientId());
+     // return perscripionList;
    }
 
    public void setPerscripionList(List<Perscripion> perscripionList) {

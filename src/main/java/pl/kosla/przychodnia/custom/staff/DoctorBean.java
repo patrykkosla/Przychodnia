@@ -119,7 +119,14 @@ public class DoctorBean implements Serializable {
       return "";
     
    } 
-   
+   public String prepatePatientAppoitment(Appoitment appoitment){
+      //removeFromSession("CurentApp");
+      
+      addToSession("curentPatient", appoitment.getPatientId());
+      addToSession("CurentApp", appoitment);
+      addToSession("newappoitment", false);
+      return "/staff/appoitment.xhtml?faces-redirect=true";
+   } 
   
     public void getBookedAppointment(int daysFuther){
        appoitmentList =  apc.getBookedAppointment(daysFuther, sf.getMedic().getId());
@@ -177,7 +184,8 @@ public class DoctorBean implements Serializable {
    }
 
    public List<Appoitment> getAppoitmentList() {
-      return appoitmentList;
+      return appoitmentFacade.allDocAppForSingelDay(sf.getMedic().getId(), curentSurgery.getId(), new Date(), Appoitment.REZERWACJA );
+      //return appoitmentList;
    }
 
    public void setAppoitmentList(List<Appoitment> appoitmentList) {

@@ -83,5 +83,19 @@ public class PatientFacade extends AbstractFacade<Patient> {
         q.setParameter("enable", enable  );
         return q.getResultList();
     }
-    
+    public Patient findPatient(String pesel ){
+       return null;
+       
+    }
+    public Patient findPatient(String firstName, String lastName){
+      return null; 
+    }
+    public Patient findPatient(){
+       return null;
+       
+    }
+    public Patient findPatient(Patient p){
+       return null;
+       
+    }
 }

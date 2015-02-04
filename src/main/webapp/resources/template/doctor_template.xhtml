@@ -29,6 +29,8 @@
                             <p:menuitem value="Lista zwolnień lekarskich" url="#" />
                             <p:menuitem value="Godzniny pracy" outcome="/views/workhour/List" />
                             <p:menuitem value="addres" outcome="/views/addres/List" />
+                            <p:menuitem value="laboratory" outcome="/laboratory.html" />
+                            <p:menuitem value="Godziny pracy" outcome="/staff/GodzinyPracy.html" />
                         </p:submenu>
                         <f:facet name="options">
                             <p:commandButton  value="#{msg.Logout}" icon="ui-icon-extlink" action="#{staffBean.logout()}"/>
@@ -39,7 +41,7 @@
                
             </p:layoutUnit>
             
-            <p:layoutUnit position="west" size="350" header="Left" >
+            <p:layoutUnit position="west"  header="Left" >
                 <ui:insert name="west_left_column"/>
             </p:layoutUnit>
             

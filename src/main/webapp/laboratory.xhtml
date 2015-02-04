@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/resources/template/doctor_template.xhtml">
+
+        <ui:define name="west_left_column">         
+             <p:panel header="Znajdz zlecenie ">
+                <h:form>
+                    <p:growl id="growl" life="2000" />
+                    <h:outputLabel value="Numer  zlecenia badania" for="orderNumberSeach"/>
+                    <p:inputText id="orderNumberSeach"  value="#{laboratoryBean.orderId}"
+                                 label="Numer zlecenia badania">
+                        <f:validateLongRange minimum="1" maximum="2147483647" />       
+                    </p:inputText>
+                    <p:commandButton 
+                         value="Znajdź zlecenie"
+                         actionListener="#{laboratoryBean.checkOrderId}"
+                         action="#{laboratoryBean.proceedByOrderId()}"/>
+                </h:form>
+            </p:panel>
+      
+        </ui:define>    
+    
+
+        
+        <ui:define name="body">             
+            
+           <h:form id="BloodTestListForm">
+                <p:panel header="Wykonane badania">
+                    <p:dataTable id="Testdatalist" value="#{laboratoryBean.bloodTestList}" var="item"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="20"
+                                 rowsPerPageTemplate="20,40,60,80,100"
+                                 >
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBloodTestTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBloodTestTitle_examDate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.examDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBloodTestTitle_hemoglobine}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.hemoglobine}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBloodTestTitle_erytrocyt}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.erytrocyt}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBloodTestTitle_mcv}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.mcv}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBloodTestTitle_patientId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.patientId}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListBloodTestTitle_labTestOrderId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.labTestOrderId}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+         </ui:define>
+        
+    </ui:composition>
+
+</html>

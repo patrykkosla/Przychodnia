@@ -21,8 +21,8 @@
             <var>bundle</var>
         </resource-bundle>
         <resource-bundle>
-            <base-name>/Bundle</base-name>
-            <var>bundle</var>
+            <base-name>/WorkHourBundle</base-name>
+            <var>wh</var>
         </resource-bundle>
     </application>
 </faces-config>

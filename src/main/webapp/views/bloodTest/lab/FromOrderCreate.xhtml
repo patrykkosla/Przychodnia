@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BloodTestCreateDlg" widgetVar="BloodTestCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateBloodTestTitle}">
+            <h:form id="BloodTestCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{bloodTestController.selected != null}">
+                        
+                                               
+                        <p:outputLabel value="#{bundle.CreateBloodTestLabel_hemoglobine}" for="hemoglobine" />
+                        <p:inputText id="hemoglobine" value="#{bloodTestController.selected.hemoglobine}" title="#{bundle.CreateBloodTestTitle_hemoglobine}" />
+                        <p:outputLabel value="#{bundle.CreateBloodTestLabel_erytrocyt}" for="erytrocyt" />
+                        <p:inputText id="erytrocyt" value="#{bloodTestController.selected.erytrocyt}" title="#{bundle.CreateBloodTestTitle_erytrocyt}" />
+                        <p:outputLabel value="#{bundle.CreateBloodTestLabel_mcv}" for="mcv" />
+                        <p:inputText id="mcv" value="#{bloodTestController.selected.mcv}" title="#{bundle.CreateBloodTestTitle_mcv}" />
+                        
+                    </p:panelGrid>
+                    <p:commandButton 
+                        actionListener="#{bloodTestController.create}" 
+                        value="#{bundle.Save}" 
+                        update="display,:BloodTestViewForm,:growl"
+                        oncomplete="handleSubmit(args,'BloodTestCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="BloodTestCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

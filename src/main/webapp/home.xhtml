@@ -14,10 +14,10 @@
         </ui:define>
         
         
-        <ui:define name="west_left_column">         
+        <ui:define name="west_left_column"> 
             <h:form>
-                <p:growl id="hp_doc_box" showDetail="true">             
-                    <p:panel   header="Przychodnia" >
+            <p:panel   header="Przychodnia" >
+                        
                         <h:panelGrid rendered="#{ not empty homePatientBean.pb.patient.surgeryId}" columns="1" cellpadding="0" >
                             <h:outputLabel value="Nazwa"/>
                             <h:outputText value="#{ homePatientBean.pb.patient.surgeryId.name}"/>
@@ -38,12 +38,14 @@
                                 icon="ui-icon-search"         
                                 id="SurgeryButton" 
                                 value="Przychodnie" 
-                                href="/wyborprzychodni.xhtml"
-                                 />
+                                href="/wyborprzychodni.xhtml"  />
                         </f:facet>
-                    </p:panel>
+                      
+                </p:panel>
+            </h:form>  
+            <h:form>
+                <p:panel header="Twój lekarz ">
                     
-                    <p:panel header="Twój lekarz ">
                         <h:panelGrid rendered="#{ not empty homePatientBean.pb.patient.medicId}" columns="1" cellpadding="0" >
                             <h:outputLabel value="Imie"/>
                             <h:outputText value="#{ homePatientBean.pb.patient.medicId.firstName}"/>
@@ -61,12 +63,12 @@
                                 id="LekarzeButton" 
                                 value="Lekarze" 
                                 disabled="#{empty homePatientBean.pb.patient.surgeryId}"
-                                href="/wyborlekarza.xhtml"
-                                 />
+                                href="/wyborlekarza.xhtml" />
                         </f:facet>                      
                     </p:panel>
-                </p:growl>
             </h:form>
+
+            
         </ui:define>
         
         
@@ -107,7 +109,7 @@
                   id="AllRecepButton" 
                   value="Przeglądaj recepty" 
                   icon="ui-icon-search"         
-                  href="pacjent/recepty.xhtml"
+                  href="/patient/recepty.xhtml"
                 />  
             </h:form>
             <ui:include src="/custom_views/pacjent/daneosobowe.xhtml"/>

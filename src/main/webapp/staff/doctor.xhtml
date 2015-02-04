@@ -27,7 +27,6 @@
                     <f:selectItems value="#{doctorBean.surgeryList}"
                                    var="selectedSurgeryDoc"
                                    itemValue="#{selectedSurgeryDoc}"
-
                                    itemLabel="#{selectedSurgeryDoc.name} #{selectedSurgeryDoc.addresId.place}"/>
                 </p:selectOneMenu>
                 <p:commandButton 
@@ -47,28 +46,42 @@
                         value="#{doctorBean.appoitmentList}"
                         var="app"
                         selectionMode="single"
-                        selection="#{nurseBean.selectedDoctor}"
+                        selection="#{doctorBean.curentAppoitment}"
                         rowKey="#{app.id}"
                         lazy="true"
                                  >
                     <p:ajax event="rowSelect"   update="selectdoctorbutton"/>
                     <p:ajax event="rowUnselect" update="selectdoctorbutton"/>
                     
+                    <p:column>
+                        <h:outputText value="#{app.appoitmentDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Pozycja">
+                        <h:outputText value="#{app.queuePositione}"/>
+                    </p:column>
                     
-                    <p:column headerText="Imie">
-                        <h:outputText value="#{doctor.firstName}"/>
+                    <p:column headerText="Imie nazwisko">
+                        <h:outputText value="#{app.patientId.firstName} #{app.patientId.lastName} "/>
                     </p:column>
-                    <p:column headerText="Nazwisko">
-                        <h:outputText value="#{doctor.lastName}"/>
+                    <p:column headerText="Status">
+                        <h:outputText value="#{app.status}  "/>
                     </p:column>
+      
                     
                     <f:facet name="footer">
                         <p:commandButton 
+                            id="appwizybutton"
+                            value="Wizyta"
+                            action="#{doctorBean.prepatePatientAppoitment(doctorBean.curentAppoitment)}"
+                            disabled="#{empty doctorBean.curentAppoitment}"
+                            />
+                        <p:commandButton 
                             id="selectdoctorbutton"
-                            value="Wybierz"
-                            action="#{doctorBean.setDocftorforView(nurseBean.selectedDoctor)}"
-                            disabled="#{empty nurseBean.selectedDoctor}"
-                            update="@(.ui-datatable), :surgeryInfoHeader, :doctorInfoHeader ,:doctorInfoHeader"
+                            value="Wizyta"
+                            action="#{doctorBean.prepatePatientAppoitment(doctorBean.curentAppoitment)}"
+                            disabled="#{empty doctorBean.curentAppoitment}"
                             />
                         
                     </f:facet>

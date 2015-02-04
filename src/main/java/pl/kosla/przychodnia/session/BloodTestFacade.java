@@ -34,5 +34,17 @@ public class BloodTestFacade extends AbstractFacade<BloodTest> {
                
         return q.getResultList();        
     }
-    
+    public List<BloodTest>  findBloodTestByOrderId(int orderId){
+         TypedQuery<BloodTest> q = em.createNamedQuery("BloodTest.findByOrderId", BloodTest.class); 
+         q.setParameter("orderId", orderId);
+         return q.getResultList();
+    }
+
+    public List<BloodTest>  findBloodTestByMedicId(int medicId){
+         TypedQuery<BloodTest> q = em.createNamedQuery("BloodTest.findByMedicId", BloodTest.class); 
+         q.setParameter("medicId", medicId);
+         return q.getResultList();
+    }
+
+   
 }

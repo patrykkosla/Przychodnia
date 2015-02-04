@@ -7,9 +7,12 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-    <h:form id="WorkhourViewForm">
-        <h:panelGroup id="display">
-            <p:panelGrid columns="2" rendered="#{workhourController.selected != null}">
+
+        <p:dialog id="WorkhourViewDlg" widgetVar="WorkhourViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewWorkhourTitle}">
+            <h:form id="WorkhourViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{workhourController.selected != null}">
+                        
                         <h:outputText value="#{wh.Monday}"/>
                         <p:selectBooleanCheckbox value="#{workhourController.selected.monday}" disabled="true"/>
                         <h:outputText value="#{wh.AppType}"/>
@@ -84,10 +87,13 @@
                         </h:outputText>
                         <h:outputText value="#{bundle.ViewWorkhourLabel_fridayMaxApp}"/>
                         <h:outputText value="#{workhourController.selected.fridayMaxApp}" title="#{bundle.ViewWorkhourTitle_fridayMaxApp}"/>
-                </p:panelGrid>
-            <p:commandButton value="#{bundle.Close}" onclick="WorkhourViewDialog.hide()"/>
-        </h:panelGroup>
-    </h:form>
+                        <h:outputText value="#{bundle.ViewWorkhourLabel_surgeryHasMedicId}"/>
+                        <h:outputText value="#{workhourController.selected.surgeryHasMedicId}" title="#{bundle.ViewWorkhourTitle_surgeryHasMedicId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="WorkhourViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
 
     </ui:composition>
 </html>

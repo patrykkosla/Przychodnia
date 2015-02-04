@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
    @NamedQuery(name = "Workhour.findById", query = "SELECT w FROM Workhour w WHERE w.id = :id"),
    @NamedQuery(name = "Workhour.findByMedicIdSurgeryId",
    query = "SELECT w FROM Workhour w WHERE w.surgeryHasMedicId.medicId.id = :medicId AND w.surgeryHasMedicId.surgeryId.id = :surgeryId AND w.surgeryHasMedicId.isAtive = :isActive"),
-
+   @NamedQuery(name = "Workhour.findByMedicId", query = "SELECT w FROM Workhour w WHERE w.surgeryHasMedicId.medicId.id = :medicId"),
    @NamedQuery(name = "Workhour.findByMonday", query = "SELECT w FROM Workhour w WHERE w.monday = :monday"),
    @NamedQuery(name = "Workhour.findByMondayType", query = "SELECT w FROM Workhour w WHERE w.mondayType = :mondayType"),
    @NamedQuery(name = "Workhour.findByMondayStart", query = "SELECT w FROM Workhour w WHERE w.mondayStart = :mondayStart"),

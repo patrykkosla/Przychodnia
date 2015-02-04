@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import pl.kosla.przychodnia.model.LabTestOrder;
 
 /**
@@ -32,5 +33,24 @@ public class LabTestOrderFacade extends AbstractFacade<LabTestOrder> {
       q.setParameter("appId", appId);
       return  q.getResultList();
 
+   }
+   public LabTestOrder findLabOrdeById(int id){
+      TypedQuery q = em.createNamedQuery("LabTestOrder.findById", LabTestOrder.class);
+      q.setParameter("id", id);
+      
+      List<LabTestOrder> t =  q.getResultList();
+      if(t.isEmpty()){
+      return null;
+       }
+      else {
+         t.get(0);
+      }
+      return (LabTestOrder) q.getResultList().get(0);
+     //return (LabTestOrder) q.getSingleResult();
+   }
+   public  List<LabTestOrder> findLabOrdeByMedicId(int medicId){
+      TypedQuery q = em.createNamedQuery("LabTestOrder.findByMedicId", LabTestOrder.class);
+      q.setParameter("medicId", medicId);
+     return q.getResultList();
    }
 }
