@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -20,12 +19,13 @@ import pl.kosla.przychodnia.model.Medic;
 import pl.kosla.przychodnia.model.Patient;
 import pl.kosla.przychodnia.model.Surgery;
 import pl.kosla.przychodnia.session.AppoitmentFacade;
+import static pl.kosla.przychodnia.utilis.FacesUtils.addToSession;
 /**
  *
  * @author patryk
  */
 @Named(value = "homePatientBean")
-@RequestScoped
+@ViewScoped
 public class HomePatientBean implements Serializable{
     private static final long serialVersionUID = 1L;
     @Inject private PatientBean pb;
@@ -104,7 +104,10 @@ public class HomePatientBean implements Serializable{
             return false;
         }
     }
-    
+    public String  prepareAppoitemtView(Appoitment a){
+       addToSession("CurentApp", selectedAppoitment);
+       return "/staff/appoitment.xhtml?faces-redirect=true";
+    }
     
     
     public Patient getP() {
@@ -134,7 +137,7 @@ public class HomePatientBean implements Serializable{
     public List<Appoitment> getLastAppoitmentsList() {
         //return lastAppoitmentsList;
         //pb.getPatient().getAppoitmentCollection();
-       return lastAppoitmentsList = appoitmentFacade.getLastAppointmentsForPatient("pas", pb.getPatient().getPatientId(), 5);
+       return lastAppoitmentsList = appoitmentFacade.getLastAppointmentsForPatient(Appoitment.PAST, pb.getPatient().getPatientId(), 5);
     }
 
     public void setLastAppoitmentsList(List<Appoitment> lastAppoitmentsList) {

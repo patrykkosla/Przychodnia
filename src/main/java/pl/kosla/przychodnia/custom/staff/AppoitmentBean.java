@@ -61,12 +61,14 @@ public class AppoitmentBean implements Serializable {
     private List<Diagnose> diagnoseList;
     private List<RadiologyExamOrder> radiologyExamOrderList;
     
-   
+   private Boolean docViewMode = false;
    public AppoitmentBean() {
    }
    @PostConstruct
    private void init() {  
-      if(sf.getMedic() != null){ //&& sf.getMedic().getType().equals(MedicType.DOCTOR)
+       System.out.println("appoitmentBean: init start zaulek"+ getFromSession("patient"));
+      if(sf.getMedic() != null && sf.getMedic().getId() != null){
+         System.out.println("appoitmentBean: init start zaulek");
             if( getFromSession("CurentApp") != null ){
                curentAppoitment =  (Appoitment) getFromSession("CurentApp");
                //sprawdzanie czy wizyta z rezerwacji czy przegląd lub edycja 
@@ -89,12 +91,22 @@ public class AppoitmentBean implements Serializable {
                   addToSession("CurentApp", curentAppoitment);
                   addToSession("newappoitment", false);
                   System.out.println("appoitmentBean nowe");
-                  
+                  curentAppoitment.setStatus(Appoitment.PAST);
               // }
-            }
+            }      
+      }else if(getFromSession("patient") != null && getFromSession("CurentApp") != null){
+          System.out.println("appoitmentBean: faza 3");
+         if( ((Appoitment)getFromSession("CurentApp")).getPatientId().getPatientId().equals(   ((int)getFromSession("patient"))  )   ){
+             System.out.println("appoitmentBean: old app for patient");
+            curentAppoitment =  (Appoitment) getFromSession("CurentApp");
+            docViewMode = false;
+         }
+         else{
+             System.out.println("appoitmentBean: brak app w sesj");
+         }
       }
-
    }
+   
    public String FinischCurentAppoitment(){
       
       removeFromSession("CurentApp");
@@ -198,18 +210,12 @@ public class AppoitmentBean implements Serializable {
    public void setRadiologyExamOrderList(List<RadiologyExamOrder> radiologyExamOrderList) {
       this.radiologyExamOrderList = radiologyExamOrderList;
    }
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
+
+   public Boolean getDocViewMode() {
+      return docViewMode;
+   }
+
+
+
+
 }

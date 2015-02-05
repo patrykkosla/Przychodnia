@@ -21,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 import pl.kosla.przychodnia.model.Patient;
 import pl.kosla.przychodnia.session.PatientFacade;
+import pl.kosla.przychodnia.utilis.FacesUtils;
 import pl.kosla.przychodnia.utilis.SessionUtil;
 
 /**
@@ -59,9 +60,7 @@ public class userLoginBean implements Serializable{
            setSessione();
            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", patient.getUsername() );
 
-            HttpSession session = SessionUtil.getSession();
-            session.setAttribute("username", patient.getUsername() );
-           FacesContext facesContext = FacesContext.getCurrentInstance();
+          FacesContext facesContext = FacesContext.getCurrentInstance();
 
             // Save the uname and password in a cookie
             Cookie btuser = new Cookie("btuser", patient.getUsername());
@@ -78,6 +77,7 @@ public class userLoginBean implements Serializable{
             ((HttpServletResponse)facesContext.getExternalContext().getResponse()).addCookie(btuser);
             ((HttpServletResponse)facesContext.getExternalContext().getResponse()).addCookie(btpasswd);
             ((HttpServletResponse)facesContext.getExternalContext().getResponse()).addCookie(btremember);
+          
            return "home.xhtml?faces-redirect=true";
 
        }else {
@@ -101,6 +101,7 @@ public class userLoginBean implements Serializable{
         // get Http Session and store username
         HttpSession session = SessionUtil.getSession();
         session.setAttribute("username", patient.getUsername());
+        session.setAttribute("patient", getPatient().getPatientId());
 
     }
     public void checkCookie(){

@@ -19,6 +19,7 @@
             <p:panel header="Recepty" >
             <p:dataTable 
                  id="recepty_datalist" 
+                 rendered="#{appoitmentBean.docViewMode}"
                  value="#{appoitmentBean.perscripionItems}" 
                  selectionMode="single" selection="#{perscripionController.selected}"
                  var="pitem"
@@ -39,13 +40,16 @@
                     <h:outputText value="#{pitem.dose}"/>
                 </p:column>  
                 <f:facet name="footer">
-                    <p:commandButton id="createPerscripionButton" icon="ui-icon-plus"   value="Wystaw recepte" actionListener="#{perscripionController.prepareCreate}" update=":PerscripionCreateForm" 
+                    <p:commandButton 
+                        id="createPerscripionButton" icon="ui-icon-plus"  
+                        value="Wystaw recepte" actionListener="#{perscripionController.prepareCreate}" 
+                                     update=":PerscripionCreateForm" 
                                      oncomplete="PF('PerscripionCreateDialog').show()"
                                      action="#{perscripionController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}"
                                      />
                     <p:commandButton id="viewPerscripionButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PerscripionViewForm" oncomplete="PF('PerscripionViewDialog').show()" disabled="#{empty perscripionController.selected}"/>
-                    <p:commandButton id="editPerscripionButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PerscripionEditForm" oncomplete="PF('PerscripionEditDialog').show()" disabled="#{empty perscripionController.selected}"/>
-                    <p:commandButton id="deletePerscripionButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{perscripionController.destroy}" update=":growl,recepty_datalist" disabled="#{empty perscripionController.selected}"/>
+                    <p:commandButton id="editPerscripionButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PerscripionEditForm" oncomplete="PF('PerscripionEditDialog').show()" disabled="#{empty perscripionController.selected}" rendered="#{appoitmentBean.docViewMode}" />
+                    <p:commandButton id="deletePerscripionButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{perscripionController.destroy}" update=":growl,recepty_datalist" disabled="#{empty perscripionController.selected}" rendered="#{appoitmentBean.docViewMode}" />
                 </f:facet>
             </p:dataTable>
             </p:panel>
@@ -80,16 +84,16 @@
                         </p:column>   
                          <f:facet name="footer">
                             <p:commandButton id="createSickLeaveButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{sickLeaveController.prepareCreate}" update=":SickLeaveCreateForm" oncomplete="PF('SickLeaveCreateDialog').show()"
-                                             action="#{sickLeaveController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}" />
+                                             action="#{sickLeaveController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}"  rendered="#{appoitmentBean.docViewMode}" />
                             <p:commandButton id="viewSickLeaveButton"   icon="ui-icon-search" value="#{bundle.View}" update=":SickLeaveViewForm" oncomplete="PF('SickLeaveViewDialog').show()" disabled="#{empty sickLeaveController.selected}"/>
-                            <p:commandButton id="editSickLeaveButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":SickLeaveEditForm" oncomplete="PF('SickLeaveEditDialog').show()" disabled="#{empty sickLeaveController.selected}"/>
-                            <p:commandButton id="deleteSickLeaveButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{sickLeaveController.destroy}" update=":growl,sldatalist" disabled="#{empty sickLeaveController.selected}"/>
+                            <p:commandButton id="editSickLeaveButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":SickLeaveEditForm" oncomplete="PF('SickLeaveEditDialog').show()" disabled="#{empty sickLeaveController.selected}" rendered="#{appoitmentBean.docViewMode}" />
+                            <p:commandButton id="deleteSickLeaveButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{sickLeaveController.destroy}" update=":growl,sldatalist" disabled="#{empty sickLeaveController.selected}" rendered="#{appoitmentBean.docViewMode}" />
                         </f:facet>
                     </p:dataTable>
                 </p:panel>
             </h:form>
-            <ui:include src="/views/sickLeave/app/Create.xhtml"/>
-            <ui:include src="/views/sickLeave/app/Edit.xhtml"/>
+                <ui:include  rendered="#{appoitmentBean.docViewMode}"  src="/views/sickLeave/app/Create.xhtml"/>
+            <ui:include  rendered="#{appoitmentBean.docViewMode}" src="/views/sickLeave/app/Edit.xhtml"/>
             <ui:include src="/views/sickLeave/app/View.xhtml"/>
             
              <h:form id="LabTestOrderListForm">
@@ -123,16 +127,16 @@
                             <p:commandButton id="createLabTestOrderButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{labTestOrderController.prepareCreate}" 
                                              update=":LabTestOrderCreateForm" 
                                              oncomplete="PF('LabTestOrderCreateDialog').show()"
-                                             action="#{labTestOrderController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}"/>
+                                             action="#{labTestOrderController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}" rendered="#{appoitmentBean.docViewMode}" />
                             <p:commandButton id="viewLabTestOrderButton"   icon="ui-icon-search" value="#{bundle.View}" update=":LabTestOrderViewForm" oncomplete="PF('LabTestOrderViewDialog').show()" disabled="#{empty labTestOrderController.selected}"/>
-                            <p:commandButton id="editLabTestOrderButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":LabTestOrderEditForm" oncomplete="PF('LabTestOrderEditDialog').show()" disabled="#{empty labTestOrderController.selected}"/>
-                            <p:commandButton id="deleteLabTestOrderButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{labTestOrderController.destroy}" update=":growl,app_lab_datalist" disabled="#{empty labTestOrderController.selected}"/>
+                            <p:commandButton id="editLabTestOrderButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":LabTestOrderEditForm" oncomplete="PF('LabTestOrderEditDialog').show()" disabled="#{empty labTestOrderController.selected}" rendered="#{appoitmentBean.docViewMode}" />
+                            <p:commandButton id="deleteLabTestOrderButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{labTestOrderController.destroy}" update=":growl,app_lab_datalist" disabled="#{empty labTestOrderController.selected}"  rendered="#{appoitmentBean.docViewMode}" />
                         </f:facet>                        
                     </p:dataTable>         
                 </p:panel>
             </h:form>   
-            <ui:include src="/views/labTestOrder/app/Create.xhtml"/>
-            <ui:include src="/views/labTestOrder/app/Edit.xhtml"/>
+            <ui:include  rendered="#{appoitmentBean.docViewMode}" src="/views/labTestOrder/app/Create.xhtml"/>
+            <ui:include rendered="#{appoitmentBean.docViewMode}"  src="/views/labTestOrder/app/Edit.xhtml"/>
             <ui:include src="/views/labTestOrder/app/View.xhtml"/>  
             
             <h:form id="RadiologyExamOrderListForm" >
@@ -158,16 +162,16 @@
                          </p:column>              
                          <f:facet name="footer">
                             <p:commandButton id="createRTGButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{radiologyExamOrderController.prepareCreate}" update=":RadiologyExamOrderCreateForm" oncomplete="PF('RadiologyExamOrderCreateDialog').show()"
-                                              action="#{radiologyExamOrderController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}"/>
+                                              action="#{radiologyExamOrderController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}" rendered="#{appoitmentBean.docViewMode}" />
                             <p:commandButton id="viewRTGButton"   icon="ui-icon-search" value="#{bundle.View}" update=":RadiologyExamOrderViewForm" oncomplete="PF('RadiologyExamOrderViewDialog').show()" disabled="#{empty radiologyExamOrderController.selected}"/>
-                            <p:commandButton id="editRTGButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":RadiologyExamOrderEditForm" oncomplete="PF('RadiologyExamOrderEditDialog').show()" disabled="#{empty radiologyExamOrderController.selected}"/>
-                            <p:commandButton id="deleteRTGButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{radiologyExamOrderController.destroy}" update=":growl,rtgdatalist" disabled="#{empty radiologyExamOrderController.selected}"/>
+                            <p:commandButton id="editRTGButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":RadiologyExamOrderEditForm" oncomplete="PF('RadiologyExamOrderEditDialog').show()" disabled="#{empty radiologyExamOrderController.selected}" rendered="#{appoitmentBean.docViewMode}" />
+                            <p:commandButton id="deleteRTGButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{radiologyExamOrderController.destroy}" update=":growl,rtgdatalist" disabled="#{empty radiologyExamOrderController.selected}" rendered="#{appoitmentBean.docViewMode}" />
                         </f:facet>                   
                     </p:dataTable> 
                 </p:panel>
             </h:form>    
-            <ui:include src="/views/radiologyExamOrder/app/Create.xhtml"/>
-            <ui:include src="/views/radiologyExamOrder/app/Edit.xhtml"/>
+            <ui:include rendered="#{appoitmentBean.docViewMode}"  src="/views/radiologyExamOrder/app/Create.xhtml"/>
+            <ui:include rendered="#{appoitmentBean.docViewMode}"  src="/views/radiologyExamOrder/app/Edit.xhtml"/>
             <ui:include src="/views/radiologyExamOrder/app/View.xhtml"/>             
         </ui:define>
         
@@ -206,7 +210,7 @@
                                 actionListener="#{diagnoseController.prepareCreate}" 
                                 update=":DiagnoseCreateForm" 
                                 oncomplete="PF('DiagnoseCreateDialog').show()"
-                                action="#{diagnoseController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}"
+                                action="#{diagnoseController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}" rendered="#{appoitmentBean.docViewMode}" 
                                 />
                             <p:commandButton id="viewDiagnoseButton"   icon="ui-icon-search" value="#{bundle.View}" update=":DiagnoseViewForm" oncomplete="PF('DiagnoseViewDialog').show()" disabled="#{empty diagnoseController.selected}"/>
                             <p:commandButton 
@@ -214,16 +218,16 @@
                                    icon="ui-icon-pencil" 
                                    value="#{bundle.Edit}" 
                                    update=":DiagnoseEditForm" 
-                                   oncomplete="PF('DiagnoseEditDialog').show()"
+                                   oncomplete="PF('DiagnoseEditDialog').show()"  rendered="#{appoitmentBean.docViewMode}" 
                                    disabled="#{empty diagnoseController.selected}"/>
-                            <p:commandButton id="deleteDiagnoseButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{diagnoseController.destroy}" update=":growl,Diagnosedatalist" disabled="#{empty diagnoseController.selected}"/>
+                            <p:commandButton id="deleteDiagnoseButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{diagnoseController.destroy}" update=":growl,Diagnosedatalist" disabled="#{empty diagnoseController.selected}"  rendered="#{appoitmentBean.docViewMode}" />
                                
                          </f:facet>                           
                     </p:dataTable>
                 </p:panel>
             </h:form>
-            <ui:include src="/views/diagnose/DiagnoseAppCreate.xhtml"/>
-            <ui:include src="/views/diagnose/DiagnoseAppEdit.xhtml"/>
+            <ui:include rendered="#{appoitmentBean.docViewMode}"  src="/views/diagnose/DiagnoseAppCreate.xhtml"/>
+            <ui:include rendered="#{appoitmentBean.docViewMode}"  src="/views/diagnose/DiagnoseAppEdit.xhtml"/>
             <ui:include src="/views/diagnose/DiagnoseAppView.xhtml"/>
            
            <p:panel  id="curentSurgeryInfo" header="#{appoitmentBean.curentAppoitment.patientId.firstName} #{appoitmentBean.curentAppoitment.patientId.lastName}" 
@@ -236,10 +240,16 @@
                         />
  
 
-                       <p:commandButton 
+                       <p:commandButton
+                            rendered="#{appoitmentBean.docViewMode}" 
                            value="Zapisz i zakończ wizytę" 
                            icon="ui-icon-disk"
                            action="#{appoitmentBean.FinischCurentAppoitment}"  />
+                    <p:button 
+                        value="Do strony głownej"        
+                        href="/home.xhtml"
+                        rendered="#{not appoitmentBean.docViewMode}" 
+                      />  
 
                </h:form> 
            </p:panel>

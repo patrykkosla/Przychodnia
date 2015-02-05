@@ -35,14 +35,14 @@
         </ui:define>
         
         <ui:define name="body">
-            <h:form id="PatientPerscripionListForm">
+            <h:form id="PerscripionListForm">
                 <p:panel header="Lista Recept">
                     <p:dataTable 
-                         id="listaWizytPacjentadatalist" 
+                         id="datalist" 
                          value="#{reciptPatientControler.perscripionList}" 
                          var="perscripion"
                          selectionMode="single" 
-                         selection="#{reciptPatientControler.selectedPerscripion}"
+                         selection="#{reciptPatientControler.selected}"
                          paginator="true"
                          rowKey="#{perscripion.id}"
                          rows="20"
@@ -78,12 +78,15 @@
                                 id="perscripionSchowButton"   
                                 icon="ui-icon-search" 
                                 value="Wybierz receptę" 
-
-                                disabled="#{empty reciptPatientControler.selectedPerscripion}"/>
+                                 update=":PerscripionViewForm" 
+                                 oncomplete="PF('PerscripionViewDialog').show()" 
+                                disabled="#{empty reciptPatientControler.selected}"/>
+                      
                         </f:facet>       
                     </p:dataTable>
                 </p:panel>
             </h:form>
+            <ui:include src="/views/perscripion/patient/View.xhtml"/>
         </ui:define>
     </ui:composition>
 

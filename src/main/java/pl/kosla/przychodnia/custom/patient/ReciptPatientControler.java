@@ -4,6 +4,7 @@
 package pl.kosla.przychodnia.custom.patient;
 
 import java.util.List;
+import javafx.event.ActionEvent;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -25,7 +26,7 @@ public class ReciptPatientControler {
    @EJB private PerscripionFacade perscripionFacade;
    
    private List<Perscripion> perscripionList;
-   private Perscripion selectedPerscripion;
+   private Perscripion selected;
    
    @PostConstruct
     private void init() {  
@@ -41,7 +42,10 @@ public class ReciptPatientControler {
     */
    public ReciptPatientControler() {
    }
-
+   public void prepateView(ActionEvent actionEvent){
+      
+      
+   }
    public List<Perscripion> getPerscripionList() {
       return perscripionFacade.findPerscripionForPatient(pb.getPatient().getPatientId());
      // return perscripionList;
@@ -51,12 +55,12 @@ public class ReciptPatientControler {
       this.perscripionList = perscripionList;
    }
 
-   public Perscripion getSelectedPerscripion() {
-      return selectedPerscripion;
+   public Perscripion getSelected() {
+      return selected;
    }
 
-   public void setSelectedPerscripion(Perscripion selectedPerscripion) {
-      this.selectedPerscripion = selectedPerscripion;
+   public void setSelected(Perscripion selected) {
+      this.selected = selected;
    }
-   
+
 }

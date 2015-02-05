@@ -8,18 +8,18 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import pl.kosla.przychodnia.model.Appoitment;
 import pl.kosla.przychodnia.session.AppoitmentFacade;
+import static pl.kosla.przychodnia.utilis.FacesUtils.addToSession;
 
 /**
  *
  * @author patryk
  */
 @Named(value = "patientAppoitmens")
-@RequestScoped
+@ViewScoped
 public class PatientAppoitmens  implements Serializable{
  private static final long serialVersionUID = 1L;
     @Inject private PatientBean pb;
@@ -35,7 +35,10 @@ public class PatientAppoitmens  implements Serializable{
     private void init() { 
         appoitmentsList = appoitmentFacade.getAppointmentForPatient("pas", pb.getPatient().getPatientId());
     }
-    
+    public String  prepareAppoitemtView(Appoitment a){
+       addToSession("CurentApp", selectedAppoitment);
+       return "/staff/appoitment.xhtml?faces-redirect=true";
+    }
     public AppoitmentFacade getAppoitmentFacade() {
         return appoitmentFacade;
     }

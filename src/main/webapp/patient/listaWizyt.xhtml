@@ -71,8 +71,9 @@
                                 id="AppoitmentSchowButton"   
                                 icon="ui-icon-search" 
                                 value="Wybierz wizytę" 
-
+                                action="#{patientAppoitmens.prepareAppoitemtView(patientAppoitmens.selectedAppoitment)}"
                                 disabled="#{empty patientAppoitmens.selectedAppoitment}"/>
+                        </f:facet>
 
                     </p:dataTable>
                 </p:panel>

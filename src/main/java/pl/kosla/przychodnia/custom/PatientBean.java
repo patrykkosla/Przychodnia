@@ -58,12 +58,12 @@ public class PatientBean implements Serializable{
       LOGGER.setLevel(Level.INFO); 
     }
     
-    private void setSessione(){
+   private void setSessione(){
         patient = patientFacade.getPatienByUsername(patient);
         // get Http Session and store username
         HttpSession session = SessionUtil.getSession();
         session.setAttribute("username", patient.getUsername());
-
+        session.setAttribute("patient", getPatient().getPatientId());
     }
     
     public void login(ActionEvent event) {//ActionEvent event

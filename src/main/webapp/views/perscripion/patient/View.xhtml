@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PerscripionViewDlg" widgetVar="PerscripionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPerscripionTitle}">
+            <h:form id="PerscripionViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{reciptPatientControler.selected != null}">
+                        <h:outputText value="Dawka"/>
+                        <h:outputText value="#{reciptPatientControler.selected.dose}" title="#{bundle.ViewPerscripionTitle_dose}"/>
+                       
+                        <h:outputText value="Data wystawienia"/>
+                        <h:outputText value="#{reciptPatientControler.selected.posteData}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="wystawione przez "/>
+                        <h:outputText value="#{reciptPatientControler.selected.appoitmentId.medicId.firstName}  #{reciptPatientControler.selected.appoitmentId.medicId.lastName}"/>
+                        
+                        <h:outputText value="Nazwa leku"/>
+                        <h:outputText value="#{reciptPatientControler.selected.medicineFk.name}"/>
+                    
+                        
+                        <h:outputText value="Opis leku"/>
+                        <h:outputText value="#{reciptPatientControler.selected.medicineFk.decryption}"/>
+                    
+                    
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="PerscripionViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

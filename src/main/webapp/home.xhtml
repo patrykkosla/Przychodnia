@@ -16,8 +16,7 @@
         
         <ui:define name="west_left_column"> 
             <h:form>
-            <p:panel   header="Przychodnia" >
-                        
+            <p:panel   header="Przychodnia" >                   
                         <h:panelGrid rendered="#{ not empty homePatientBean.pb.patient.surgeryId}" columns="1" cellpadding="0" >
                             <h:outputLabel value="Nazwa"/>
                             <h:outputText value="#{ homePatientBean.pb.patient.surgeryId.name}"/>
@@ -67,11 +66,8 @@
                         </f:facet>                      
                     </p:panel>
             </h:form>
-
-            
         </ui:define>
-        
-        
+               
         <ui:define name="east_right_column">
             <h:form>
             <p:panel>
@@ -111,12 +107,15 @@
                   icon="ui-icon-search"         
                   href="/patient/recepty.xhtml"
                 />  
+                <p:button 
+                    id="AllWizytButton" 
+                    value="#{msg.LookApp}" 
+                    href="/patient/listaWizyt.xhtml"
+                />
+
             </h:form>
             <ui:include src="/custom_views/pacjent/daneosobowe.xhtml"/>
-            
-            
         </ui:define>
-        
         
         <ui:define name="body">  
             <h2>Zbliżające się wizyty</h2>
@@ -145,13 +144,11 @@
             
             
             <h2>Twoje wizyty</h2>
+            <h:form>
             <p:panel header="Ostatnie wizyty">
-                <h:form>
                     <p:dataTable id="lastAppoitmentsdatalist" 
-                                 value="#{homePatientBean.lastAppoitmentsList}" 
-                                 var="lappoitment"
-                                 selectionMode="single"
-                                 selection="#{homePatientBean.selectedAppoitment}"
+                                 value="#{homePatientBean.lastAppoitmentsList}"  var="lappoitment"
+                                 selectionMode="single"  selection="#{homePatientBean.selectedAppoitment}"
                                  rowKey="#{lappoitment.id}"
                                  >
 
@@ -168,31 +165,21 @@
                             <h:outputText value="#{lappoitment.medicId.firstName} "/>
                             <h:outputText value="#{lappoitment.medicId.lastName}"/>
                         </p:column>
-                        
+                        <p:column headerText="Nota">
+                            <h:outputText value="#{lappoitment.note} "/>
+                        </p:column>
                         <f:facet name="footer">
                             <p:commandButton 
                                 id="schowAppoitmentButton"   
                                 icon="ui-icon-search" 
-                                value="Pokaż szczegóły" 
+                                value="Plokaż detale wizyty" 
                                 disabled="#{empty homePatientBean.selectedAppoitment}"
-                                update=":AppoitmentQuickViewForm" 
-                                oncomplete="PF('AppoitmentQuickViewDlg').show()" 
-                                
+                                action="#{homePatientBean.prepareAppoitemtView(homePatientBean.selectedAppoitment)}"                               
                                 /> 
                         </f:facet>
                     </p:dataTable>
-                
-                </h:form>
-                <ui:include src="/custom_views/pacjent/AppoitmentQuickView.xhtml"/>
-                <h:form>
-                    <p:button 
-                      id="AllWizytButton" 
-                      value="PrzeglÄ…daj listÄ™ wszystkich wizy" 
-                     />
-                
-                </h:form>
-
             </p:panel>
+            </h:form>    
          </ui:define>
         
     </ui:composition>
