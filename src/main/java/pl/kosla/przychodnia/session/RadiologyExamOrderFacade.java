@@ -32,4 +32,16 @@ public class RadiologyExamOrderFacade extends AbstractFacade<RadiologyExamOrder>
       q.setParameter("appoitmentId", appoitmentId);
       return q.getResultList();
    }
+   public RadiologyExamOrder findRTGOrdeById(int orderId){
+      TypedQuery q = em.createNamedQuery("RadiologyExamOrder.findById", RadiologyExamOrder.class);
+      q.setParameter("id", orderId);
+      List<RadiologyExamOrder> t =  q.getResultList();
+      if(t.isEmpty()){
+      return null;
+       }
+      else {
+        return (RadiologyExamOrder)q.getResultList().get(0); 
+      }
+      
+   }
 }

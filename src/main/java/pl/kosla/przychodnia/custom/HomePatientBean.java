@@ -82,12 +82,27 @@ public class HomePatientBean implements Serializable{
     
     
     public void setSurgeryForPatient(Surgery surgery ){
-        pb.setSurgeryForPatient(surgery);
+       cancellAllApp();
+       pb.setSurgeryForPatient(surgery);
     }
     public void setDoctorForPatient(Medic medic){
+       
+      // dodać anulację wizyt
+       cancellAllApp();
+       
         pb.setDoctorForPatient(medic);
-        // dodać anulację wizyt
+        
     }
+    
+    public void  cancellAllApp(){
+            bookedAppoitmentsList = appoitmentFacade.getAppointmentForPatient(Appoitment.REZERWACJA, pb.getPatient().getPatientId());
+         if(!bookedAppoitmentsList.isEmpty()){
+            for(Appoitment a : bookedAppoitmentsList){
+               a.setStatus(Appoitment.CANCELD);
+            }
+         }
+   }
+                
     public void upDateData(){
         pb.upDatePatient();  
     }

@@ -34,4 +34,11 @@ public class RadiologiaFacade extends AbstractFacade<Radiologia> {
                
         return q.getResultList();        
     }   
+    public List<Radiologia> findRTGTestByOrderId(int orderId){     
+        TypedQuery<Radiologia> q = em.createNamedQuery("Radiologia.findByRTGOrderId", Radiologia.class);
+        q.setParameter("orderId", orderId);            
+        return q.getResultList();        
+    }   
+    
+    
 }

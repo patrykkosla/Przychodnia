@@ -84,7 +84,7 @@ public class LaboratoryBean implements Serializable{
 
       }
       return null;
-}
+   }
    public void setLabTestOrder(LabTestOrder labTestOrder) {
       this.labTestOrder = labTestOrder;
    }

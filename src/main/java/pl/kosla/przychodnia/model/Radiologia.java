@@ -36,6 +36,7 @@ import pl.kosla.przychodnia.enums.RadiologyExamType;
 @NamedQueries({
    @NamedQuery(name = "Radiologia.findAll", query = "SELECT r FROM Radiologia r"),
    @NamedQuery(name = "Radiologia.findById", query = "SELECT r FROM Radiologia r WHERE r.id = :id"),
+   @NamedQuery(name = "Radiologia.findByRTGOrderId", query = "SELECT r FROM Radiologia r WHERE r.examOrderId.id = :orderId"),
    @NamedQuery(name = "Radiologia.findByPatient", query = "SELECT r FROM Radiologia r WHERE r.patientId.patientId = :patientId"),
    @NamedQuery(name = "Radiologia.findByExamDate", query = "SELECT r FROM Radiologia r WHERE r.examDate = :examDate"),
    @NamedQuery(name = "Radiologia.findByImagesAmount", query = "SELECT r FROM Radiologia r WHERE r.imagesAmount = :imagesAmount"),
