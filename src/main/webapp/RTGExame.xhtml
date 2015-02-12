@@ -28,23 +28,22 @@
                             rows="9"
                             cols="155"
                             id="descriptione" 
-                            value="#{RTGLabExameBean.tempRTG.descriptione}"/>
+                            value="#{rTGLabExameBean.tempRTG.descriptione}"/>
                     </p:panelGrid>
                        <p:fileUpload 
                            fileUploadListener="#{rTGLabExameBean.handleFileUpload}"
                            mode="advanced"
                            dragDropSupport="false"
-                            multiple="false"
-                            update="messages"
-                            sizeLimit="100000"
-                            fileLimit="1" 
-                            allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
-                             />
- 
-                        <p:growl id="messages" showDetail="true" />
+                           multiple="false"
+                           update="messages"
+                           sizeLimit="100000"
+                           fileLimit="1" 
+                           allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                           />
+                    <p:growl id="messages" showDetail="true" />
                     <p:commandButton
-                        disabled="#{RTGLabExameBean.isNew}"
-                        action="#{RTGLabExameBean.saveExame()}"
+                        disabled="#{not rTGLabExameBean.isNew}"
+                        action="#{rTGLabExameBean.saveExame()}"
                         value="Zapisz badanie"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="RadiologiaCreateDialog.hide()"/>
                 </h:panelGroup>

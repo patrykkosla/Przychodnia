@@ -236,6 +236,8 @@ public class MakeAppoitmentBean implements Serializable{
       Appoitment a = appoitmentFacade.finOneAppoitment(pb.getPatient().getPatientId(), d.getDate(), d.getDoctor().getId());
       a.setStatus(Appoitment.CANCELD);
       appoitmentFacade.edit(a);
+      RequestContext context = RequestContext.getCurrentInstance();
+      context.addCallbackParam("bookSet", true);  
       return null;
    }
    @PostConstruct

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AddresCreateDlg" widgetVar="AddresCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateAddresTitle}">
+            <h:form id="AddresCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{addresController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateAddresLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{addresController.selected.id}" title="#{bundle.CreateAddresTitle_id}" required="true" requiredMessage="#{bundle.CreateAddresRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateAddresLabel_place}" for="place" />
+                        <p:inputText id="place" value="#{addresController.selected.place}" title="#{bundle.CreateAddresTitle_place}" />
+                        <p:outputLabel value="#{bundle.CreateAddresLabel_street}" for="street" />
+                        <p:inputText id="street" value="#{addresController.selected.street}" title="#{bundle.CreateAddresTitle_street}" />
+                        <p:outputLabel value="#{bundle.CreateAddresLabel_posteCode}" for="posteCode" />
+                        <p:inputText id="posteCode" value="#{addresController.selected.posteCode}" title="#{bundle.CreateAddresTitle_posteCode}" />
+                        <p:outputLabel value="#{bundle.CreateAddresLabel_phoneNumber}" for="phoneNumber" />
+                        <p:inputText id="phoneNumber" value="#{addresController.selected.phoneNumber}" title="#{bundle.CreateAddresTitle_phoneNumber}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{addresController.create}" value="#{bundle.Save}" update="display,:AddresListForm:datalist,:growl" oncomplete="handleSubmit(args,'AddresCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="AddresCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

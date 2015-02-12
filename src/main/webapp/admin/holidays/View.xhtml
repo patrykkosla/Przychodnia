@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HolidaysViewDlg" widgetVar="HolidaysViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewHolidaysTitle}">
+            <h:form id="HolidaysViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{holidaysController.selected != null}">
+                        <h:outputText value="#{bundle.ViewHolidaysLabel_id}"/>
+                        <h:outputText value="#{holidaysController.selected.id}" title="#{bundle.ViewHolidaysTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewHolidaysLabel_startDate}"/>
+                        <h:outputText value="#{holidaysController.selected.startDate}" title="#{bundle.ViewHolidaysTitle_startDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewHolidaysLabel_endDate}"/>
+                        <h:outputText value="#{holidaysController.selected.endDate}" title="#{bundle.ViewHolidaysTitle_endDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewHolidaysLabel_status}"/>
+                        <h:outputText value="#{holidaysController.selected.status}" title="#{bundle.ViewHolidaysTitle_status}"/>
+                        <h:outputText value="#{bundle.ViewHolidaysLabel_applyDate}"/>
+                        <h:outputText value="#{holidaysController.selected.applyDate}" title="#{bundle.ViewHolidaysTitle_applyDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewHolidaysLabel_surgeryHasMedicId}"/>
+                        <h:outputText value="#{holidaysController.selected.surgeryHasMedicId}" title="#{bundle.ViewHolidaysTitle_surgeryHasMedicId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="HolidaysViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

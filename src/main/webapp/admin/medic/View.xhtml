@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MedicViewDlg" widgetVar="MedicViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewMedicTitle}">
+            <h:form id="MedicViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{medicController.selected != null}">
+                        <h:outputText value="#{bundle.ViewMedicLabel_id}"/>
+                        <h:outputText value="#{medicController.selected.id}" title="#{bundle.ViewMedicTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewMedicLabel_username}"/>
+                        <h:outputText value="#{medicController.selected.username}" title="#{bundle.ViewMedicTitle_username}"/>
+                        <h:outputText value="#{bundle.ViewMedicLabel_firstName}"/>
+                        <h:outputText value="#{medicController.selected.firstName}" title="#{bundle.ViewMedicTitle_firstName}"/>
+                        <h:outputText value="#{bundle.ViewMedicLabel_lastName}"/>
+                        <h:outputText value="#{medicController.selected.lastName}" title="#{bundle.ViewMedicTitle_lastName}"/>
+                        <h:outputText value="#{bundle.ViewMedicLabel_password}"/>
+                        <h:outputText value="#{medicController.selected.password}" title="#{bundle.ViewMedicTitle_password}"/>
+                        <h:outputText value="#{bundle.ViewMedicLabel_pesel}"/>
+                        <h:outputText value="#{medicController.selected.pesel}" title="#{bundle.ViewMedicTitle_pesel}"/>
+                        <h:outputText value="#{bundle.ViewMedicLabel_sex}"/>
+                        <p:selectBooleanCheckbox value="#{medicController.selected.sex}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewMedicLabel_enable}"/>
+                        <p:selectBooleanCheckbox value="#{medicController.selected.enable}" disabled="true"/>
+                        <h:outputText value="#{bundle.ViewMedicLabel_bornDate}"/>
+                        <h:outputText value="#{medicController.selected.bornDate}" title="#{bundle.ViewMedicTitle_bornDate}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewMedicLabel_createTime}"/>
+                        <h:outputText value="#{medicController.selected.createTime}" title="#{bundle.ViewMedicTitle_createTime}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewMedicLabel_type}"/>
+                        <h:outputText value="#{medicController.selected.type}" title="#{bundle.ViewMedicTitle_type}"/>
+                        <h:outputText value="#{bundle.ViewMedicLabel_addresId}"/>
+                        <h:outputText value="#{medicController.selected.addresId}" title="#{bundle.ViewMedicTitle_addresId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="MedicViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

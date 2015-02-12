@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SurgeryHasMedicEditDlg" widgetVar="SurgeryHasMedicEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditSurgeryHasMedicTitle}">
+            <h:form id="SurgeryHasMedicEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{surgeryHasMedicController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditSurgeryHasMedicLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{surgeryHasMedicController.selected.id}" title="#{bundle.EditSurgeryHasMedicTitle_id}" required="true" requiredMessage="#{bundle.EditSurgeryHasMedicRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditSurgeryHasMedicLabel_secureLevel}" for="secureLevel" />
+                        <p:inputText id="secureLevel" value="#{surgeryHasMedicController.selected.secureLevel}" title="#{bundle.EditSurgeryHasMedicTitle_secureLevel}" />
+                        <p:outputLabel value="#{bundle.EditSurgeryHasMedicLabel_positione}" for="positione" />
+                        <p:inputText id="positione" value="#{surgeryHasMedicController.selected.positione}" title="#{bundle.EditSurgeryHasMedicTitle_positione}" />
+                        <p:outputLabel value="#{bundle.EditSurgeryHasMedicLabel_isAtive}" for="isAtive" />
+                        <p:selectBooleanCheckbox id="isAtive" value="#{surgeryHasMedicController.selected.isAtive}" />
+                        <p:outputLabel value="#{bundle.EditSurgeryHasMedicLabel_onHoliday}" for="onHoliday" />
+                        <p:selectBooleanCheckbox id="onHoliday" value="#{surgeryHasMedicController.selected.onHoliday}" />
+                        <p:outputLabel value="#{bundle.EditSurgeryHasMedicLabel_creationTime}" for="creationTime" />
+                        <p:calendar id="creationTime" pattern="MM/dd/yyyy HH:mm:ss" value="#{surgeryHasMedicController.selected.creationTime}" title="#{bundle.EditSurgeryHasMedicTitle_creationTime}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditSurgeryHasMedicLabel_startDate}" for="startDate" />
+                        <p:calendar id="startDate" pattern="MM/dd/yyyy" value="#{surgeryHasMedicController.selected.startDate}" title="#{bundle.EditSurgeryHasMedicTitle_startDate}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditSurgeryHasMedicLabel_stopDate}" for="stopDate" />
+                        <p:calendar id="stopDate" pattern="MM/dd/yyyy" value="#{surgeryHasMedicController.selected.stopDate}" title="#{bundle.EditSurgeryHasMedicTitle_stopDate}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditSurgeryHasMedicLabel_medicId}" for="medicId" />
+                        <p:selectOneMenu id="medicId" value="#{surgeryHasMedicController.selected.medicId}" required="true" requiredMessage="#{bundle.EditSurgeryHasMedicRequiredMessage_medicId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{medicController.itemsAvailableSelectOne}"
+                                           var="medicIdItem"
+                                           itemValue="#{medicIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditSurgeryHasMedicLabel_surgeryId}" for="surgeryId" />
+                        <p:selectOneMenu id="surgeryId" value="#{surgeryHasMedicController.selected.surgeryId}" required="true" requiredMessage="#{bundle.EditSurgeryHasMedicRequiredMessage_surgeryId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{surgeryController.itemsAvailableSelectOne}"
+                                           var="surgeryIdItem"
+                                           itemValue="#{surgeryIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{surgeryHasMedicController.update}" value="#{bundle.Save}" update="display,:SurgeryHasMedicListForm:datalist,:growl" oncomplete="handleSubmit(args, 'SurgeryHasMedicEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="SurgeryHasMedicEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

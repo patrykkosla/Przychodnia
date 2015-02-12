@@ -114,7 +114,7 @@ public class PatientBean implements Serializable{
       HttpSession session = SessionUtil.getSession();
       session.invalidate();
       patient = null;
-      return "index.xhtml?faces-redirect=true";
+      return "/index.xhtml?faces-redirect=true";
    }
     
     public  boolean checkDoctor (){// check if patient has asigned doctor

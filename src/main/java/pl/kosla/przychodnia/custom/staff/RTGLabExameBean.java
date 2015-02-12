@@ -85,6 +85,7 @@ public void saveExame() throws Exception{
 public void saveFile() throws Exception{
    if(file != null){
       String temp = file.getFileName().substring(file.getFileName().length() - 3);
+      //file.write("D:\\Roboczy\\medicfilestorage\\"+ tempRTG.getId().toString() + "." + temp );
       file.write("D:\\Roboczy\\medicfilestorage\\"+ tempRTG.getId().toString() + "." + temp );
        
       }

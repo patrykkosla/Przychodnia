@@ -65,7 +65,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Appoitment.AllAppForSingelDay", 
     query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId AND a.appoitmentDate =:appDate  ORDER BY a.queuePositione "),
     @NamedQuery(name = "Appoitment.ttt", 
-    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId AND a.appoitmentDate =:appDate AND a.patientId.surgeryId.id =:surgeryId ORDER BY a.queuePositione ")})
+    query = "SELECT a FROM Appoitment a WHERE a.status = :status AND a.medicId.id = :medicId AND a.appoitmentDate =:appDate AND a.patientId.surgeryId.id =:surgeryId ORDER BY a.queuePositione "),
+    @NamedQuery(name = "Appoitment.findDocDayAllapp", 
+    query = "SELECT a FROM Appoitment a WHERE a.status IN ( :status , :statusBis) AND a.medicId.id = :medicId AND a.appoitmentDate =:appDate AND a.patientId.surgeryId.id =:surgeryId ORDER BY a.queuePositione ")})
 public class Appoitment implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

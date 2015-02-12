@@ -25,7 +25,9 @@ import pl.kosla.przychodnia.session.DiagnoseFacade;
 import pl.kosla.przychodnia.session.PerscripionFacade;
 import pl.kosla.przychodnia.session.RadiologiaFacade;
 import pl.kosla.przychodnia.session.SickLeaveFacade;
+import static pl.kosla.przychodnia.utilis.FacesUtils.addToSession;
 import static pl.kosla.przychodnia.utilis.FacesUtils.getFromSession;
+import static pl.kosla.przychodnia.utilis.FacesUtils.removeFromSession;
 
 /**
  *
@@ -52,6 +54,7 @@ public class KartaBean implements Serializable{
    private List<Perscripion> perscripionsList;
    private List<Diagnose> diagnosesList;
    private List<SickLeave> sickLeaveList;
+   private Appoitment selestedAppoitment;
    
    private String role;
    /**
@@ -87,6 +90,12 @@ public class KartaBean implements Serializable{
       }
       System.out.println("kartaBean: brak pacjenta");
    }
+   public String prapereAppView (Appoitment a){
+           
+      addToSession("curentPatient", a.getPatientId());
+      addToSession("CurentApp", a);
+      return "/staff/appoitment.xhtml?faces-redirect=true";
+   } 
    
    public void fillBookedAppoitmentsList() {
       this.bookedAppoitmentsList =appoitmentFacade.getAppointmentForPatient(Appoitment.REZERWACJA, patientController.getSelected().getPatientId());
@@ -162,6 +171,14 @@ public class KartaBean implements Serializable{
    public List<SickLeave> getSickLeaveListLong() {
      return sickLeaveFacade.getSickLeavesLitByPatientId(patientController.getSelected().getPatientId());
       //return sickLeaveList;
+   }
+
+   public Appoitment getSelestedAppoitment() {
+      return selestedAppoitment;
+   }
+
+   public void setSelestedAppoitment(Appoitment selestedAppoitment) {
+      this.selestedAppoitment = selestedAppoitment;
    }
    
    

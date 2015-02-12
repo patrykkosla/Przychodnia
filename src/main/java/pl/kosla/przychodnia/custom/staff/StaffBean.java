@@ -78,13 +78,9 @@ public class StaffBean implements Serializable {
             ((HttpServletResponse)facesContext.getExternalContext().getResponse()).addCookie(btuser);
             ((HttpServletResponse)facesContext.getExternalContext().getResponse()).addCookie(btpasswd);
             ((HttpServletResponse)facesContext.getExternalContext().getResponse()).addCookie(btremember);
+
+            role = medic.getType().toString();
             
-            if(medic.getType().equals(MedicType.DOCTOR)){
-               role = "doc";
-            }
-            if(medic.getType().equals(MedicType.NURSE)){
-               role = "nurse";
-            }
        }else {
             loggedIn = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
@@ -98,7 +94,7 @@ public class StaffBean implements Serializable {
       HttpSession session = SessionUtil.getSession();
       session.invalidate();
       medic = null;
-      return "index.xhtml?faces-redirect=true";
+      return "/index.xhtml?faces-redirect=true";
    }    
     public void checkCookie(){
     FacesContext facesContext = FacesContext.getCurrentInstance();

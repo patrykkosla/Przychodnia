@@ -16,6 +16,7 @@ import pl.kosla.przychodnia.model.Appoitment;
 import pl.kosla.przychodnia.model.SickLeave;
 import pl.kosla.przychodnia.session.AppoitmentFacade;
 import static org.apache.commons.lang3.RandomStringUtils.random;
+import org.joda.time.DateMidnight;
 import pl.kosla.przychodnia.controler.LabTestOrderController;
 import pl.kosla.przychodnia.controler.MedicineController;
 import pl.kosla.przychodnia.enums.MedicType;
@@ -67,14 +68,36 @@ public class AppoitmentBean implements Serializable {
    @PostConstruct
    private void init() {  
        System.out.println("appoitmentBean: init start zaulek"+ getFromSession("patient"));
-      if(sf.getMedic() != null && sf.getMedic().getId() != null){
-         System.out.println("appoitmentBean: init start zaulek");
+      if(sf.getMedic() != null && sf.getMedic().getId() != null){//check if medic
             if( getFromSession("CurentApp") != null ){
                curentAppoitment =  (Appoitment) getFromSession("CurentApp");
-               //sprawdzanie czy wizyta z rezerwacji czy przegląd lub edycja 
-              // sickLeaveItems = (List<SickLeave>) curentAppoitment.getSickLeaveCollection();
+               Date ds = new Date();
+               DateMidnight d = new DateMidnight(ds);
+               if(curentAppoitment.getStatus().equals(Appoitment.REZERWACJA)){//Appoitment z rezerwacji
+                  curentAppoitment.setAppoitmentDate(new Date());
+                  docViewMode = true;
+               }
+               else if (sf.getMedic().getId().equals(curentAppoitment.getMedicId().getId()) && d.isEqual(new DateMidnight(curentAppoitment.getAppoitmentDate())) ){
+                  docViewMode = true;
+               }else if (sf.getMedic().getId().equals(curentAppoitment.getMedicId().getId()) ){
+                  docViewMode = false;
+                  
+               }
+               else{
+                  docViewMode = false;
+               }
                System.out.println("appoitmentBean z sesji");
                curentAppoitment.setStatus(Appoitment.PAST);
+               
+               
+               
+               
+               
+               
+               
+               
+               
+               
                
             }else if(getFromSession("newappoitment").equals(true) && getFromSession("curentPatient") != null && sf.getMedic().getType().equals(MedicType.DOCTOR)  ){//nowa wizyta
                System.out.println("faza 2");
@@ -92,6 +115,7 @@ public class AppoitmentBean implements Serializable {
                   addToSession("newappoitment", false);
                   System.out.println("appoitmentBean nowe");
                   curentAppoitment.setStatus(Appoitment.PAST);
+                  docViewMode = true;
               // }
             }      
       }else if(getFromSession("patient") != null && getFromSession("CurentApp") != null){

@@ -36,12 +36,18 @@
         <ui:define name="body">
             <h:form>
                 <p:panel header="Lista wizyt">
-                    <p:dataTable id="appdatalist"
-                                 value="#{kartaBean.appoitmentsList}" 
-                                 var="AppoitmentItem"
-                                 rowKey="#{AppoitmentItem.id}"
-                                    >
-
+                    <p:dataTable
+                        id="appdatalist"
+                         value="#{kartaBean.appoitmentsList}" 
+                         var="AppoitmentItem"
+                         rowKey="#{AppoitmentItem.id}"
+                         selectionMode="single" selection="#{kartaBean.selestedAppoitment}"
+                         paginator="true"
+                          rows="25"
+                          rowsPerPageTemplate="25,50,75,100,125"
+                        >
+                        <p:ajax event="rowSelect"   update="schowAppoitmentButton"/>
+                        <p:ajax event="rowUnselect" update="schowAppoitmentButton"/>
                         <p:column headerText="id">
                             <h:outputText value="#{AppoitmentItem.id}"/>
                         </p:column>
@@ -53,6 +59,16 @@
                                 <f:convertDateTime pattern="MM/dd/yyyy" />
                             </h:outputText>
                         </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton
+                                id="schowAppoitmentButton"
+                                value="Pokaż wizytę"
+                                icon="ui-icon-search" 
+                                action="#{kartaBean.prapereAppView(kartaBean.selestedAppoitment)}"
+                                 disabled="#{empty kartaBean.selestedAppoitment}"
+                                />
+                            
+                        </f:facet>
                     </p:dataTable>
                 </p:panel>                
                 <p:panel header="Lista ostatnich diagnoz">

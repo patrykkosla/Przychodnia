@@ -9,6 +9,6 @@ package pl.kosla.przychodnia.enums;
  */
 public enum MedicType {
    DOCTOR,
-   NURSE;
-   
-}
+   NURSE,
+   ADMIN;
+   }

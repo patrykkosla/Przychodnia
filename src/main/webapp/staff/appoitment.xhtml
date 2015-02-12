@@ -42,7 +42,7 @@
                 <f:facet name="footer">
                     <p:commandButton 
                         id="createPerscripionButton" icon="ui-icon-plus"  
-                        value="Wystaw recepte" actionListener="#{perscripionController.prepareCreate}" 
+                        value="Wypisz recepte" actionListener="#{perscripionController.prepareCreate}" 
                                      update=":PerscripionCreateForm" 
                                      oncomplete="PF('PerscripionCreateDialog').show()"
                                      action="#{perscripionController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}"
@@ -83,7 +83,7 @@
                             </h:outputText>
                         </p:column>   
                          <f:facet name="footer">
-                            <p:commandButton id="createSickLeaveButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{sickLeaveController.prepareCreate}" update=":SickLeaveCreateForm" oncomplete="PF('SickLeaveCreateDialog').show()"
+                            <p:commandButton id="createSickLeaveButton" icon="ui-icon-plus"   value="Wystwwa zwolnienie" actionListener="#{sickLeaveController.prepareCreate}" update=":SickLeaveCreateForm" oncomplete="PF('SickLeaveCreateDialog').show()"
                                              action="#{sickLeaveController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}"  rendered="#{appoitmentBean.docViewMode}" />
                             <p:commandButton id="viewSickLeaveButton"   icon="ui-icon-search" value="#{bundle.View}" update=":SickLeaveViewForm" oncomplete="PF('SickLeaveViewDialog').show()" disabled="#{empty sickLeaveController.selected}"/>
                             <p:commandButton id="editSickLeaveButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":SickLeaveEditForm" oncomplete="PF('SickLeaveEditDialog').show()" disabled="#{empty sickLeaveController.selected}" rendered="#{appoitmentBean.docViewMode}" />
@@ -124,7 +124,7 @@
                              <h:outputText value="#{labitem.labFecesGeneralTest}"/>
                          </p:column>
                          <f:facet name="footer">
-                            <p:commandButton id="createLabTestOrderButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{labTestOrderController.prepareCreate}" 
+                            <p:commandButton id="createLabTestOrderButton" icon="ui-icon-plus"   value="Wystaw zlecenie badań" actionListener="#{labTestOrderController.prepareCreate}" 
                                              update=":LabTestOrderCreateForm" 
                                              oncomplete="PF('LabTestOrderCreateDialog').show()"
                                              action="#{labTestOrderController.selected.setAppoitmentId(appoitmentBean.curentAppoitment)}" rendered="#{appoitmentBean.docViewMode}" />
@@ -180,10 +180,26 @@
             <h:form id="fdgs">
 
                 <pe:analogClock/>
-
-                <h:outputText value="#{appoitmentBean.curentAppoitment.patientId.firstName} #{appoitmentBean.curentAppoitment.patientId.lastName}"/>
-                <h:outputText  value="#{appoitmentBean.curentAppoitment.patientId.bornDate}" />
+                <p:panelGrid columns="2">
+                <h:outputText   value="Numer wizyty"/>
+                <h:outputText   value="#{appoitmentBean.curentAppoitment.id}"/>
                 
+                
+                
+                <h:outputText   value="Nazwisko"/>
+                <h:outputText value="#{appoitmentBean.curentAppoitment.patientId.firstName}"/>
+               
+                <h:outputText   value="Imie"/>
+                <h:outputText value=" #{appoitmentBean.curentAppoitment.patientId.lastName}"/>
+                
+                
+                <h:outputText  value="#{appoitmentBean.curentAppoitment.patientId.bornDate}" />                   
+                    
+                    
+                    
+                </p:panelGrid>
+          
+              
 
             </h:form>
         </ui:define>       

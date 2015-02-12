@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MedicineEditDlg" widgetVar="MedicineEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditMedicineTitle}">
+            <h:form id="MedicineEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{medicineController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditMedicineLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{medicineController.selected.id}" title="#{bundle.EditMedicineTitle_id}" required="true" requiredMessage="#{bundle.EditMedicineRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditMedicineLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{medicineController.selected.name}" title="#{bundle.EditMedicineTitle_name}" required="true" requiredMessage="#{bundle.EditMedicineRequiredMessage_name}"/>
+                        <p:outputLabel value="#{bundle.EditMedicineLabel_latineName}" for="latineName" />
+                        <p:inputText id="latineName" value="#{medicineController.selected.latineName}" title="#{bundle.EditMedicineTitle_latineName}" />
+                        <p:outputLabel value="#{bundle.EditMedicineLabel_decryption}" for="decryption" />
+                        <p:inputText id="decryption" value="#{medicineController.selected.decryption}" title="#{bundle.EditMedicineTitle_decryption}" />
+                        <p:outputLabel value="#{bundle.EditMedicineLabel_amount}" for="amount" />
+                        <p:inputText id="amount" value="#{medicineController.selected.amount}" title="#{bundle.EditMedicineTitle_amount}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{medicineController.update}" value="#{bundle.Save}" update="display,:MedicineListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MedicineEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MedicineEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

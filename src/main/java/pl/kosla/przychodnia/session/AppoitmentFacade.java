@@ -190,6 +190,16 @@ public Integer bookAppoitment(Appoitment appoitment, int maxApp){
       return q.getResultList();
 
    }
+   public List<Appoitment> allDocAppForSingelDay(Integer doctorId, Integer surgeryId, Date appDate, String status, String statusBis){
+      TypedQuery<Appoitment> q = em.createNamedQuery("Appoitment.findDocDayAllapp", Appoitment.class);
+      q.setParameter("medicId", doctorId);
+      q.setParameter("surgeryId", surgeryId);
+      q.setParameter("status", status);
+      q.setParameter("statusBis", statusBis);
+      q.setParameter("appDate", appDate, TemporalType.DATE);       
+      return q.getResultList();
+
+   }
    public Appoitment findById(Integer appId){
       TypedQuery<Appoitment> q = em.createNamedQuery("Appoitment.findById", Appoitment.class);
       q.setParameter("id", appId);

@@ -184,7 +184,7 @@ public class DoctorBean implements Serializable {
    }
 
    public List<Appoitment> getAppoitmentList() {
-      return appoitmentFacade.allDocAppForSingelDay(sf.getMedic().getId(), curentSurgery.getId(), new Date(), Appoitment.REZERWACJA );
+      return appoitmentFacade.allDocAppForSingelDay(sf.getMedic().getId(), curentSurgery.getId(), new Date(), Appoitment.REZERWACJA , Appoitment.PAST);
       //return appoitmentList;
    }
 

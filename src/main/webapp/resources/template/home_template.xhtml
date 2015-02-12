@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <title><ui:insert name="title">Strona domowa pacjenta</ui:insert></title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
         <h:outputScript library="js" name="patient.js"/>
@@ -19,25 +19,21 @@
 
         <p:layout fullPage="true">
             
-            <p:layoutUnit position="north" size="65" header="#{bundle.AppName}">
+            <p:layoutUnit position="north" size="65" header="Strona domowa pacjenta">
                 <h:form id="menuForm">
                     <p:menubar>
                         <p:menuitem value="#{bundle.Home}" outcome="/home" icon="ui-icon-home"/>
-                        <p:submenu label="#{bundle.Maintenance}">
-                            <p:menuitem value="Addres" outcome="/views/addres/List.xhtml" />
-                            <p:menuitem value="Patient" outcome="/views/patient/List.xhtml" />
-                        </p:submenu>
                         <f:facet name="options">
                             <p:commandButton  value="wyloguj" icon="ui-icon-extlink" action="#{PatientBean.logout()}"/>
                         </f:facet>
                     </p:menubar>
                 </h:form>
             </p:layoutUnit>
-            <p:layoutUnit position="west" size="200" >
+            <p:layoutUnit position="west" size="250" >
                 <ui:insert name="west_left_column"/>
             </p:layoutUnit>
 
-            <p:layoutUnit position="east" size="200" header="Dane osobowe" >
+            <p:layoutUnit position="east" size="250" header="Dane osobowe" >
                 <ui:insert name="east_right_column"/>
             </p:layoutUnit>
             

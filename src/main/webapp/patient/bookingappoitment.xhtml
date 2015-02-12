@@ -92,6 +92,7 @@
                             action="#{makeAppoitmentBean.bookAppoitment(item)}"
                             value="zabookuj"    
                             oncomplete="handleAppoitmentRequest(xhr, status, args)"
+                            update="datalist"
                             >
                         <f:setPropertyActionListener 
                             value="#{item}" 

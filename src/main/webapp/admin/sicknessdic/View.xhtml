@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SicknessdicViewDlg" widgetVar="SicknessdicViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewSicknessdicTitle}">
+            <h:form id="SicknessdicViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sicknessdicController.selected != null}">
+                        <h:outputText value="#{bundle.ViewSicknessdicLabel_id}"/>
+                        <h:outputText value="#{sicknessdicController.selected.id}" title="#{bundle.ViewSicknessdicTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewSicknessdicLabel_name}"/>
+                        <h:outputText value="#{sicknessdicController.selected.name}" title="#{bundle.ViewSicknessdicTitle_name}"/>
+                        <h:outputText value="#{bundle.ViewSicknessdicLabel_latinName}"/>
+                        <h:outputText value="#{sicknessdicController.selected.latinName}" title="#{bundle.ViewSicknessdicTitle_latinName}"/>
+                        <h:outputText value="#{bundle.ViewSicknessdicLabel_icd10}"/>
+                        <h:outputText value="#{sicknessdicController.selected.icd10}" title="#{bundle.ViewSicknessdicTitle_icd10}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="SicknessdicViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HolidaysEditDlg" widgetVar="HolidaysEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditHolidaysTitle}">
+            <h:form id="HolidaysEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{holidaysController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditHolidaysLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{holidaysController.selected.id}" title="#{bundle.EditHolidaysTitle_id}" required="true" requiredMessage="#{bundle.EditHolidaysRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditHolidaysLabel_startDate}" for="startDate" />
+                        <p:calendar id="startDate" pattern="MM/dd/yyyy" value="#{holidaysController.selected.startDate}" title="#{bundle.EditHolidaysTitle_startDate}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditHolidaysLabel_endDate}" for="endDate" />
+                        <p:calendar id="endDate" pattern="MM/dd/yyyy" value="#{holidaysController.selected.endDate}" title="#{bundle.EditHolidaysTitle_endDate}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditHolidaysLabel_status}" for="status" />
+                        <p:inputText id="status" value="#{holidaysController.selected.status}" title="#{bundle.EditHolidaysTitle_status}" />
+                        <p:outputLabel value="#{bundle.EditHolidaysLabel_applyDate}" for="applyDate" />
+                        <p:calendar id="applyDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{holidaysController.selected.applyDate}" title="#{bundle.EditHolidaysTitle_applyDate}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditHolidaysLabel_surgeryHasMedicId}" for="surgeryHasMedicId" />
+                        <p:selectOneMenu id="surgeryHasMedicId" value="#{holidaysController.selected.surgeryHasMedicId}" required="true" requiredMessage="#{bundle.EditHolidaysRequiredMessage_surgeryHasMedicId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{surgeryHasMedicController.itemsAvailableSelectOne}"
+                                           var="surgeryHasMedicIdItem"
+                                           itemValue="#{surgeryHasMedicIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{holidaysController.update}" value="#{bundle.Save}" update="display,:HolidaysListForm:datalist,:growl" oncomplete="handleSubmit(args, 'HolidaysEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="HolidaysEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

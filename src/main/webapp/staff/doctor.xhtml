@@ -40,7 +40,7 @@
         
         <ui:define name="body">
             <h:form id="apptab">
-                <p:panel header="Dzisiejsze wizyty">
+                <p:panel header="Dzisiejsze rezerwacje">
                     <p:dataTable 
                         id="appdatalist"
                         value="#{doctorBean.appoitmentList}"
@@ -49,7 +49,7 @@
                         selection="#{doctorBean.curentAppoitment}"
                         rowKey="#{app.id}"
                         lazy="true"
-                                 >
+                        >
                     <p:ajax event="rowSelect"   update="selectdoctorbutton"/>
                     <p:ajax event="rowUnselect" update="selectdoctorbutton"/>
                     
@@ -72,12 +72,6 @@
                     
                     <f:facet name="footer">
                         <p:commandButton 
-                            id="appwizybutton"
-                            value="Wizyta"
-                            action="#{doctorBean.prepatePatientAppoitment(doctorBean.curentAppoitment)}"
-                            disabled="#{empty doctorBean.curentAppoitment}"
-                            />
-                        <p:commandButton 
                             id="selectdoctorbutton"
                             value="Wizyta"
                             action="#{doctorBean.prepatePatientAppoitment(doctorBean.curentAppoitment)}"
@@ -88,14 +82,6 @@
                     </p:dataTable>
                 </p:panel>
             </h:form>    
-            
-            <h:outputText id="surgeryInfoHeader"    value="Twoja wybrana przychodnia to #{nurseBean.curentSurgery.name}"/><br/>
-            <p:spacer></p:spacer>
-            <h:outputText id="surgeryInfoHeader2"    value="Twoja zaznaczona  to #{nurseBean.selectedSurgery.name}"/><br/>
-            <p:spacer></p:spacer>
-            <h:outputText id="doctorInfoHeader"    value="Twoj wybrany lekarz to  #{nurseBean.selectedDoctor.firstName}"/><br/>
-
-
         </ui:define>
     </ui:composition>
 

@@ -33,7 +33,7 @@
                     <h:form id="login_line">
                         <p:commandButton id="loginLink"  value="Zaloguj się" onclick="PF('dlg').show();"/>
 
-                        <p:commandButton id="loginMedicsLink"  value="Medic Login" onclick="PF('dlg').show();"/>
+                        <p:commandButton id="loginMedicsLink"  value="Medic Login" onclick="PF('medicdlg').show();"/>
 
                         <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
                         <p:button href="rejestracja.xhtml" value="Zarejstruj się"/>
@@ -66,6 +66,36 @@
                                         value="Login"
                                         update="growl" 
                                         actionListener="#{PatientBean.login}"
+                                        oncomplete="handleLoginRequest(xhr, status, args)" />
+                                </f:facet>  
+                            </h:panelGrid>
+                        </p:dialog>
+                        <p:dialog header="Medic login" widgetVar="medicdlg" resizable="false">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel for="medusername" value="Username:" />
+                                <p:inputText 
+                                    id="medusername" 
+                                    value="#{staffBean.uname}" 
+                                    required="true" 
+                                    label="username" />
+
+                                <h:outputLabel for="medpassword" value="Password:" />
+                                <p:password 
+                                    id="medpassword" 
+                                    value="#{staffBean.password}" 
+                                    required="true" 
+                                    label="password"
+                                    feedback="false"
+                                    redisplay="true"/>
+
+
+                                <f:facet name="footer">
+                                    <h:selectBooleanCheckbox id="mdremember" value="#{staffBean.remember}" onclick="return check(this);" />
+                                    <h:outputLabel for="remember">Zapamiętaj Mnie</h:outputLabel>
+                                    <p:commandButton 
+                                        value="Login"
+                                        update="growl" 
+                                        actionListener="#{staffBean.login}"
                                         oncomplete="handleLoginRequest(xhr, status, args)" />
                                 </f:facet>  
                             </h:panelGrid>
@@ -161,11 +191,6 @@
                 }
             }
         </script>
-
-        <br />
-        <h:link outcome="/views/labTestOrder/List" value="Show All LabTestOrder Items"/>
-        <br />
-        <h:link outcome="/views/radiologyExamOrder/List" value="Show All RadiologyExamOrder Items"/>
     </h:body>
 
 
