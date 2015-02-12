@@ -36,7 +36,7 @@
                         <h:selectBooleanCheckbox id="remember" value="#{staffBean.remember}" onclick="return check(this);" />
                         <h:outputLabel for="remember">Zapamiętaj Mnie</h:outputLabel>
                         <p:commandButton value="Login" update="growl" actionListener="#{staffBean.login}"
-                                         oncomplete="handleLoginRequest(xhr, status, args)" />
+                                         oncomplete="handleStaffLoginRequest(xhr, status, args)" />
                     </f:facet>  
                 </h:panelGrid>
                 <p:button  href="/staff/przychodnia.xhtml" value="Home page"/>

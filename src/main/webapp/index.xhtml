@@ -16,7 +16,7 @@
         <h:outputScript library="js" name="jsfcrud.js"/>
         <h:outputScript library="js" name="grayscale.js"/>
         <h:outputScript library="js" name="jquery.easing.min.js"/>
-
+        <h:outputScript library="js" name="login.js"/>
     </h:head>
 
     <h:body id="page-top">
@@ -36,6 +36,7 @@
                         <p:commandButton id="loginMedicsLink"  value="Medic Login" onclick="PF('medicdlg').show();"/>
 
                         <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+                        
                         <p:button href="rejestracja.xhtml" value="Zarejstruj się"/>
 
                         <p:button  href="/home.xhtml" value="Home page"/>
@@ -70,6 +71,9 @@
                                 </f:facet>  
                             </h:panelGrid>
                         </p:dialog>
+                    </h:form>    
+                    <h:form>
+                        <p:growl id="mdgrowl" sticky="true" showDetail="true" life="5000" />
                         <p:dialog header="Medic login" widgetVar="medicdlg" resizable="false">
                             <h:panelGrid columns="2" cellpadding="5">
                                 <h:outputLabel for="medusername" value="Username:" />
@@ -82,7 +86,7 @@
                                 <h:outputLabel for="medpassword" value="Password:" />
                                 <p:password 
                                     id="medpassword" 
-                                    value="#{staffBean.password}" 
+                                   value="#{staffBean.password}" 
                                     required="true" 
                                     label="password"
                                     feedback="false"
@@ -94,15 +98,15 @@
                                     <h:outputLabel for="remember">Zapamiętaj Mnie</h:outputLabel>
                                     <p:commandButton 
                                         value="Login"
-                                        update="growl" 
+                                        update="mdgrowl" 
                                         actionListener="#{staffBean.login}"
-                                        oncomplete="handleLoginRequest(xhr, status, args)" />
+                                        oncomplete="handleStaffLoginRequest(xhr, status, args)" />
                                 </f:facet>  
                             </h:panelGrid>
                         </p:dialog>
-
-
                     </h:form>
+
+                    
                 </div>    
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse navbar-right navbar-main-collapse">

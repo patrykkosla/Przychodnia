@@ -50,7 +50,9 @@ public class StaffBean implements Serializable {
       
         medic.setPassword(password);
         medic.setUsername(uname);
-        String role ="";  
+         System.out.println("password: " +password);
+         System.out.println("uname: " +uname);
+        String role;  
        if( medicFacade.authenticate( medic ) ){
 
            loggedIn = true;

@@ -2,7 +2,7 @@
  * Mój jest kawałek podłogi...  * 
  */
 
-function handleLoginRequest(xhr, status, args) {
+function handleStaffLoginRequest(xhr, status, args) {
     if (args.loggedIn && args.role === "NURSE") {
         window.location.replace("/przychodnia/staff/przychodnia.xhtml");
     }else if (args.loggedIn && args.role === "DOCTOR") {
