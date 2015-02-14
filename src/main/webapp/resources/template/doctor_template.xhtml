@@ -17,16 +17,14 @@
         <p:growl id="growl" life="3000" />
 
         <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="65" header="#{bundle.AppName}">
+            <p:layoutUnit position="north" size="65" header="Witaj: #{staffBean.medic.firstName} ">
                   <h:form id="menuForm">
                     <p:menubar>
                         <p:menuitem value="#{bundle.Home}" outcome="/staff/doctor.xhtml" icon="ui-icon-home"/>
                         <p:menuitem value="#{stf.SelectSurgery}" outcome="/staff/doctor.xhtml" icon="ui-icon-home"/>
                         <p:submenu label="Listy" icon="ui-icon-gear">
                             <p:menuitem value="Lista pacjentów" outcome="/doctor/patients.xhtml" />
-                            <p:menuitem value="Godzniny pracy" outcome="/views/workhour/List" />
-                            <p:menuitem value="laboratory" outcome="/laboratory.html" />
-                            <p:menuitem value="Laboratorium RTG " outcome="/RTGLab.html" />
+                            <p:menuitem value="Laboratorium" outcome="/laboratory.html" />
                             <p:menuitem value="Godziny pracy" outcome="/staff/GodzinyPracy.html" />
                         </p:submenu>
                         <f:facet name="options">

@@ -66,4 +66,11 @@ public List<SurgeryHasMedic> finaByPositineIsActive(Positione positione , boolea
      return q.getResultList();
    
 }
+public List<SurgeryHasMedic> finaByMedicIsActive(Integer medicId , boolean isAtive){
+      TypedQuery<SurgeryHasMedic> q = em.createNamedQuery( "SurgeryHasMedic.findByMedicId", SurgeryHasMedic.class);
+      q.setParameter("medicId", medicId);
+      q.setParameter("isAtive", isAtive);
+     return q.getResultList();
+   
+}
 }    

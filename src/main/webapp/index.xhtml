@@ -116,6 +116,9 @@
                             <a href="#page-top"></a>
                         </li>
                         <li>
+                            <a class="page-scroll" href="#register">Rejestracja</a>
+                        </li>
+                        <li>
                             <a class="page-scroll" href="#about">O nas</a>
                         </li>
                         <li>
@@ -148,8 +151,8 @@
         <section id="about" class="container content-section text-center">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <h2>About Grayscale</h2>
-                    <p>E-Karta is darmowym oprogramwanie łaczącym pacjenta z swoim lekarzem rodzinnym.  Każda przychodnia może dołączyć do systemu, już dziś zapytaj swojego lekarza czy użwają E-Karty </p>
+                    <h2>System E-Karta </h2>
+                    <p>E-Karta jest darmowym oprogramwanie łaczącym pacjenta z swoim lekarzem rodzinnym.  Każda przychodnia może dołączyć do systemu, już dziś zapytaj swojego lekarza czy użwają E-Karty </p>
                     <p>Jeśli jesteś lekarzem skontaktuj się z nami a pomorzemy wdrożyć system<span>E-Karta </span> w twoje placówce. Pomorzemy ci oszczędzić czas i pieniądze dzieki spedzany na czynnosciach które mogą być zautamoaztzowane</p>
                     <p>E-Karta zawiera w sobie system rezerwacji wizy, ułatwia wypisywanie recept oraz kontrolę nad zleconymi badaniami.</p>
                 </div>
@@ -161,7 +164,7 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
                     <h2>Skontaktu się z namiw</h2>
-                    <p>Nie krępuj się wysłać nam meila z wszelkimi pytania mi lub twoję opinią na temat naszego programu. </p>
+                    <p>Nie krępuj się wysłać nam meila z wszelkimi pytaniami lub twoję opinią na temat naszego programu. </p>
                     <p><a href="mailto:feedback@e-karta.pl">feedback@e-karta.pl</a>
                     </p>
                     <ul class="list-inline banner-social-buttons">
@@ -171,6 +174,142 @@
                         </li>
 
                     </ul>
+                </div>
+            </div>
+        </section>  
+        <section id="register" class="container content-section text-center">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+
+    <h:form id="register_form" style="margin: 30px auto;">
+        <p:messages />
+    <p:panel header="Formularz rejestraacji" style="margin: 30px; padding: 30px; width: 640px; " >
+    <h:panelGrid  id="grid"  columns="2" cellpadding="5" >
+
+        <h:outputLabel value="Imie" for="patientName"/>
+        <p:inputText id="patientName"  value="#{patientRejestracjaBean.patient.firstName}"
+                     required="true"
+                     requiredMessage="Imie jest wymagane"
+                     label="Imie">
+            <f:validateLength minimum="2" />    
+        <p:message for="patientName" />    
+        </p:inputText>
+        <h:outputLabel value="Nazwisko" for="patientImie"/>
+        <p:inputText id="patientImie" value="#{patientRejestracjaBean.patient.lastName}"
+                     required="true"
+                      requiredMessage="Nazwisko jest wymagane"
+                     label="Nazwisko">
+            <f:validateLength minimum="2" />  
+            <f:validateRegex pattern="^[a-zA-Z-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$" />
+        <p:message for="patientImie" />    
+        </p:inputText>
+        
+       
+
+        <h:outputLabel value="Adres email" for="email"/>
+        <p:inputText id="email" 
+                     required="true"
+                     requiredMessage="Podaj swój adres email"
+                     validatorMessage="Nie poprawny adres email"
+                     value="#{patientRejestracjaBean.patient.username}">
+
+        <f:validateRegex
+            pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+        <p:message for="email" />
+        </p:inputText>
+        
+       
+
+
+        <h:outputLabel for="pwd1" value="Hasło" />
+        <p:password id="pwd1" value="#{patientRejestracjaBean.patient.password}"
+                    label="Password 1"
+                    required="true" 
+                    feedback="true">
+        <p:messages id="passwor_messages" autoUpdate="true" for="pwd1"/>
+        </p:password>
+    
+        
+        
+        <h:selectOneRadio id="selectOneRadio1" value="#{patientRejestracjaBean.patient.sex}">
+            <h:outputLabel for="selectOneRadio1" value="Wybirz płeć" />
+            <f:selectItem itemLabel="Mężczyzna" itemValue="#{true}"/>
+            <f:selectItem itemLabel="Kobieta" itemValue="#{false}"/>
+        </h:selectOneRadio>
+        <p:spacer/>
+       
+        <p:outputLabel value="Data urodzenia" for="dob"/>
+        <p:calendar value="#{patientRejestracjaBean.patient.bornDate}" id="dob">
+        </p:calendar>
+        <p:message id="dobMsg" for="dob" />
+        
+        <p:spacer/>
+        
+        
+        <p:outputLabel value="PESEL" for="pesel"/>
+        <p:inputText id="pesel"  value="#{patientRejestracjaBean.patient.pesel}"/>
+
+        <p:outputLabel value="Waga" for="waga"/>
+        <p:inputText id="waga"  value="#{patientRejestracjaBean.patient.weitht}"/>
+
+        <p:outputLabel value="Wzrost" for="wzrost"/>
+        <p:inputText id="wzrost" value="#{patientRejestracjaBean.patient.height}"/>   
+
+        <p:outputLabel for="blodgrup" value="Wybirz grupę krwi" />
+        <p:spacer/>
+        <p:selectOneMenu id="blodgrup" value="#{patientRejestracjaBean.blodGrupTemp}" >
+            <f:selectItem itemLabel="Grupa kwi" itemValue="" />
+            <f:selectItem itemLabel="A" itemValue="A" />
+            <f:selectItem itemLabel="B" itemValue="b" />
+            <f:selectItem itemLabel="AB" itemValue="AB" />
+            <f:selectItem itemLabel="0" itemValue="0" />
+        </p:selectOneMenu>  
+
+        <p:selectOneMenu id="rhtype" value="#{patientRejestracjaBean.rhTypeTemp}"
+                        >
+            <f:selectItem itemLabel="Typ Rh" itemValue="" />
+            <f:selectItem itemLabel="Rh+" itemValue="+" />
+            <f:selectItem itemLabel="Rh-" itemValue="-" />
+        </p:selectOneMenu>     
+        <p:spacer height="10" />
+        <p:separator style="width:400px;"/>
+
+
+        <p:outputLabel value="Miejscowość" for="miejscowosc"/>
+        <p:inputText id="miejscowosc" value="#{patientRejestracjaBean.addres.place}" 
+                    required="true"
+                    requiredMessage="Podaj miejscowość zamieszkania"
+                    label="Miejscowość">
+        </p:inputText>
+        <p:message for="miejscowosc" />
+        <h:outputText value="#{patientRejestracjaBean.addres.place}" />              
+
+        <p:outputLabel value="Ulica" for="street"/>
+        <p:inputText id="street" value="#{patientRejestracjaBean.addres.street}"
+                    required="true"
+                    requiredMessage="Podaj ulicę i numer domu">
+        </p:inputText>
+        <p:message for="street" />
+        <h:outputText value="#{patientRejestracjaBean.addres.street}" /> 
+
+        <p:outputLabel for="posteCode" value="Kod pocztowy" />
+        <p:inputMask id="posteCode" value="#{patientRejestracjaBean.addres.posteCode}" mask="99-999"
+                     required="true"
+                     requiredMessage="Podaj kod pocztowy">  
+        </p:inputMask>
+        <p:message for="posteCode" />
+        <h:outputText value="#{patientRejestracjaBean.addres.posteCode}" /> 
+
+    </h:panelGrid>
+        <p:commandButton 
+                         value="Zarejestrój"
+                         update="register_form" 
+                         validateClient="true"
+                         action="#{patientRejestracjaBean.doRegister()}"/>
+
+          <p:button href="index.xhtml" value="Powrót"/>
+    </p:panel>
+</h:form>
                 </div>
             </div>
         </section>  

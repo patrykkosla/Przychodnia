@@ -10,7 +10,9 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import pl.kosla.przychodnia.model.SurgeryHasMedic;
 import pl.kosla.przychodnia.model.Workhour;
+import pl.kosla.przychodnia.session.SurgeryHasMedicFacade;
 import pl.kosla.przychodnia.session.WorkhourFacade;
 
 /**
@@ -22,8 +24,11 @@ import pl.kosla.przychodnia.session.WorkhourFacade;
 public class WorkHourBean implements Serializable{
 
 @EJB WorkhourFacade workhourFacade;   
+@EJB SurgeryHasMedicFacade SurgeryHasMedicFacade;
+
 @Inject StaffBean staffBean;
 private List<Workhour> workHourList;
+private List<SurgeryHasMedic> surgeryHasMedicDoctorList;
 
    public WorkHourBean() {
    }
@@ -47,5 +52,15 @@ private List<Workhour> workHourList;
    public void setWorkHourList(List<Workhour> workHourList) {
       this.workHourList = workHourList;
    }
-   
+
+   public List<SurgeryHasMedic> getSurgeryHasMedicDoctorList() {
+      return SurgeryHasMedicFacade.finaByMedicIsActive(staffBean.getMedic().getId(), true);
+      //return surgeryHasMedicDoctorList;
+   }
+
+   public void setSurgeryHasMedicDoctorList(List<SurgeryHasMedic> surgeryHasMedicDoctorList) {
+      this.surgeryHasMedicDoctorList = surgeryHasMedicDoctorList;
+   }
+
+
 }

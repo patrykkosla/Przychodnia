@@ -51,6 +51,8 @@ import pl.kosla.przychodnia.enums.Positione;
    query = "SELECT shm.medicId FROM SurgeryHasMedic shm WHERE shm.surgeryId = :surgeryId AND shm.isAtive = :isAtive" ),
    @NamedQuery(name = "SurgeryHasMedic.findActiveSurgeryforMedic",
    query = "SELECT shm.surgeryId FROM SurgeryHasMedic shm WHERE shm.medicId.id = :medicId AND shm.isAtive = :isAtive" ),
+   @NamedQuery(name = "SurgeryHasMedic.findByMedicId",
+   query = "SELECT shm FROM SurgeryHasMedic shm WHERE shm.medicId.id = :medicId AND shm.isAtive = :isAtive" ),
    
    @NamedQuery(name = "SurgeryHasMedic.findByStopDate", query = "SELECT s FROM SurgeryHasMedic s WHERE s.stopDate = :stopDate")})
 public class SurgeryHasMedic implements Serializable {

@@ -12,3 +12,6 @@ tr.avaibleDate {
 tr.not_avaibleDate {
     background-color: lightcoral;
 }
+#register_form{
+    margin: 0px auto;
+}

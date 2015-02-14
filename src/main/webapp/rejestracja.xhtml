@@ -6,21 +6,14 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
- 
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputStylesheet library="css" name="main.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
     </h:head>
 <h:body>
+    
 <f:view contentType="text/html">
-    <h:form>
-        <ui:include src="/resources/elements/header.xhtml" />
-        
-        <p:button href="index.xhtml" value="Powrót"/>
-    </h:form>
-     
-
-
-    <h:form id="register_form">
+    <h:form id="register_form" style="margin: 30px auto;">
         <p:messages />
     <p:panel header="Formularz rejestraacji" style="margin: 30px; padding: 30px; width: 640px; " >
     <h:panelGrid  id="grid"  columns="2" cellpadding="5" >
@@ -33,9 +26,6 @@
             <f:validateLength minimum="2" />    
         <p:message for="patientName" />    
         </p:inputText>
-        
-        
-
         <h:outputLabel value="Nazwisko" for="patientImie"/>
         <p:inputText id="patientImie" value="#{patientRejestracjaBean.patient.lastName}"
                      required="true"
@@ -149,7 +139,7 @@
                          validateClient="true"
                          action="#{patientRejestracjaBean.doRegister()}"/>
 
-
+          <p:button href="index.xhtml" value="Powrót"/>
     </p:panel>
 </h:form>
      <h:outputText value="#{patientRejestracjaBean.patient.firstName}" />
