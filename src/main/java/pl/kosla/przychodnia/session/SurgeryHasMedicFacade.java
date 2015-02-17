@@ -71,6 +71,12 @@ public List<SurgeryHasMedic> finaByMedicIsActive(Integer medicId , boolean isAti
       q.setParameter("medicId", medicId);
       q.setParameter("isAtive", isAtive);
      return q.getResultList();
-   
 }
+public List<SurgeryHasMedic> finaByMedicIsActiveEmpty(Integer medicId , boolean isAtive){
+      TypedQuery<SurgeryHasMedic> q = em.createNamedQuery( "SurgeryHasMedic.findByMedicIdEmpty", SurgeryHasMedic.class);
+      q.setParameter("medicId", medicId);
+      q.setParameter("isAtive", isAtive);
+     return q.getResultList();
+}
+
 }    

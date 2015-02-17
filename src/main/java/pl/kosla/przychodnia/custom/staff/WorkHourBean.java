@@ -54,8 +54,17 @@ private List<SurgeryHasMedic> surgeryHasMedicDoctorList;
    }
 
    public List<SurgeryHasMedic> getSurgeryHasMedicDoctorList() {
-      return SurgeryHasMedicFacade.finaByMedicIsActive(staffBean.getMedic().getId(), true);
+//      List<SurgeryHasMedic> temp = SurgeryHasMedicFacade.finaByMedicIsActive(staffBean.getMedic().getId(), true);
+//      
+//      for(SurgeryHasMedic s : temp ){
+//        if( !s.getWorkhourCollection().isEmpty() ){
+//           temp.remove(s);
+//        }
+//      }
+      
       //return surgeryHasMedicDoctorList;
+      return SurgeryHasMedicFacade.finaByMedicIsActiveEmpty(staffBean.getMedic().getId(), true);
+      //return temp;
    }
 
    public void setSurgeryHasMedicDoctorList(List<SurgeryHasMedic> surgeryHasMedicDoctorList) {

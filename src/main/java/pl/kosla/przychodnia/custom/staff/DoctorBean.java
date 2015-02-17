@@ -116,7 +116,8 @@ public class DoctorBean implements Serializable {
       removeFromSession("curentSurgery");
       addToSession("curentSurgery", selectedSurgery);
       addCookie("curentSurgery", selectedSurgery.getId().toString());
-      return "";
+      //return "";
+      return "/staff/doctor.xhtml?faces-redirect=true";
     
    } 
    public String prepatePatientAppoitment(Appoitment appoitment){
