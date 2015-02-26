@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListLabTestOrderTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="LabTestOrderListForm">
+                <p:panel header="#{bundle.ListLabTestOrderTitle}">
+                    <p:dataTable id="datalist" value="#{labTestOrderController.items}" var="item"
+                                 selectionMode="single" selection="#{labTestOrderController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListLabTestOrderTitle_labBlodOb}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.labBlodOb}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListLabTestOrderTitle_labBlodMorfologia}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.labBlodMorfologia}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListLabTestOrderTitle_labBlodCells}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.labBlodCells}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListLabTestOrderTitle_labFecesGeneralTest}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.labFecesGeneralTest}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListLabTestOrderTitle_labUrineGeneralTest}"/>
+                            </f:facet>
+                            <p:selectBooleanCheckbox value="#{item.labUrineGeneralTest}" disabled="true"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListLabTestOrderTitle_appoitmentId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.appoitmentId}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

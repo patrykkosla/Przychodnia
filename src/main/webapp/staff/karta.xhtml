@@ -12,8 +12,6 @@
             <h:outputText value="Katra pacjenta"></h:outputText>
         </ui:define>
         <ui:define name="west_left_column">
-        <ui:include src="/custom_views/common/RadiologiaShortList.xhtml"/>
-        <ui:include src="/custom_views/common/BloodTestShortList.xhtml"/>
         <ui:include src="/custom_views/common/PerscripionShortList.xhtml"/>
         <ui:include src="/custom_views/common/SickLeaveShortList.xhtml"/>
   
@@ -21,14 +19,25 @@
         <ui:define name="east_right_column">
             <h:form>
                 <p:panel header="Dane Pacjenta">
-                    <h:outputText value="#{kartaBean.patientController.selected.firstName} #{kartaBean.patientController.selected.lastName} "/>
-                    <h:outputText value="Data urodzenia #{kartaBean.patientController.selected.bornDate}">
-                        <f:convertDateTime pattern="MM/dd/yyyy" />
-                    </h:outputText>
-                    <h:outputText value="Lekarz prowadzacy #{kartaBean.patientController.selected.medicId.firstName}  #{kartaBean.patientController.selected.medicId.lastName} "/>
-                    <h:outputText value="#{kartaBean.patientController.selected.addresId.place}"/>
-                    <h:outputText value="#{kartaBean.patientController.selected.addresId.street}"/>
-                    <h:outputText value="#{kartaBean.patientController.selected.addresId.posteCode}"/>
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Imie i nazwisko"/>
+                        <h:outputText value="#{kartaBean.patientController.selected.firstName} #{kartaBean.patientController.selected.lastName} "/>
+                        <h:outputText value="Data urodzenia"/>
+                        <h:outputText value="#{kartaBean.patientController.selected.bornDate}">
+                            <f:convertDateTime pattern="MM/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="Lekarz prowadzacy"/>
+                        <h:outputText value="#{kartaBean.patientController.selected.medicId.firstName}  #{kartaBean.patientController.selected.medicId.lastName} "/>
+                      
+                        <h:outputText value="Miejscowość"/> 
+                        <h:outputText value="#{kartaBean.patientController.selected.addresId.place}"/>
+                      
+                        <h:outputText value="Ulica"/>
+                        <h:outputText value="#{kartaBean.patientController.selected.addresId.street}"/>
+                        
+                        <h:outputText value="kod pocztowy"/>
+                        <h:outputText value="#{kartaBean.patientController.selected.addresId.posteCode}"/>
+                    </p:panelGrid>
                 </p:panel>
             </h:form>    
         </ui:define>

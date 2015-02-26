@@ -24,11 +24,8 @@
                         <p:menuitem value="#{bundle.Home}" outcome="/staff/doctor.xhtml" icon="ui-icon-home"/>
                         <p:menuitem value="#{stf.SelectSurgery}" outcome="/staff/doctor.xhtml" icon="ui-icon-home"/>
                         <p:submenu label="Listy" icon="ui-icon-gear">
-                            <p:menuitem value="Lista recept"   />
                             <p:menuitem value="Lista pacjentów" outcome="/doctor/patients.xhtml" />
-                            <p:menuitem value="Lista zwolnień lekarskich" url="#" />
                             <p:menuitem value="Godzniny pracy" outcome="/views/workhour/List" />
-                            <p:menuitem value="addres" outcome="/views/addres/List" />
                         </p:submenu>
                         <f:facet name="options">
                             <p:commandButton  value="#{msg.Logout}" icon="ui-icon-extlink" action="#{staffBean.logout()}"/>

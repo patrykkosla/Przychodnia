@@ -71,18 +71,27 @@
         <ui:define name="east_right_column">
             <h:form>
             <p:panel>
-                <h:panelGrid columns="2"> 
-                    <h:outputLabel value="Imie"/>          
-                    <h:outputText value="#{ homePatientBean.pb.patient.firstName}"/>
-                    <h:outputLabel value="Nazwisko"/>
-                    <h:outputText value="#{homePatientBean.pb.patient.lastName}"/>           
-
-                    <h:outputLabel value="Waga"/>
-                    <h:outputText value="#{ homePatientBean.pb.patient.weitht}"/>  
-                    <h:outputLabel value="Wzrost"/>           
-                    <h:outputText value="#{homePatientBean.pb.patient.height}"/>    
-
-                </h:panelGrid> 
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Imie i nazwisko"/>
+                        <h:outputText value="#{homePatientBean.pb.patient.firstName} #{homePatientBean.pb.patient.lastName} "/>
+                        <h:outputText value="Data urodzenia"/>
+                        <h:outputText value="#{homePatientBean.pb.patient.bornDate}">
+                            <f:convertDateTime pattern="MM/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="Lekarz prowadzacy"/>
+                        <h:outputText value="#{khomePatientBean.pb.patient.medicId.firstName}  #{homePatientBean.pb.patient.medicId.lastName} "/>
+                      
+                        <h:outputText value="Miejscowość"/> 
+                        <h:outputText value="#{homePatientBean.pb.patient.addresId.place}"/>
+                      
+                        <h:outputText value="Ulica"/>
+                        <h:outputText value="#{homePatientBean.pb.patient.addresId.street}"/>
+                        
+                        <h:outputText value="kod pocztowy"/>
+                        <h:outputText value="#{homePatientBean.pb.patient.addresId.posteCode}"/>
+                    </p:panelGrid>
+   
+                
                 <f:facet name="footer">
                     <p:commandButton 
                         id="EditPersonalDataButton" 
